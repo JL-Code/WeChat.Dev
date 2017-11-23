@@ -60,9 +60,11 @@
     <Compile Include="App.cs" />
     <Compile Include="Cache\LocalCacheManager.cs" />
     <Compile Include="IApplicationConfigService.cs" />
+    <Compile Include="IMemberService.cs" />
     <Compile Include="IMessageService.cs" />
     <Compile Include="Implementation\AccessTokenService.cs" />
     <Compile Include="Implementation\ApplicationConfigService.cs" />
+    <Compile Include="Implementation\MemberService.cs" />
     <Compile Include="Implementation\MessageService.cs" />
     <Compile Include="IWeChatAppService.cs" />
     <Compile Include="JsApiTicketManager.cs" />

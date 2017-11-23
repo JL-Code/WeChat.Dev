@@ -15,5 +15,17 @@ namespace WeChat.Core
         {
             return JsApiTicketContainer.GetTicket(appId, appSecret, getNewTicket);
         }
+
+        /// <summary>
+        /// 使用完整的应用凭证获取Ticket，如果不存在将自动注册
+        /// </summary>
+        /// <param name="appId"></param>
+        /// <param name="appSecret"></param>
+        /// <param name="getNewTicket"></param>
+        /// <returns></returns>
+        public static string TryGetTicket(string appId, string appSecret, bool getNewTicket = false)
+        {
+            return JsApiTicketContainer.TryGetTicket(appId, appSecret, getNewTicket);
+        }
     }
 }

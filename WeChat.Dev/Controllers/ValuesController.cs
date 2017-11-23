@@ -21,5 +21,6 @@ namespace WeChat.Dev.Controllers
             _msgService.SendText(appcode, message, toUser);
             return Ok();
         }
+
     }
 }
