@@ -1,12 +1,14 @@
 ﻿using Autofac;
-using Autofac.Integration.Mvc;
+using System.Linq;
 using System.Reflection;
-using System.Web.Mvc;
 using WeChat.Infrastructure;
 
 namespace WeChat.Dev
 {
-    public class AutofacConfig
+    /// <summary>
+    /// 非http请求生成实例的 autofac容器管理
+    /// </summary>
+    public class AutofacManager
     {
         const string connstr = "server=.;database=dev;uid=sa;pwd=123456";
         private static IContainer _autofacContainer;
@@ -32,8 +34,8 @@ namespace WeChat.Dev
             var maps = new string[] { "WeChat.Core", "WeChat.Infrastructure" };
             Register(maps[0], "Service", builder);
             Register(maps[1], "Repository", builder);
-            builder.Register(m => EFContext.CreateForEFDesignTools(connstr)).InstancePerRequest();
-            RegisterMvc(builder);
+            builder.Register(m => EFContext.CreateForEFDesignTools(connstr)).InstancePerDependency();
+            _autofacContainer = builder.Build();
         }
 
         private static void Register(string path, string suffix, ContainerBuilder builder)
@@ -42,15 +44,7 @@ namespace WeChat.Dev
             builder.RegisterAssemblyTypes(assembly)
                 .Where(m => m.Name.EndsWith(suffix))
                 .AsImplementedInterfaces()//默认实现接口
-                .InstancePerRequest();//每次http请求生成一个实例
-        }
-
-        private static void RegisterMvc(ContainerBuilder builder)
-        {
-            builder.RegisterControllers(Assembly.GetExecutingAssembly());
-            //设置依赖解析
-            _autofacContainer = builder.Build();
-            DependencyResolver.SetResolver(new AutofacDependencyResolver(_autofacContainer));
+                .InstancePerDependency();//当被依赖的时候 生成新的一个唯一的实例
         }
 
         #endregion

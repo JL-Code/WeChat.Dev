@@ -52,6 +52,7 @@
     <Compile Include="EntityTypeConfiguration\ApplicationConfigEntityTypeConfiguration.cs" />
     <Compile Include="EntityTypeConfiguration\WeChatAppEntityTypeConfiguration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\ApplicationConfigRepository.cs" />
     <Compile Include="Repositories\Repository.cs" />
     <Compile Include="Repositories\WeChatAppRepository.cs" />
   </ItemGroup>

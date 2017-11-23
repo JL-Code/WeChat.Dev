@@ -21,7 +21,11 @@ namespace WeChat.Dev
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+
             AutofacConfig.RegisterAutofac();
+            AutofacManager.RegisterAutofac();
+            //企业微信应用信息注册
+            AccessTokenConfig.Register();
         }
     }
 }

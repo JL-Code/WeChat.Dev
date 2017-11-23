@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using WeChat.Domain.AggregatesModel;
 
@@ -15,6 +16,12 @@ namespace WeChat.Core
         {
             var entity = _repository.ListEntities().Where(m => m.AppCode?.ToLower() == appCode?.ToLower()).FirstOrDefault();
             return entity;
+        }
+
+        public List<WeChatAppConfig> ListApps()
+        {
+            var entities = _repository.ListEntities().ToList();
+            return entities;
         }
     }
 }
