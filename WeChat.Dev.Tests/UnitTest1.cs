@@ -4,7 +4,7 @@ using Autofac;
 using WeChat.Core;
 using WeChat.Domain.AggregatesModel;
 using WeChat.Infrastructure;
-using WeChat.Infrastructure.Repositories;
+using WeChat.Core.Cache;
 
 namespace WeChat.Dev.Tests
 {
@@ -33,6 +33,13 @@ namespace WeChat.Dev.Tests
                 Console.WriteLine(app.WeChatAppID);
             }
 
+        }
+
+        [TestMethod]
+        public void MyTestMethod()
+        {
+            LocalCacheManager.Add("test", 1212);
+            Console.WriteLine(LocalCacheManager.Get<int>("test"));
         }
     }
 }

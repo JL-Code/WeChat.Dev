@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using WeChat.Core;
 using WeChat.Core.Cache;
 using WeChat.Domain.AggregatesModel;
@@ -10,17 +11,18 @@ namespace WeChat.Dev
     /// </summary>
     public class AccessTokenConfig
     {
-        //企业ID
-        const string corpId = "wx2e8cc6975a5fa1ce";
         public static void Register()
         {
             IWeChatAppService appService = AutofacManager.Resolve<IWeChatAppService>();
-            LocalCacheManager.Add(Constants.CORP_ID, corpId);
-            
+            IApplicationConfigService configService = AutofacManager.Resolve<IApplicationConfigService>();
+            var config = configService.ListApplicationConfig()
+                .FirstOrDefault(m => m.ConfigType.ToLower() == Constants.WECHAT.ToLower() && m.ConfigKey.ToLower() == Constants.CORP_ID.ToLower());
+            LocalCacheManager.Add(Constants.CORP_ID, config.ConfigValue);
+
             List<WeChatAppConfig> apps = appService.ListApps();
             apps.ForEach(app =>
             {
-                WeChatManager.RegisterWorkApp(corpId, app.SecretValue, app.AppName);
+                WeChatManager.RegisterWorkApp(config.ConfigValue, app.SecretValue, app.AppName);
             });
         }
     }

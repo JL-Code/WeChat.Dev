@@ -1,6 +1,8 @@
 ﻿using Autofac;
 using Autofac.Integration.Mvc;
+using Autofac.Integration.WebApi;
 using System.Reflection;
+using System.Web.Http;
 using System.Web.Mvc;
 using WeChat.Infrastructure;
 
@@ -33,7 +35,7 @@ namespace WeChat.Dev
             Register(maps[0], "Service", builder);
             Register(maps[1], "Repository", builder);
             builder.Register(m => EFContext.CreateForEFDesignTools(connstr)).InstancePerRequest();
-            RegisterMvc(builder);
+            RegisterMvcAndWebApi(builder);
         }
 
         private static void Register(string path, string suffix, ContainerBuilder builder)
@@ -45,12 +47,14 @@ namespace WeChat.Dev
                 .InstancePerRequest();//每次http请求生成一个实例
         }
 
-        private static void RegisterMvc(ContainerBuilder builder)
+        private static void RegisterMvcAndWebApi(ContainerBuilder builder)
         {
             builder.RegisterControllers(Assembly.GetExecutingAssembly());
+            builder.RegisterApiControllers(Assembly.GetExecutingAssembly());
             //设置依赖解析
             _autofacContainer = builder.Build();
             DependencyResolver.SetResolver(new AutofacDependencyResolver(_autofacContainer));
+            GlobalConfiguration.Configuration.DependencyResolver = new AutofacWebApiDependencyResolver(_autofacContainer);
         }
 
         #endregion

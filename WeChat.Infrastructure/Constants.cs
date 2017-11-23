@@ -10,8 +10,8 @@
         /// </summary>
         public const string MOBILE_APPROVAL = "MobileApprove";
 
-        public const string WECHAT = "WECHAT";
+        public const string WECHAT = "WeChat";
 
-        public const string CORP_ID = "CORPID";
+        public const string CORP_ID = "CorpId";
     }
 }

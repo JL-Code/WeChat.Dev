@@ -1,6 +1,6 @@
 ﻿using WeChat.Domain.AggregatesModel;
 
-namespace WeChat.Infrastructure.Repositories
+namespace WeChat.Infrastructure
 {
     public class WeChatAppRepository : Repository<WeChatAppConfig>, IWeChatAppRepository
     {

@@ -1,4 +1,5 @@
 ﻿using Senparc.Weixin.Cache;
+using System;
 
 namespace WeChat.Core.Cache
 {
@@ -6,12 +7,22 @@ namespace WeChat.Core.Cache
     {
         static LocalObjectCacheStrategy _cache = LocalObjectCacheStrategy.Instance;
 
+        /// <summary>
+        /// 添加缓存
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="value"></param>
         public static void Add(string key, object value)
         {
             _cache.InsertToCache(key, value);
         }
 
-        public static object GetItem(string key)
+        /// <summary>
+        /// 获取缓存
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        public static object Get(string key)
         {
             if (_cache.CheckExisted(key))
             {
@@ -20,14 +31,34 @@ namespace WeChat.Core.Cache
             return null;
         }
 
-
+        /// <summary>
+        /// 获取缓存
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="key"></param>
+        /// <returns></returns>
         public static T Get<T>(string key)
         {
             var result = default(T);
-            var item = GetItem(key);
-            //TODO: 泛型转换为值类型
-
+            try
+            {
+                var item = Get(key);
+                if (item != null)
+                    result = (T)item;
+            }
+            catch (Exception)
+            { }
             return result;
+        }
+
+        /// <summary>
+        /// 更新缓存
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="value"></param>
+        public static void Update(string key, object value)
+        {
+            _cache.Update(key, value);
         }
     }
 }

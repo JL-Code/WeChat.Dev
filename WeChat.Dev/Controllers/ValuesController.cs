@@ -3,7 +3,7 @@ using WeChat.Core;
 
 namespace WeChat.Dev.Controllers
 {
-    [RoutePrefix("api/message")]
+    [RoutePrefix("api/messages")]
     public class MessageController : ApiController
     {
 
@@ -14,12 +14,11 @@ namespace WeChat.Dev.Controllers
             _currentService = currentService;
             _msgService = msgService;
         }
-
-        [HttpPost]
-        [Route("text")]
-        public IHttpActionResult Text(string appcode, string message)
+        [Route("")]
+        [HttpGet]
+        public IHttpActionResult Text(string appcode, string message, string toUser)
         {
-            _msgService.SendText(appcode, message);
+            _msgService.SendText(appcode, message, toUser);
             return Ok();
         }
     }
