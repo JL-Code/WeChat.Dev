@@ -1,4 +1,4 @@
-﻿namespace WeChat.Core
+﻿namespace Zap.WeChat.SDK
 {
     /// <summary>
     /// 常量

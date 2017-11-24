@@ -2,7 +2,7 @@
 using Senparc.Weixin.Work.Containers;
 using System;
 using System.Web.Mvc;
-using WeChat.Core;
+using Zap.WeChat.SDK;
 
 namespace WeChat.Dev.Controllers
 {

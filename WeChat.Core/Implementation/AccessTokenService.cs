@@ -1,6 +1,6 @@
-﻿using WeChat.Core.Cache;
+﻿using Zap.WeChat.SDK.Cache;
 
-namespace WeChat.Core.Implementation
+namespace Zap.WeChat.SDK.Implementation
 {
     public abstract class AccessTokenService
     {
@@ -31,6 +31,16 @@ namespace WeChat.Core.Implementation
             };
         }
 
+        public virtual App TryGetToken(string appcode)
+        {
 
+            var app = _appService.GetApp(appcode);
+            var accessToken = AccessTokenManager.TryGetToken(CorpID, app.SecretValue);
+            return new App
+            {
+                AccessToken = accessToken,
+                AgentId = app.WeChatAppID
+            };
+        }
     }
 }

@@ -1,6 +1,6 @@
-﻿using WeChat.Core.AdvancedAPIs.AddressList;
+﻿using Zap.WeChat.SDK.AdvancedAPIs.AddressList;
 
-namespace WeChat.Core
+namespace Zap.WeChat.SDK
 {
     public interface IMemberService
     {

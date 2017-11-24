@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WeChat.Core.AdvancedAPIs.AddressList
+namespace Zap.WeChat.SDK.AdvancedAPIs.AddressList
 {
     class TagResult
     {

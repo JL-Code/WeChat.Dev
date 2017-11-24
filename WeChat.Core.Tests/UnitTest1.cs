@@ -3,10 +3,10 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Autofac;
 using WeChat.Domain.AggregatesModel;
 using WeChat.Infrastructure;
-using WeChat.Core.Implementation;
-using WeChat.Core.Cache;
+using Zap.WeChat.SDK.Implementation;
+using Zap.WeChat.SDK.Cache;
 
-namespace WeChat.Core.Tests
+namespace Zap.WeChat.SDK.Tests
 {
     [TestClass]
     public class UnitTest1

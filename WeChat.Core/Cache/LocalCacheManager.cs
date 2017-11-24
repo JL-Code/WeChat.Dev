@@ -1,7 +1,7 @@
 ﻿using Senparc.Weixin.Cache;
 using System;
 
-namespace WeChat.Core.Cache
+namespace Zap.WeChat.SDK.Cache
 {
     public class LocalCacheManager
     {

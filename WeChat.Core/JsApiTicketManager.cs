@@ -1,6 +1,6 @@
 ﻿using Senparc.Weixin.Work.Containers;
 
-namespace WeChat.Core
+namespace Zap.WeChat.SDK
 {
     public class JsApiTicketManager
     {

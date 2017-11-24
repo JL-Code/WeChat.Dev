@@ -1,6 +1,6 @@
-﻿using WeChat.Core.MessageAPI;
+﻿using Zap.WeChat.SDK.MessageAPI;
 
-namespace WeChat.Core.Implementation
+namespace Zap.WeChat.SDK.Implementation
 {
     public class MessageService : AccessTokenService, IMessageService
     {

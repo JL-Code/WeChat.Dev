@@ -2,10 +2,10 @@
 using Senparc.Weixin.Work.AdvancedAPIs.Mass;
 using System;
 using System.Linq;
-using WeChat.Core.AdvancedAPIs.AddressList;
-using WeChat.Core.MessageAPI;
+using Zap.WeChat.SDK.AdvancedAPIs.AddressList;
+using Zap.WeChat.SDK.MessageAPI;
 
-namespace WeChat.Core
+namespace Zap.WeChat.SDK
 {
     public static class ResultExtends
     {

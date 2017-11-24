@@ -1,7 +1,7 @@
 ﻿using Senparc.Weixin.Work.Containers;
-using WeChat.Core.Cache;
+using Zap.WeChat.SDK.Cache;
 
-namespace WeChat.Core
+namespace Zap.WeChat.SDK
 {
     public class WeChatManager
     {

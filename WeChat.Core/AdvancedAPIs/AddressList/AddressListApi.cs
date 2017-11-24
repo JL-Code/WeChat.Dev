@@ -2,7 +2,7 @@
 using Senparc.Weixin.Work;
 using Senparc.Weixin.Work.AdvancedAPIs.MailList;
 
-namespace WeChat.Core.AdvancedAPIs.AddressList
+namespace Zap.WeChat.SDK.AdvancedAPIs.AddressList
 {
     public class AddressListApi
     {

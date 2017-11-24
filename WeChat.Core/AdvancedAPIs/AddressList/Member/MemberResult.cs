@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System.Collections.Generic;
 
-namespace WeChat.Core.AdvancedAPIs.AddressList
+namespace Zap.WeChat.SDK.AdvancedAPIs.AddressList
 {
     public class MemberResult : WeChatResponse
     {

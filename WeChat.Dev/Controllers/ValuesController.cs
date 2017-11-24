@@ -1,5 +1,5 @@
 ﻿using System.Web.Http;
-using WeChat.Core;
+using Zap.WeChat.SDK;
 
 namespace WeChat.Dev.Controllers
 {

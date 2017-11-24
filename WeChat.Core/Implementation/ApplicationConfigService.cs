@@ -2,7 +2,7 @@
 using System.Linq;
 using WeChat.Domain.AggregatesModel;
 
-namespace WeChat.Core
+namespace Zap.WeChat.SDK
 {
     public class ApplicationConfigService : IApplicationConfigService
     {

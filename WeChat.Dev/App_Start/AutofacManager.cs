@@ -31,7 +31,7 @@ namespace WeChat.Dev
         public static void RegisterAutofac()
         {
             var builder = new ContainerBuilder();
-            var maps = new string[] { "WeChat.Core", "WeChat.Infrastructure" };
+            var maps = new string[] { "Zap.WeChat.SDK", "WeChat.Infrastructure" };
             Register(maps[0], "Service", builder);
             Register(maps[1], "Repository", builder);
             builder.Register(m => EFContext.CreateForEFDesignTools(connstr)).InstancePerDependency();

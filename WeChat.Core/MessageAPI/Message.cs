@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System.Collections.Generic;
 
-namespace WeChat.Core.MessageAPI
+namespace Zap.WeChat.SDK.MessageAPI
 {
     public class Message<T> where T : class
     {

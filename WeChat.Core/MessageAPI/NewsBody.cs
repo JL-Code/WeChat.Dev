@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WeChat.Core.MessageAPI
+namespace Zap.WeChat.SDK.MessageAPI
 {
     public class NewsBody
     {

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WeChat.Core
+namespace Zap.WeChat.SDK
 {
     /// <summary>
     /// 微信响应消息

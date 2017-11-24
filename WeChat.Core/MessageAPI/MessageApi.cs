@@ -1,7 +1,7 @@
 ﻿using Senparc.Weixin.Work.AdvancedAPIs;
 using Senparc.Weixin.Work.Containers;
 
-namespace WeChat.Core.MessageAPI
+namespace Zap.WeChat.SDK.MessageAPI
 {
     public class MessageApi
     {

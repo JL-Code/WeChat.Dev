@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.27004.2009
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeChat.Dev", "WeChat.Dev\WeChat.Dev.csproj", "{E93EA937-0660-4E5B-A955-F281AD8B24A6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeChat.Core", "WeChat.Core\WeChat.Core.csproj", "{A7EE82DB-E4FA-4955-B0DF-08D16787DE94}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zap.WeChat.SDK", "WeChat.Core\Zap.WeChat.SDK.csproj", "{A7EE82DB-E4FA-4955-B0DF-08D16787DE94}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeChat.Domain", "WeChat.Domain\WeChat.Domain.csproj", "{0B28BACF-460A-4DA0-B5ED-5B88C46A99D2}"
 EndProject

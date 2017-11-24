@@ -1,6 +1,6 @@
-﻿using WeChat.Core.AdvancedAPIs.AddressList;
+﻿using Zap.WeChat.SDK.AdvancedAPIs.AddressList;
 
-namespace WeChat.Core.Implementation
+namespace Zap.WeChat.SDK.Implementation
 {
     public class MemberService : AccessTokenService, IMemberService
     {

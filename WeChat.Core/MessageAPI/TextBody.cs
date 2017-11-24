@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace WeChat.Core.MessageAPI
+namespace Zap.WeChat.SDK.MessageAPI
 {
     public class TextBody
     {
