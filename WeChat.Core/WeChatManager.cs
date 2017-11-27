@@ -1,5 +1,6 @@
 ﻿using Senparc.Weixin.Work.Containers;
-using Zap.WeChat.SDK.Cache;
+using System;
+using Zap.WeChat.SDK.Entities;
 
 namespace Zap.WeChat.SDK
 {
@@ -16,22 +17,10 @@ namespace Zap.WeChat.SDK
             AccessTokenContainer.Register(corpId, corpSecret, name);
         }
 
-        /// <summary>
-        /// 注册CoropId
-        /// </summary>
-        /// <param name="corpId"></param>
-        public static void RegisterCoprID(string corpId)
-        {
-            LocalCacheManager.Add(Constants.CORP_ID, corpId);
-        }
 
-        /// <summary>
-        /// 重新注册CorpId
-        /// </summary>
-        /// <param name="corpId"></param>
-        public static void ReRegisterCoprID(string corpId)
+        public static void RegisterWorkApp(string appcode, CorpAppConfig app)
         {
-            LocalCacheManager.Update(Constants.CORP_ID, corpId);
+            throw new NotImplementedException();
         }
     }
 }

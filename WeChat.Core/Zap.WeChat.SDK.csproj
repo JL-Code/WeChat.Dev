@@ -9,14 +9,15 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Zap.WeChat.SDK</RootNamespace>
     <AssemblyName>Zap.WeChat.SDK</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>..\..\..\Company\ZapSoft\packagesExtend\Zap\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -57,23 +58,30 @@
     <Compile Include="AdvancedAPIs\AddressList\Department\DepartmentResult.cs" />
     <Compile Include="AdvancedAPIs\AddressList\Member\MemberResult.cs" />
     <Compile Include="AdvancedAPIs\AddressList\Tag\TagResult.cs" />
+    <Compile Include="AdvancedAPIs\OAuth2\OAuth2Api.cs" />
+    <Compile Include="AdvancedAPIs\OAuth2\OAuth2Result.cs" />
     <Compile Include="App.cs" />
     <Compile Include="Cache\LocalCacheManager.cs" />
+    <Compile Include="CommandAPIs\CommonApi.cs" />
+    <Compile Include="Entities\Config\CorpAppConfig.cs" />
+    <Compile Include="Entities\Config\CorpConfig.cs" />
+    <Compile Include="Entities\JsonResult\AccessTokenResult.cs" />
     <Compile Include="IApplicationConfigService.cs" />
     <Compile Include="IMemberService.cs" />
     <Compile Include="IMessageService.cs" />
     <Compile Include="Implementation\AccessTokenService.cs" />
     <Compile Include="Implementation\ApplicationConfigService.cs" />
+    <Compile Include="Implementation\CorpAppService.cs" />
     <Compile Include="Implementation\MemberService.cs" />
-    <Compile Include="Implementation\MessageService.cs" />
+    <Compile Include="Handler\MessageHandler.cs" />
+    <Compile Include="Implementation\BaseService.cs" />
+    <Compile Include="IServices\ICorpAppService.cs" />
     <Compile Include="IWeChatAppService.cs" />
     <Compile Include="JsApiTicketManager.cs" />
-    <Compile Include="MessageAPI\Message.cs" />
-    <Compile Include="MessageAPI\MessageApi.cs" />
-    <Compile Include="MessageAPI\MessageResult.cs" />
-    <Compile Include="MessageAPI\NewsBody.cs" />
+    <Compile Include="AdvancedAPIs\MessageAPI\MessageApi.cs" />
+    <Compile Include="AdvancedAPIs\MessageAPI\MessageResult.cs" />
+    <Compile Include="AdvancedAPIs\MessageAPI\NewsBody.cs" />
     <Compile Include="ResultExtends.cs" />
-    <Compile Include="MessageAPI\TextBody.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Implementation\WeChatAppService.cs" />
     <Compile Include="WeChatManager.cs" />
@@ -92,8 +100,6 @@
       <Name>WeChat.Infrastructure</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="CommandAPIs\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

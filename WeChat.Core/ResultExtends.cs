@@ -1,6 +1,7 @@
 ﻿using Senparc.Weixin.Work.AdvancedAPIs.MailList;
 using Senparc.Weixin.Work.AdvancedAPIs.Mass;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Zap.WeChat.SDK.AdvancedAPIs.AddressList;
 using Zap.WeChat.SDK.MessageAPI;
@@ -53,6 +54,18 @@ namespace Zap.WeChat.SDK
                 },
                 Status = result.status
             };
+        }
+
+
+        public static List<Senparc.Weixin.Work.Entities.Article> ToNews(this NewsBody data)
+        {
+            return data.Articles.Select(news => new Senparc.Weixin.Work.Entities.Article
+            {
+                Description = news.Description,
+                PicUrl = news.PicUrl,
+                Title = news.Title,
+                Url = news.Url
+            }).ToList();
         }
     }
 }

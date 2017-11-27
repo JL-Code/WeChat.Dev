@@ -12,7 +12,7 @@ namespace WeChat.Dev.Tests
     public class UnitTest1
     {
         [TestMethod]
-        public void TestMethod1()
+        public void AutoFac_Test()
         {
             var connstr = "server=.;database=dev;uid=sa;pwd=123456";
             ContainerBuilder builder = new ContainerBuilder();
@@ -36,7 +36,7 @@ namespace WeChat.Dev.Tests
         }
 
         [TestMethod]
-        public void MyTestMethod()
+        public void LocalCacheManager_Add_IsNotNull()
         {
             LocalCacheManager.Add("test", 1212);
             Console.WriteLine(LocalCacheManager.Get<int>("test"));

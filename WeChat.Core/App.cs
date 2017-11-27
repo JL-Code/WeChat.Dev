@@ -1,6 +1,6 @@
 ﻿namespace Zap.WeChat.SDK
 {
-    public class App
+    public class AppResult
     {
         /// <summary>
         /// 应用访问令牌

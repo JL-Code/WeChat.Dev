@@ -2,9 +2,11 @@
 
 namespace Zap.WeChat.SDK
 {
+    /// <summary>
+    /// 访问令牌管理
+    /// </summary>
     public class AccessTokenManager
     {
-
         /// <summary>
         /// 获取AccessToken
         /// </summary>
@@ -30,6 +32,16 @@ namespace Zap.WeChat.SDK
         {
             var result = AccessTokenContainer.TryGetToken(corpId, corpSecret, getNewToken);
             return result;
+        }
+        /// <summary>
+        /// 注册应用凭证信息，此操作只是注册，不会马上获取Token，并将清空之前的Token。 执行此注册过程，会连带注册ProviderTokenContainer。
+        /// </summary>
+        /// <param name="corpId">企业ID</param>
+        /// <param name="corpSecret">企业应用秘钥</param>
+        /// <returns></returns>
+        public static string BuildingKey(string corpId, string corpSecret)
+        {
+            return AccessTokenContainer.BuildingKey(corpId, corpSecret);
         }
     }
 }

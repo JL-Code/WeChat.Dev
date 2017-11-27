@@ -19,24 +19,24 @@ namespace Zap.WeChat.SDK.Implementation
             }
         }
 
-        public virtual App GetToken(string appcode)
+        public virtual AppResult GetToken(string appcode)
         {
 
             var app = _appService.GetApp(appcode);
             var accessToken = AccessTokenManager.GetToken(CorpID, app.SecretValue);
-            return new App
+            return new AppResult
             {
                 AccessToken = accessToken,
                 AgentId = app.WeChatAppID
             };
         }
 
-        public virtual App TryGetToken(string appcode)
+        public virtual AppResult TryGetToken(string appcode)
         {
 
             var app = _appService.GetApp(appcode);
             var accessToken = AccessTokenManager.TryGetToken(CorpID, app.SecretValue);
-            return new App
+            return new AppResult
             {
                 AccessToken = accessToken,
                 AgentId = app.WeChatAppID
