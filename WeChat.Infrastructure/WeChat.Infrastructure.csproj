@@ -57,7 +57,12 @@
     <Compile Include="Repositories\Repository.cs" />
     <Compile Include="Repositories\WeChatAppRepository.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\WeChat.Domain\WeChat.Domain.csproj">
+      <Project>{0b28bacf-460a-4da0-b5ed-5b88c46a99d2}</Project>
+      <Name>WeChat.Domain</Name>
+    </ProjectReference>
+  </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />

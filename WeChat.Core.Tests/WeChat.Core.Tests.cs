@@ -32,6 +32,7 @@ namespace Zap.WeChat.SDK.Tests
             builder.RegisterInstance(EFContext.CreateForEFDesignTools(connstr));
             container = builder.Build();
             Register();
+            AddCache();
         }
 
 
@@ -95,5 +96,19 @@ namespace Zap.WeChat.SDK.Tests
             }, "jiangy@highzap.com");
         }
 
+        [TestMethod]
+        public void GetDynamicCache_Dynamic_DynamicIsNotNull()
+        {
+            var obj = LocalCacheManager.Get<dynamic>("dynamic");
+            Console.WriteLine(obj.userid);
+            Console.WriteLine(obj.pwd);
+        }
+
+        private static void AddCache()
+        {
+            var startTime = TimeZone.CurrentTimeZone.ToLocalTime(new DateTime(1970, 1, 1));
+            long timeStamp = (long)(DateTime.Now - startTime).TotalSeconds;
+            LocalCacheManager.Add("dynamic", new { userid = "jiangy@highzap.com", pwd = "123456", uid = "jiangy", exp_in = timeStamp });
+        }
     }
 }

@@ -60,5 +60,17 @@ namespace Zap.WeChat.SDK.Cache
         {
             _cache.Update(key, value);
         }
+
+        /// <summary>
+        /// 移除缓存
+        /// </summary>
+        /// <param name="key"></param>
+        public static void Remove(string key)
+        {
+            if (_cache.CheckExisted(key))
+            {
+                _cache.RemoveFromCache(key);
+            }
+        }
     }
 }

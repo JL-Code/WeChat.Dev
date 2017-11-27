@@ -66,6 +66,7 @@
     <Compile Include="Entities\Config\CorpAppConfig.cs" />
     <Compile Include="Entities\Config\CorpConfig.cs" />
     <Compile Include="Entities\JsonResult\AccessTokenResult.cs" />
+    <Compile Include="Extensions\DateTimeExtend.cs" />
     <Compile Include="IApplicationConfigService.cs" />
     <Compile Include="IMemberService.cs" />
     <Compile Include="IMessageService.cs" />
