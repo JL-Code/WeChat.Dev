@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Zap.WeChat.SDK;
-using Zap.WeChat.SDK.Cache;
 using WeChat.Domain.AggregatesModel;
 
 namespace WeChat.Dev

@@ -5,6 +5,7 @@ using Zap.WeChat.SDK;
 using WeChat.Domain.AggregatesModel;
 using WeChat.Infrastructure;
 using Zap.WeChat.SDK.Cache;
+using WeChat.Application;
 
 namespace WeChat.Dev.Tests
 {

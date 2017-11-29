@@ -1,6 +1,6 @@
 ﻿using Zap.WeChat.SDK.AdvancedAPIs.AddressList;
 
-namespace Zap.WeChat.SDK.Implementation
+namespace WeChat.Application
 {
     public class MemberService : AccessTokenService, IMemberService
     {

@@ -1,4 +1,4 @@
-﻿namespace Zap.WeChat.SDK
+﻿namespace WeChat.Application
 {
     public interface IMessageService
     {

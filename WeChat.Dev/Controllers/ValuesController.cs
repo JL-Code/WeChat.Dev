@@ -1,5 +1,5 @@
 ﻿using System.Web.Http;
-using Zap.WeChat.SDK;
+using WeChat.Application;
 
 namespace WeChat.Dev.Controllers
 {
@@ -14,6 +14,7 @@ namespace WeChat.Dev.Controllers
             _currentService = currentService;
             _msgService = msgService;
         }
+
         [Route("")]
         [HttpGet]
         public IHttpActionResult Text(string appcode, string message, string toUser)

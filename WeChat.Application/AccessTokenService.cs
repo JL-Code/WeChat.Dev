@@ -1,6 +1,7 @@
-﻿using Zap.WeChat.SDK.Cache;
+﻿using Zap.WeChat.SDK;
+using Zap.WeChat.SDK.Cache;
 
-namespace Zap.WeChat.SDK.Implementation
+namespace WeChat.Application
 {
     public abstract class AccessTokenService
     {

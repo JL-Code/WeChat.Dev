@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using WeChat.Domain.AggregatesModel;
 
-namespace Zap.WeChat.SDK
+namespace WeChat.Application
 {
     public interface IApplicationConfigService
     {

@@ -3,12 +3,12 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Autofac;
 using WeChat.Domain.AggregatesModel;
 using WeChat.Infrastructure;
-using Zap.WeChat.SDK.Implementation;
 using Zap.WeChat.SDK.Cache;
 using Zap.WeChat.SDK.IServices;
 using System.Collections.Generic;
 using System.Linq;
 using Zap.WeChat.SDK.Handler;
+using WeChat.Application;
 
 namespace Zap.WeChat.SDK.Tests
 {

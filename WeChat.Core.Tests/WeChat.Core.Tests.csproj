@@ -74,6 +74,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\WeChat.Application\WeChat.Application.csproj">
+      <Project>{db16ccee-3efd-4482-a122-6bf393e1a953}</Project>
+      <Name>WeChat.Application</Name>
+    </ProjectReference>
     <ProjectReference Include="..\WeChat.Core\Zap.WeChat.SDK.csproj">
       <Project>{a7ee82db-e4fa-4955-b0df-08d16787de94}</Project>
       <Name>Zap.WeChat.SDK</Name>

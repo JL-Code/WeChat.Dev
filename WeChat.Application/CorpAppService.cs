@@ -3,7 +3,7 @@ using WeChat.Domain.AggregatesModel;
 using Zap.WeChat.SDK.Entities;
 using Zap.WeChat.SDK.IServices;
 
-namespace Zap.WeChat.SDK.Implementation
+namespace WeChat.Application
 {
     public class CorpAppService : ICorpAppService
     {

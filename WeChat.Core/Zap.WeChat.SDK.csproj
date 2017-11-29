@@ -17,7 +17,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\..\Company\ZapSoft\packagesExtend\Zap\</OutputPath>
+    <OutputPath>..\..\..\ZapSoft\packagesExtend\Zap\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -66,40 +66,25 @@
     <Compile Include="Entities\Config\CorpAppConfig.cs" />
     <Compile Include="Entities\Config\CorpConfig.cs" />
     <Compile Include="Entities\JsonResult\AccessTokenResult.cs" />
+    <Compile Include="Entities\JsonResult\JsApiTicketResult.cs" />
     <Compile Include="Extensions\DateTimeExtend.cs" />
-    <Compile Include="IApplicationConfigService.cs" />
-    <Compile Include="IMemberService.cs" />
-    <Compile Include="IMessageService.cs" />
-    <Compile Include="Implementation\AccessTokenService.cs" />
-    <Compile Include="Implementation\ApplicationConfigService.cs" />
-    <Compile Include="Implementation\CorpAppService.cs" />
-    <Compile Include="Implementation\MemberService.cs" />
+    <Compile Include="Handler\JSSDKHandler.cs" />
+    <Compile Include="Helpers\SHA1UtilHelper.cs" />
+    <Compile Include="Helpers\JSSDK\JSSDKHelper.cs" />
     <Compile Include="Handler\MessageHandler.cs" />
     <Compile Include="Implementation\BaseService.cs" />
     <Compile Include="IServices\ICorpAppService.cs" />
-    <Compile Include="IWeChatAppService.cs" />
     <Compile Include="JsApiTicketManager.cs" />
     <Compile Include="AdvancedAPIs\MessageAPI\MessageApi.cs" />
     <Compile Include="AdvancedAPIs\MessageAPI\MessageResult.cs" />
     <Compile Include="AdvancedAPIs\MessageAPI\NewsBody.cs" />
     <Compile Include="ResultExtends.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Implementation\WeChatAppService.cs" />
     <Compile Include="WeChatManager.cs" />
     <Compile Include="WeChatResponse.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\WeChat.Domain\WeChat.Domain.csproj">
-      <Project>{0B28BACF-460A-4DA0-B5ED-5B88C46A99D2}</Project>
-      <Name>WeChat.Domain</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\WeChat.Infrastructure\WeChat.Infrastructure.csproj">
-      <Project>{1f6d09cf-09c7-4543-b30a-022fea23ec47}</Project>
-      <Name>WeChat.Infrastructure</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
