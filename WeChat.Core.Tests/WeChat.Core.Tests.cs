@@ -110,5 +110,11 @@ namespace Zap.WeChat.SDK.Tests
             long timeStamp = (long)(DateTime.Now - startTime).TotalSeconds;
             LocalCacheManager.Add("dynamic", new { userid = "jiangy@highzap.com", pwd = "123456", uid = "jiangy", exp_in = timeStamp });
         }
+
+        [TestMethod]
+        public void MyTestMethod()
+        {
+
+        }
     }
 }

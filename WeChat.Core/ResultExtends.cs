@@ -56,6 +56,43 @@ namespace Zap.WeChat.SDK
             };
         }
 
+        /// <summary>
+        /// 将SDK中的部门成员详情信息转换为Zap.WeChat.SDK中的部门成员详情信息
+        /// </summary>
+        /// <param name="result"></param>
+        /// <returns></returns>
+        public static List<MemberResult> ToDepartmentMemberInfoResult(this GetDepartmentMemberInfoResult result)
+        {
+            if (result == null)
+                throw new ArgumentNullException(nameof(result));
+            var list = result.userlist?.Select(user => new MemberResult
+            {
+                ErrorCode = user.ErrorCodeValue,
+                ErrorMessage = user.errmsg,
+                UserID = user.userid,
+                Name = user.name,
+                Department = user.department,
+                Order = user.order,
+                Position = user.position,
+                Mobile = user.mobile,
+                Gender = user.gender,
+                Email = user.email,
+                IsLeader = user.isleader,
+                Avatar = user.avatar,
+                TelePhone = user.telephone,
+                EnglishName = user.english_name,
+                Extattr = new AdvancedAPIs.AddressList.Extattr
+                {
+                    Attrs = user.extattr.attrs.Select(m => new AdvancedAPIs.AddressList.Attr
+                    {
+                        Name = m.name,
+                        Value = m.value
+                    }).ToList()
+                },
+                Status = user.status
+            })?.ToList();
+            return list;
+        }
 
         public static List<Senparc.Weixin.Work.Entities.Article> ToNews(this NewsBody data)
         {
@@ -67,5 +104,29 @@ namespace Zap.WeChat.SDK
                 Url = news.Url
             }).ToList();
         }
+
+
+        //public static Dictionary<string, List<MemberResult>> To(this List<MemberResult> result)
+        //{
+        //    result.ForEach(m =>
+        //    {
+        //        m.pinyin = PinYinUtil.GetPinyin(m.name);
+        //        m.namealif = PinYinUtil.GetFirstPinyin(m.name.Substring(0, 1));
+        //        if (!string.IsNullOrEmpty(m.avatar))
+        //        {
+        //            if (m.avatar.IndexOf("shp.qpic.cn") > 0)
+        //            {
+        //                m.avatar += "64";
+        //            }
+        //            else
+        //            {
+        //                if (minAvatar)
+        //                    m.avatar = m.avatar.Replace("/0", "/100");
+        //            }
+        //        }
+        //    });
+        //    var newlist = respone.UserList.GroupBy(m => m.namealif).ToDictionary(m => m.Key, m => m.ToList());
+        //    return newlist;
+        //}
     }
 }

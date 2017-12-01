@@ -20,7 +20,6 @@ namespace Zap.WeChat.SDK.Handler
             return MessageApi.SendText(Config.CorpId, Config.CorpSecret, Config.AgentId, message, toUser);
         }
 
-
         public MessageResult SendNews(NewsBody body, string toUser = null, string toParty = null, string toTag = null, int safe = 0)
         {
             return MessageApi.SendNews(AppKey, Config.AgentId, body, toUser, toParty, toTag, safe);

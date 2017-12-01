@@ -46,7 +46,7 @@ namespace Zap.WeChat.SDK.AdvancedAPIs.OAuth2
         /// <returns></returns>
         public static GetUserInfoResult GetUserId(string corpId, string corpSecret, string code)
         {
-            var accessToken = AccessTokenManager.TryGetToken(corpId, corpSecret);
+            var accessToken = AccessTokenManager.TryGetToken(corpId, corpSecret, true);
             var url = string.Format("https://qyapi.weixin.qq.com/cgi-bin/user/getuserinfo?access_token={0}&code={1}", accessToken.AsUrlData(), code.AsUrlData());
             return Get.GetJson<GetUserInfoResult>(url);
         }

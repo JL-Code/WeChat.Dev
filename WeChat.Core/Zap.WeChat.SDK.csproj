@@ -56,6 +56,7 @@
     <Compile Include="AccessTokenManager.cs" />
     <Compile Include="AdvancedAPIs\AddressList\AddressListApi.cs" />
     <Compile Include="AdvancedAPIs\AddressList\Department\DepartmentResult.cs" />
+    <Compile Include="AdvancedAPIs\AddressList\Member\AddressListResult.cs" />
     <Compile Include="AdvancedAPIs\AddressList\Member\MemberResult.cs" />
     <Compile Include="AdvancedAPIs\AddressList\Tag\TagResult.cs" />
     <Compile Include="AdvancedAPIs\OAuth2\OAuth2Api.cs" />
@@ -68,6 +69,7 @@
     <Compile Include="Entities\JsonResult\AccessTokenResult.cs" />
     <Compile Include="Entities\JsonResult\JsApiTicketResult.cs" />
     <Compile Include="Extensions\DateTimeExtend.cs" />
+    <Compile Include="Handler\AddressHandler.cs" />
     <Compile Include="Handler\JSSDKHandler.cs" />
     <Compile Include="Helpers\SHA1UtilHelper.cs" />
     <Compile Include="Helpers\JSSDK\JSSDKHelper.cs" />
