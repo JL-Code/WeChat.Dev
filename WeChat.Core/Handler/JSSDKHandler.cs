@@ -42,6 +42,7 @@ namespace Zap.WeChat.SDK.Handler
                 Timestamp = timestamp, // 必填，生成签名的时间戳
                 Noncestr = noncestr, // 必填，生成签名的随机串
                 Signature = signature,// 必填，签名，见附录1
+                JsapiTicket = jsapi_ticket
             };
         }
     }

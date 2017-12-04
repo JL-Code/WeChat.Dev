@@ -112,9 +112,12 @@ namespace Zap.WeChat.SDK.Tests
         }
 
         [TestMethod]
-        public void MyTestMethod()
+        public void Test_JSSDK_Valid()
         {
-
+            var appService = container.Resolve<ICorpAppService>();
+            var handler = new JSSDKHandler(appService, Constants.MOBILE_APPROVAL);
+            var url = @"http://meunsc.oicp.net/dev/MA/flowform/formdetail?id=a353688a-d3d8-e711-9708-8cdcd450dc4b&nodeid=797c409a-d3d8-e711-9708-8cdcd450dc4b&userId=bf632547-f432-e611-963d-c35f2f517ea0&nodeExtType=3&nodeExtGuid=6225e0c4-d85a-4dbd-8a18-43e898ce3755&src=/dev/MA/backlog/mybacklog";
+            var result = handler.GetSignature(url);
         }
     }
 }

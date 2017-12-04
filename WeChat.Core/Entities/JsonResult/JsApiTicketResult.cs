@@ -1,4 +1,6 @@
-﻿namespace Zap.WeChat.SDK.Entities
+﻿using Newtonsoft.Json;
+
+namespace Zap.WeChat.SDK.Entities
 {
     public class JsApiTicketResult
     {
@@ -21,5 +23,11 @@
         ///  必填 签名
         /// </summary>
         public string Signature { get; set; }
+
+        /// <summary>
+        /// jsapi_ticket
+        /// </summary>
+        [JsonIgnore]
+        public string JsapiTicket { get; set; }
     }
 }
