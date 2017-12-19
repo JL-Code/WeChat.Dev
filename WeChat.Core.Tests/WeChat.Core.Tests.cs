@@ -9,6 +9,9 @@ using System.Collections.Generic;
 using System.Linq;
 using Zap.WeChat.SDK.Handler;
 using WeChat.Application;
+using Zap.WeChat.SDK.Helpers;
+using System.IO;
+using System.Drawing;
 
 namespace Zap.WeChat.SDK.Tests
 {
@@ -116,8 +119,26 @@ namespace Zap.WeChat.SDK.Tests
         {
             var appService = container.Resolve<ICorpAppService>();
             var handler = new JSSDKHandler(appService, Constants.MOBILE_APPROVAL);
-            var url = @"http://meunsc.oicp.net/dev/MA/flowform/formdetail?id=a353688a-d3d8-e711-9708-8cdcd450dc4b&nodeid=797c409a-d3d8-e711-9708-8cdcd450dc4b&userId=bf632547-f432-e611-963d-c35f2f517ea0&nodeExtType=3&nodeExtGuid=6225e0c4-d85a-4dbd-8a18-43e898ce3755&src=/dev/MA/backlog/mybacklog";
-            var result = handler.GetSignature(url);
+            var url1 = @"http://meunsc.oicp.net/dev/ma/flowform/formdetail?id=a353688a-d3d8-e711-9708-8cdcd450dc4b&nodeid=797c409a-d3d8-e711-9708-8cdcd450dc4b&userId=bf632547-f432-e611-963d-c35f2f517ea0&nodeExtType=3&nodeExtGuid=6225e0c4-d85a-4dbd-8a18-43e898ce3755&src=/dev/MA/backlog/mybacklog";
+
+            var url2 = @"http://meunsc.oicp.net/dev/ma/flowform/formdetail?id=a353688a-d3d8-e711-9708-8cdcd450dc4b&nodeid=797c409a-d3d8-e711-9708-8cdcd450dc4b&userId=bf632547-f432-e611-963d-c35f2f517ea0&nodeExtType=3&nodeExtGuid=6225e0c4-d85a-4dbd-8a18-43e898ce3755&src=/dev/MA/backlog/mybacklog";
+
+            var result1 = handler.GetSignature(url1);
+
+            var signature = JSSDKHelper.GetSignature(result1.JsapiTicket, result1.Noncestr, result1.Timestamp, url2);
+            Assert.AreEqual(result1.Signature, signature);
+        }
+
+        [TestMethod]
+        public void Get_Image_WidthHeight()
+        {
+            using (FileStream fs = new FileStream(@"E:\00_Workspace\Company\Zap_WeChat_SDK\WeChat.Dev\WeChat.Core.Tests\Images\2-1.png", FileMode.Open, FileAccess.Read))
+            {
+                Image image = Image.FromStream(fs);
+                var width = image.Width;
+                var height = image.Height;
+                Console.WriteLine($"{width}x{height}");
+            }
         }
     }
 }

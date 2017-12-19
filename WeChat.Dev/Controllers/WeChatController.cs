@@ -2,6 +2,7 @@
 using Senparc.Weixin.Work.Containers;
 using System;
 using System.Web.Mvc;
+using WeChat.Application;
 using Zap.WeChat.SDK;
 
 namespace WeChat.Dev.Controllers
@@ -55,7 +56,7 @@ namespace WeChat.Dev.Controllers
                 }
                 else if (!string.IsNullOrEmpty(result.UserId))
                 {
-                    //身份合法 跳转首页
+                    //微信网页授权成功 准备获取企业应用授权
                     return Redirect("/home/index");
                 }
                 else
