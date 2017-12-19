@@ -19,5 +19,10 @@
         /// 跳转URL
         /// </summary>
         public string ReturnUrl { get; set; }
+
+        /// <summary>
+        /// 微信用户ID
+        /// </summary>
+        public string WxUserId { get; set; }
     }
 }

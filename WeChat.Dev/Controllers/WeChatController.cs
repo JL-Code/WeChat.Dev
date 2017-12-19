@@ -3,6 +3,7 @@ using Senparc.Weixin.Work.Containers;
 using System;
 using System.Web.Mvc;
 using WeChat.Application;
+using WeChat.Domain.AggregatesModel;
 using Zap.WeChat.SDK;
 
 namespace WeChat.Dev.Controllers
@@ -15,9 +16,12 @@ namespace WeChat.Dev.Controllers
         const string corpId = "wx2e8cc6975a5fa1ce";
 
         IWeChatAppService _currentService;
-        public WeChatController(IWeChatAppService currentService)
+        IAccountService _accountService;
+        public WeChatController(IWeChatAppService currentService
+            , IAccountService accountService)
         {
             _currentService = currentService;
+            _accountService = accountService;
         }
         // GET: WeChat
         public ActionResult Index()
@@ -40,10 +44,11 @@ namespace WeChat.Dev.Controllers
             return Redirect(target);
         }
 
-        public ActionResult ConsumeCode(string code, string appcode)
+        public ActionResult ConsumeCode(string code, string appcode, string returnUrl = null)
         {
             try
             {
+                User user = null;
                 if (string.IsNullOrEmpty(appcode))
                     throw new ArgumentNullException(nameof(appcode));
                 var app = _currentService.GetApp(appcode);
@@ -56,8 +61,19 @@ namespace WeChat.Dev.Controllers
                 }
                 else if (!string.IsNullOrEmpty(result.UserId))
                 {
-                    //微信网页授权成功 准备获取企业应用授权
-                    return Redirect("/home/index");
+                    //通过微信usesrid 换 业务系统账号密码
+                    user = _accountService.FindUserByWxUserID(result.UserId);
+                    if (user == null)
+                    {
+                        //微信用户未绑定对应业务系统账号
+                        return RedirectToAction("login", "account", new { returnUrl, wxuserid = result.UserId });
+                    }
+                    else
+                    {
+                        var nonceStr = Guid.NewGuid().ToString().Replace("-", "");
+                        //微信网页授权成功 准备获取企业应用授权
+                        return RedirectToAction("login", "account", new { nonce = nonceStr });
+                    }
                 }
                 else
                 {

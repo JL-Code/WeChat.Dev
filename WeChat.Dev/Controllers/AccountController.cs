@@ -21,7 +21,8 @@ namespace WeChat.Dev.Controllers
         [AllowAnonymous]
         public ActionResult Login(string returnUrl, string wxuserid)
         {
-            return View();
+            var model = new AccountModel { ReturnUrl = returnUrl, WxUserId = wxuserid };
+            return View(model);
         }
 
         [HttpPost]

@@ -1,8 +1,27 @@
-﻿
+﻿@model WeChat.Dev.Models.AccountModel
 @{
     ViewBag.Title = "登录";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Login</h2>
-
+<div>
+    <form class="weui-cells weui-cells_form" method="post">
+        <div class="weui-cell">
+            <div class="weui-cell__hd"><label class="weui-label">账号</label></div>
+            <div class="weui-cell__bd">
+                <input class="weui-input" type="text" placeholder="请输入账号">
+            </div>
+        </div>
+        <div class="weui-cell">
+            <div class="weui-cell__hd"><label class="weui-label">密码</label></div>
+            <div class="weui-cell__bd">
+                <input class="weui-input" type="password" placeholder="请输入密码">
+            </div>
+        </div>
+        <div class="weui-btn-area">
+            <button class="weui-btn weui-btn_primary" type="submit">登录</button>
+        </div>
+        <input type="hidden" name="ReturnUrl" value="@Model.ReturnUrl" />
+        <input type="hidden" name="WxUserId" value="@Model.WxUserId" />
+    </form>
+</div>

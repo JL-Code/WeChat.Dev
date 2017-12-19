@@ -8,21 +8,19 @@ namespace WeChat.Dev.Controllers
 {
     public class HomeController : Controller
     {
+
         public ActionResult Index()
         {
             return View();
         }
 
-        public ActionResult About()
+        public ActionResult TestAuthroize()
         {
-            ViewBag.Message = "Your application description page.";
-
             return View();
         }
 
-        public ActionResult Contact()
+        public ActionResult Error()
         {
-            ViewBag.Message = "Your contact page.";
 
             return View();
         }

@@ -12,6 +12,12 @@ namespace WeChat.Application
             _repository = repository;
         }
 
+        public User FindUserByWxUserID(string wxuserId)
+        {
+            var user = _repository.ListEntities().FirstOrDefault(m => m.WorkUserId == wxuserId);
+            return user;
+        }
+
         public User Login(string account, string password)
         {
             if (string.IsNullOrEmpty(account) || string.IsNullOrEmpty(password))
