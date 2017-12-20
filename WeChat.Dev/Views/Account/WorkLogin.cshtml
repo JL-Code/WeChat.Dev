@@ -3,6 +3,35 @@
     ViewBag.Title = "微信登录";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<div id="worklogin" data-appcode="@ViewBag.AppCode" data-returnurl="@ViewBag.ReturnUrl" data-nonce="@ViewBag.Nonce"></div>
+@section scripts{
+    <script>
+        authorize();
 
-<h2>WorkLogin</h2>
+        function authorize() {
+            var dataset = document.getElementById('worklogin').dataset;
+            weui.loading("加载中");
+            axios
+                .post('/account/worklogin', {
+                    nonce: dataset.nonce,
+                })
+                .then(function (response) {
+                    try {
+                        var data = response.data;
+                        if (data.errcode !== 0) {
+                            weui.alert(data.errmsg);
+                        } else {
+                            localStorage.setItem(dataset.appcode + "_identity", data.token)
+                            window.location.href = dataset.returnurl
+                        }
+                    } catch (e) {
+                        console.log(e)
+                    }
+                })
+                .catch(function (error) {
+                    console.log(error); 
+                });
+        }
+    </script>
+}
 

@@ -21,8 +21,8 @@
         public string ReturnUrl { get; set; }
 
         /// <summary>
-        /// 微信用户ID
+        /// 企业微信用户ID
         /// </summary>
-        public string WxUserId { get; set; }
+        public string WorkUserId { get; set; }
     }
 }

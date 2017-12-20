@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Threading.Tasks;
 using WeChat.Domain.AggregatesModel;
 
 namespace WeChat.Application
@@ -10,6 +11,21 @@ namespace WeChat.Application
         public AccountService(IUserRepository repository)
         {
             _repository = repository;
+        }
+
+        public void BindWorkID(Guid userid, string workUserId)
+        {
+            var user = _repository.GetAsync(userid).Result;
+            if (user != null)
+            {
+                user.WorkUserId = workUserId;
+            }
+            _repository.Update(user);
+        }
+
+        public Task<User> FindUserAsync(string account, string password)
+        {
+            return _repository.GetAsync(m => m.Account == account && m.Password == password);
         }
 
         public User FindUserByWxUserID(string wxuserId)

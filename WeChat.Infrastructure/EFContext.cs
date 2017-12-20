@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Data.Entity;
+using System.Data.Entity.ModelConfiguration;
+using System.Linq;
+using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using WeChat.Domain.SeedWork;
@@ -24,8 +27,22 @@ namespace WeChat.Infrastructure
         /// <param name="modelBuilder"></param>
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            modelBuilder.Configurations.Add(new ApplicationConfigEntityTypeConfiguration());
-            modelBuilder.Configurations.Add(new WeChatAppEntityTypeConfiguration());
+
+            //modelBuilder.Configurations.Add(new ApplicationConfigEntityTypeConfiguration());
+            //modelBuilder.Configurations.Add(new WeChatAppEntityTypeConfiguration());
+            //modelBuilder.Configurations.Add(new UserEntityTypeConfiguration());
+
+            var asm = Assembly.Load("WeChat.Infrastructure");
+            var typesToRegister = asm.GetTypes()
+                        .Where(type => !String.IsNullOrEmpty(type.Namespace))
+                        .Where(type => type.BaseType != null && type.BaseType.IsGenericType && type.BaseType.GetGenericTypeDefinition() == typeof(EntityTypeConfiguration<>));
+            foreach (var type in typesToRegister)
+            {
+                dynamic configInstance = Activator.CreateInstance(type);
+                if (configInstance == null)
+                    continue;
+                modelBuilder.Configurations.Add(configInstance);
+            }
         }
 
         /// <summary>

@@ -4,24 +4,64 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div>
+<div data-appcode="@ViewBag.AppCode" id="login_container">
     <form class="weui-cells weui-cells_form" method="post">
         <div class="weui-cell">
             <div class="weui-cell__hd"><label class="weui-label">账号</label></div>
             <div class="weui-cell__bd">
-                <input class="weui-input" type="text" placeholder="请输入账号">
+                <input class="weui-input" type="text" id="Account" name="Account" placeholder="请输入账号">
             </div>
         </div>
         <div class="weui-cell">
             <div class="weui-cell__hd"><label class="weui-label">密码</label></div>
             <div class="weui-cell__bd">
-                <input class="weui-input" type="password" placeholder="请输入密码">
+                <input class="weui-input" type="password" id="Password" name="Password" placeholder="请输入密码">
             </div>
         </div>
         <div class="weui-btn-area">
-            <button class="weui-btn weui-btn_primary" type="submit">登录</button>
+            <button class="weui-btn weui-btn_primary" type="button" onclick="login()">登录</button>
         </div>
-        <input type="hidden" name="ReturnUrl" value="@Model.ReturnUrl" />
-        <input type="hidden" name="WxUserId" value="@Model.WxUserId" />
+        <input type="hidden" name="ReturnUrl" id="ReturnUrl" value="@Model.ReturnUrl" />
+        <input type="hidden" name="WorkUserId" id="WorkUserId" value="@Model.WorkUserId" />
     </form>
 </div>
+@section scripts{
+    <script>
+        var appcode = document.querySelector('#login_container').dataset.appcode;
+        function login() {
+            var acc = document.getElementById("Account").value;
+            var pwd = document.getElementById("Password").value;
+            var workUserId = document.getElementById("WorkUserId").value;
+            var returnUrl = document.getElementById("ReturnUrl").value;
+            if (!acc || !pwd || !workUserId) {
+                weui.alert("账号或密码不能为空");
+                return
+            }
+            var loading = weui.loading('加载中');
+            axios
+                .post('/account/login', {
+                    account: acc,
+                    password: pwd,
+                    workUserId: workUserId
+                })
+                .then(function (response) {
+                    try {
+                        loading.hide();
+                        var data = response.data;
+                        if (data.errcode !== 0) {
+                            weui.alert(data.errmsg);
+                        } else {
+                            localStorage.setItem(appcode + "_identity", data.token)
+                            window.location.href = returnUrl
+                        }
+                    } catch (e) {
+                        console.log(e)
+                    }
+                })
+                .catch(function (error) {
+                    loading.hide();
+                    console.log(error);
+                });
+        }
+    </script>
+}

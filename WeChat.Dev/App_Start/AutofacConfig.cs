@@ -4,6 +4,7 @@ using Autofac.Integration.WebApi;
 using System.Reflection;
 using System.Web.Http;
 using System.Web.Mvc;
+using WeChat.Domain.SeedWork;
 using WeChat.Infrastructure;
 
 namespace WeChat.Dev
@@ -11,7 +12,8 @@ namespace WeChat.Dev
     public class AutofacConfig
     {
         const string connstr = "server=.;database=dev;uid=sa;pwd=123456";
-        private static IContainer _autofacContainer;
+        static IContainer _autofacContainer;
+
         /// <summary>
         /// autofac容器
         /// </summary>
@@ -35,7 +37,7 @@ namespace WeChat.Dev
             Register(maps[0], "Service", builder);
             Register(maps[1], "Service", builder);
             Register(maps[2], "Repository", builder);
-            builder.Register(m => EFContext.CreateForEFDesignTools(connstr)).InstancePerRequest();
+            builder.Register(m => EFContext.CreateForEFDesignTools(connstr)).AsSelf().As<IUnitOfWork>().InstancePerRequest();
             RegisterMvcAndWebApi(builder);
         }
 
@@ -44,7 +46,7 @@ namespace WeChat.Dev
             var assembly = Assembly.Load(path);
             builder.RegisterAssemblyTypes(assembly)
                 .Where(m => m.Name.EndsWith(suffix))
-                .AsImplementedInterfaces()//默认实现接口
+                .AsImplementedInterfaces()//指定将一个类型注册为提供其所有实现的接口
                 .InstancePerRequest();//每次http请求生成一个实例
         }
 

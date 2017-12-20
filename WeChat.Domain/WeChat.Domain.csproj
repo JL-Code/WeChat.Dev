@@ -43,6 +43,8 @@
   <ItemGroup>
     <Compile Include="AggregatesModel\Configuration\ApplicationConfig.cs" />
     <Compile Include="AggregatesModel\Configuration\IApplicationConfigRepository.cs" />
+    <Compile Include="AggregatesModel\RefreshToken\IRefreshTokenRepository.cs" />
+    <Compile Include="AggregatesModel\RefreshToken\RefreshToken.cs" />
     <Compile Include="AggregatesModel\User\IUserRepository.cs" />
     <Compile Include="AggregatesModel\User\User.cs" />
     <Compile Include="AggregatesModel\WxConfiguration\IWeChatAppRepository.cs" />

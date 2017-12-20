@@ -1,6 +1,7 @@
 ﻿using Autofac;
 using System.Linq;
 using System.Reflection;
+using WeChat.Domain.SeedWork;
 using WeChat.Infrastructure;
 
 namespace WeChat.Dev
@@ -35,7 +36,7 @@ namespace WeChat.Dev
             Register(maps[0], "Service", builder);
             Register(maps[1], "Service", builder);
             Register(maps[2], "Repository", builder);
-            builder.Register(m => EFContext.CreateForEFDesignTools(connstr)).InstancePerDependency();
+            builder.Register(m => EFContext.CreateForEFDesignTools(connstr)).AsSelf().InstancePerDependency();
             _autofacContainer = builder.Build();
         }
 
@@ -44,7 +45,7 @@ namespace WeChat.Dev
             var assembly = Assembly.Load(path);
             builder.RegisterAssemblyTypes(assembly)
                 .Where(m => m.Name.EndsWith(suffix))
-                .AsImplementedInterfaces()//默认实现接口
+                .AsImplementedInterfaces()//指定将一个类型注册为提供其所有实现的接口
                 .InstancePerDependency();//当被依赖的时候 生成新的一个唯一的实例
         }
 

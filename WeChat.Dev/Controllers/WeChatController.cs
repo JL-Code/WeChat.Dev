@@ -1,10 +1,12 @@
 ﻿using Senparc.Weixin.Work.AdvancedAPIs;
 using Senparc.Weixin.Work.Containers;
 using System;
+using System.Web;
 using System.Web.Mvc;
 using WeChat.Application;
 using WeChat.Domain.AggregatesModel;
 using Zap.WeChat.SDK;
+using Zap.WeChat.SDK.Cache;
 
 namespace WeChat.Dev.Controllers
 {
@@ -17,12 +19,14 @@ namespace WeChat.Dev.Controllers
 
         IWeChatAppService _currentService;
         IAccountService _accountService;
+
         public WeChatController(IWeChatAppService currentService
             , IAccountService accountService)
         {
             _currentService = currentService;
             _accountService = accountService;
         }
+
         // GET: WeChat
         public ActionResult Index()
         {
@@ -40,7 +44,7 @@ namespace WeChat.Dev.Controllers
         {
             //默认移动审批应用
             appcode = appcode ?? Constants.MOBILE_APPROVAL;
-            returnUrl = returnUrl ?? "";
+            returnUrl = returnUrl ?? Request.UrlReferrer?.ToString();
             var redirectUrl = $"http://meunsc.oicp.net/wechat/consumecode?appcode={appcode}&returnUrl={returnUrl}";
             var target = OAuth2Api.GetCode(corpId, redirectUrl, "");
             return Redirect(target);
@@ -70,18 +74,19 @@ namespace WeChat.Dev.Controllers
                 }
                 else if (!string.IsNullOrEmpty(result.UserId))
                 {
-                    //通过微信usesrid 换 业务系统账号密码
+                    //通过企业微信usesrid 换 业务系统账号密码
                     user = _accountService.FindUserByWxUserID(result.UserId);
                     if (user == null)
                     {
                         //微信用户未绑定对应业务系统账号
-                        return RedirectToAction("login", "account", new { returnUrl, wxuserid = result.UserId });
+                        return RedirectToAction("login", "account", new { returnUrl, appcode, workUserId = result.UserId });
                     }
                     else
                     {
                         var nonceStr = Guid.NewGuid().ToString().Replace("-", "");
+                        LocalCacheManager.Add(nonceStr, user);
                         //微信网页授权成功 准备获取企业应用授权
-                        return RedirectToAction("login", "account", new { nonce = nonceStr });
+                        return RedirectToAction("worklogin", "account", new { nonce = nonceStr, appcode, returnUrl });
                     }
                 }
                 else

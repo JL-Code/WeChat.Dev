@@ -52,10 +52,13 @@
     <Compile Include="Constants.cs" />
     <Compile Include="EFContext.cs" />
     <Compile Include="EntityTypeConfiguration\ApplicationConfigEntityTypeConfiguration.cs" />
+    <Compile Include="EntityTypeConfiguration\RefreshTokenConfiguration.cs" />
     <Compile Include="EntityTypeConfiguration\UserEntityTypeConfiguration.cs" />
     <Compile Include="EntityTypeConfiguration\WeChatAppEntityTypeConfiguration.cs" />
+    <Compile Include="HashHanlder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\ApplicationConfigRepository.cs" />
+    <Compile Include="Repositories\RefreshTokenRepository.cs" />
     <Compile Include="Repositories\Repository.cs" />
     <Compile Include="Repositories\UserRepository.cs" />
     <Compile Include="Repositories\WeChatAppRepository.cs" />

@@ -8,6 +8,7 @@ namespace WeChat.Domain.SeedWork
     /// </summary>
     public interface IUnitOfWork
     {
+        int SaveChanges();
         Task<int> SaveChangesAsync(CancellationToken cancellationToken = default(CancellationToken));
         Task<bool> SaveEntitiesAsync(CancellationToken cancellationToken = default(CancellationToken));
     }
