@@ -97,7 +97,7 @@ namespace WeChat.Dev.OAuthProviders
 
             context.OwinContext.Response.Headers.Add("Access-Control-Allow-Origin", new[] { allowedOrigin });
             //如果是这样，我们将检查资源所有者的用户名/密码，如果是这种情况，我们将为此用户生成一组声明以及包含客户端id和userName的身份验证属性，这些属性需要接下来的步骤。
-            var user = await _accountService.FindUserAsync(context.UserName, context.Password);
+            var user = await AccountService.FindUserAsync(context.UserName, context.Password);
 
             if (user == null)
             {

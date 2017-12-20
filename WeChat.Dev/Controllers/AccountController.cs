@@ -76,7 +76,7 @@ namespace WeChat.Dev.Controllers
                 errcode = 500;
                 errmsg = ex.Message;
             }
-            return Json(new { errmsg, errcode, token });
+            return Content(JsonHandler.ToJson(new { errmsg, errcode, token }));
         }
 
         #endregion
@@ -142,7 +142,7 @@ namespace WeChat.Dev.Controllers
                 errcode = 500;
                 errmsg = ex.Message;
             }
-            return Json(new { errmsg, errcode, token });
+            return Content(JsonHandler.ToJson(new { errmsg, errcode, token }));
         }
 
         #endregion

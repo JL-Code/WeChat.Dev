@@ -21,7 +21,7 @@
                         if (data.errcode !== 0) {
                             weui.alert(data.errmsg);
                         } else {
-                            localStorage.setItem(dataset.appcode + "_identity", data.token)
+                            localStorage.setItem(dataset.appcode + "_identity", JSON.stringify(data.token))
                             window.location.href = dataset.returnurl
                         }
                     } catch (e) {

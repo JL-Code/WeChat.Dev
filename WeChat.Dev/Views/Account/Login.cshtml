@@ -51,7 +51,7 @@
                         if (data.errcode !== 0) {
                             weui.alert(data.errmsg);
                         } else {
-                            localStorage.setItem(appcode + "_identity", data.token)
+                            localStorage.setItem(appcode + "_identity", JSON.stringify(data.token))
                             window.location.href = returnUrl
                         }
                     } catch (e) {
