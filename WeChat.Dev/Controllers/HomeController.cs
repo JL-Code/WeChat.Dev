@@ -19,9 +19,9 @@ namespace WeChat.Dev.Controllers
             return View();
         }
 
-        public ActionResult Error()
+        public ActionResult Error(string errmsg = null)
         {
-
+            ViewBag.ErrMsg = errmsg;
             return View();
         }
     }

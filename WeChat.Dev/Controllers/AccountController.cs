@@ -19,7 +19,7 @@ namespace WeChat.Dev.Controllers
         #region 账号密码登录
 
         [AllowAnonymous]
-        public ActionResult Login(string returnUrl, string wxuserid)
+        public ActionResult Login(string returnUrl = null, string wxuserid = null)
         {
             var model = new AccountModel { ReturnUrl = returnUrl, WxUserId = wxuserid };
             return View(model);

@@ -34,16 +34,25 @@ namespace WeChat.Dev.Controllers
         /// 微信网页授权
         /// </summary>
         /// <param name="appcode">应用编码 默认为移动审批</param>
+        /// <param name="returnUrl">返回url</param>
         /// <returns></returns>
-        public ActionResult Authorize(string appcode = null)
+        public ActionResult Authorize(string appcode = null, string returnUrl = null)
         {
             //默认移动审批应用
             appcode = appcode ?? Constants.MOBILE_APPROVAL;
-            var redirectUrl = $"http://meunsc.oicp.net/wechat/consumecode?appcode={appcode}";
+            returnUrl = returnUrl ?? "";
+            var redirectUrl = $"http://meunsc.oicp.net/wechat/consumecode?appcode={appcode}&returnUrl={returnUrl}";
             var target = OAuth2Api.GetCode(corpId, redirectUrl, "");
             return Redirect(target);
         }
 
+        /// <summary>
+        /// 消费临时code 换取微信应用信息
+        /// </summary>
+        /// <param name="code">临时授权码code</param>
+        /// <param name="appcode">应用code</param>
+        /// <param name="returnUrl">返回url</param>
+        /// <returns></returns>
         public ActionResult ConsumeCode(string code, string appcode, string returnUrl = null)
         {
             try
@@ -57,7 +66,7 @@ namespace WeChat.Dev.Controllers
                 if (!string.IsNullOrEmpty(result.OpenId))
                 {
                     //成员未关注该企业微信
-                    return Content("成员未关注该企业微信");
+                    throw new Exception("成员未关注该企业微信");
                 }
                 else if (!string.IsNullOrEmpty(result.UserId))
                 {
@@ -77,12 +86,12 @@ namespace WeChat.Dev.Controllers
                 }
                 else
                 {
-                    return Content(result.errmsg);
+                    throw new Exception(result.errmsg);
                 }
             }
             catch (Exception ex)
             {
-                return Content(ex.Message);
+                return RedirectToAction("error", "home", new { errmsg = ex.Message });
             }
         }
     }
