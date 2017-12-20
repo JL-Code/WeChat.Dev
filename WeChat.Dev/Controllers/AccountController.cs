@@ -1,9 +1,14 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 using WeChat.Application;
 using WeChat.Dev.Models;
+using WeChat.Dev.OAuthProviders;
 using WeChat.Domain.AggregatesModel;
 using WeChat.Domain.SeedWork;
+using WeChat.Infrastructure;
 using Zap.WeChat.SDK.Cache;
 
 namespace WeChat.Dev.Controllers
@@ -47,10 +52,10 @@ namespace WeChat.Dev.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        public ActionResult Login(AccountModel model)
+        public async Task<ActionResult> Login(AccountModel model)
         {
             var errmsg = string.Empty;
-            var token = string.Empty;
+            OAuthModel token = null;
             var errcode = 0;
             try
             {
@@ -61,9 +66,9 @@ namespace WeChat.Dev.Controllers
                 {
                     //业务系统绑定微信号
                     _accountService.BindWorkID(user.UserId, model.WorkUserId);
+                    await _unitOfWork.SaveChangesAsync();
                     //根据OAuth2.0 颁发令牌
-                    token = user.UserId + user.WorkUserId;
-                    _unitOfWork.SaveChangesAsync();
+                    token = await GetTokenAsync(user);
                 }
             }
             catch (Exception ex)
@@ -111,10 +116,10 @@ namespace WeChat.Dev.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        public ActionResult WorkLogin(string nonce)
+        public async Task<ActionResult> WorkLogin(string nonce)
         {
             var errmsg = string.Empty;
-            var token = string.Empty;
+            OAuthModel token = null;
             var errcode = 0;
             try
             {
@@ -130,7 +135,7 @@ namespace WeChat.Dev.Controllers
                     throw new Exception("用户未绑定业务系统账号，请联系管理员");
                 }
                 //根据OAuth2.0 颁发令牌
-                token = user.UserId + user.WorkUserId;
+                token = await GetTokenAsync(user);
             }
             catch (Exception ex)
             {
@@ -138,6 +143,28 @@ namespace WeChat.Dev.Controllers
                 errmsg = ex.Message;
             }
             return Json(new { errmsg, errcode, token });
+        }
+
+        #endregion
+
+        #region 获取授权令牌
+
+
+        public async Task<OAuthModel> GetTokenAsync(User info)
+        {
+            //获取身份授权
+            var http = new HttpKit("http://meunsc.oicp.net");
+            var content = new FormUrlEncodedContent(new[]
+            {
+                    new KeyValuePair<string, string>("grant_type", "password"),
+                    new KeyValuePair<string, string>("client_id", info.WorkUserId),
+                    new KeyValuePair<string, string>("username", info.Account),
+                    new KeyValuePair<string, string>("password", info.Password)
+                });
+            var resp = await http.PostAsync<OAuthModel>("/api/token", content);
+            if (!resp.IsSuccess || string.IsNullOrEmpty(resp.Content.AccesssToken))
+                return null;
+            return resp.Content;
         }
 
         #endregion

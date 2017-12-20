@@ -197,6 +197,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Models\UserModel.cs" />
+    <Compile Include="OAuthProviders\OAuthModel.cs" />
     <Compile Include="OAuthProviders\SimpleAccessTokenProvider.cs" />
     <Compile Include="OAuthProviders\SimpleAuthorizationServerProvider.cs" />
     <Compile Include="OAuthProviders\SimpleRefreshTokenProvider.cs" />
