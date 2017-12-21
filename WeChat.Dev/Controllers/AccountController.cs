@@ -40,11 +40,11 @@ namespace WeChat.Dev.Controllers
             var model = new AccountModel { ReturnUrl = returnUrl, WorkUserId = workUserId };
             if (workUserId == null)
             {
-                return RedirectToAction("error", "home", new { errmsg = "无效的参数workUserId" });
+                return RedirectToAction("error", "home", new { errmsg = "无效的参数workUserId", appcode });
             }
             if (appcode == null)
             {
-                return RedirectToAction("error", "home", new { errmsg = "无效的参数appcode" });
+                return RedirectToAction("error", "home", new { errmsg = "无效的参数appcode", appcode });
             }
             ViewBag.AppCode = appcode;
             return View(model);
@@ -106,7 +106,7 @@ namespace WeChat.Dev.Controllers
             }
             catch (Exception ex)
             {
-                return RedirectToAction("error", "home", new { errmsg = ex.Message });
+                return RedirectToAction("error", "home", new { errmsg = ex.Message, appcode });
             }
             ViewBag.AppCode = appcode;
             ViewBag.ReturnUrl = returnUrl;
@@ -164,6 +164,7 @@ namespace WeChat.Dev.Controllers
             var resp = await http.PostAsync<OAuthModel>("/api/token", content);
             if (!resp.IsSuccess || string.IsNullOrEmpty(resp.Content.AccesssToken))
                 return null;
+            resp.Content.ExpiresIn = (int)DateTime.Now.AddSeconds(resp.Content.ExpiresIn).ToJSTimeStamp();
             return resp.Content;
         }
 

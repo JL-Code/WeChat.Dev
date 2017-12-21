@@ -71,6 +71,7 @@
     <Compile Include="Repositories\UserRepository.cs" />
     <Compile Include="Repositories\WeChatAppRepository.cs" />
     <Compile Include="ThumbnailHelper.cs" />
+    <Compile Include="DateTimeExtend.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

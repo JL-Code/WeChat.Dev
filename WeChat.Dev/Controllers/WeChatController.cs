@@ -96,7 +96,7 @@ namespace WeChat.Dev.Controllers
             }
             catch (Exception ex)
             {
-                return RedirectToAction("error", "home", new { errmsg = ex.Message });
+                return RedirectToAction("error", "home", new { errmsg = ex.Message, appcode });
             }
         }
     }

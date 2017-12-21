@@ -109,15 +109,13 @@ namespace WeChat.Dev.OAuthProviders
 
             #region 为此用户生成一组声明以及包含客户端id和userName的身份验证属性，这些属性需要接下来的步骤。(需要封装)
 
-            identity.AddClaim(new Claim(ClaimTypes.Name, context.UserName));
-            identity.AddClaim(new Claim("isadmin", "True"));
-            identity.AddClaim(new Claim("name", "mecode"));
-            identity.AddClaim(new Claim("company", "衡泽科技"));
+            identity.AddClaim(new Claim("userid", user.UserId.ToString()));
 
             #endregion
-
-            var props = new AuthenticationProperties(new Dictionary<string, string>{
-                {"as:client_id", context.ClientId ?? string.Empty }
+            //身份令牌描述信息
+            var props = new AuthenticationProperties(new Dictionary<string, string>
+            {
+                //{"as:client_id", context.ClientId ?? string.Empty }
             });
             var ticket = new AuthenticationTicket(identity, props);
             //调用“context.Validated（ticket）”时，会在幕后生成访问令牌

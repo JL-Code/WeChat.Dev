@@ -1,16 +1,19 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - 我的 ASP.NET 应用程序</title>
     <link rel="stylesheet" href="https://res.wx.qq.com/open/libs/weui/1.1.2/weui.min.css">
 </head>
-<body>
+<body data-appcode="@ViewBag.AppCode" data-website="@ViewBag.WebSite">
     @RenderBody()
     <script src="~/Scripts/weui.min.js"></script>
-    <script src="~/Scripts/axios-0.17.1/axios.min.js"></script>
+    <script src="~/Scripts/axios.min.js"></script>
+    <script src="~/Scripts/store.legacy.min.js"></script>
+    <script src="~/Scripts/site.js"></script>
+    <script src="~/Scripts/identity.js"></script>
     @RenderSection("scripts", required: false)
 </body>
 </html>

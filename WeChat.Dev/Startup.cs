@@ -53,7 +53,7 @@ namespace WeChat.Dev
                 //授权路径
                 AuthorizeEndpointPath = new PathString("/api/authorize"),
                 //设置令牌过期时间
-                AccessTokenExpireTimeSpan = TimeSpan.FromMinutes(10),
+                AccessTokenExpireTimeSpan = TimeSpan.FromHours(2),
                 //令牌授权服务 用于处理授权服务器中间件引发的事件
                 Provider = new SimpleAuthorizationServerProvider(),
                 //认证服务代理
