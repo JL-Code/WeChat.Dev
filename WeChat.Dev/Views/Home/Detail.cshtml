@@ -1,0 +1,811 @@
+﻿
+@{
+    ViewBag.Title = "Detail";
+    Layout = "~/Views/Shared/_WeuiLayout.cshtml";
+}
+@section head{
+    <link href="~/Content/mobile.timeline.css" rel="stylesheet" />
+    <link href="~/Scripts/photoswipe/photoswipe.css" rel="stylesheet" />
+    <link href="~/Scripts/photoswipe/default-skin/default-skin.css" rel="stylesheet" />
+}
+<div class="menu-pm container">
+    <h4 class="blockquote before-darkorange">业务信息</h4>
+    <div id="form_container"></div>
+    <h4 class="blockquote before-pink">相关附件</h4>
+    <div id="form_attachment"></div>
+    <h4 class="blockquote before-success">审批进度</h4>
+    <!--时间轴开始-->
+    <div class="timeline-header weui-flex text-center bg-white">
+        <div class="weui-flex__item node-state"><span class="before-lightgray">未办</span></div>
+        <div class="weui-flex__item node-state"><span class="before-themethirdcolor">在办</span></div>
+        <div class="weui-flex__item node-state"><span class="before-themefourthcolor">已办</span></div>
+        <div class="weui-flex__item node-state"><span class="before-themesecondary">作废</span></div>
+    </div>
+    <section class="timeline-container">
+        <div class="timeline" id="form_timeline"></div>
+    </section>
+    <!--时间轴结束-->
+    <div class="weui-form-preview__ft fixed_b">
+        <a class="weui-form-preview__btn weui-form-preview__btn_default" href="javascript:window.history.back();">取消</a>
+        <button class="weui-form-preview__btn weui-form-preview__btn_primary" onclick="disaccord()" type="button">不同意</button>
+        <button class="weui-form-preview__btn weui-form-preview__btn_primary" onclick="agree()" type="button">同意</button>
+        <button class="weui-form-preview__btn weui-form-preview__btn_primary" onclick="moreActions()" type="button">更多</button>
+    </div>
+    <!-- Root element of PhotoSwipe. Must have class pswp.photoswipe的根元素必须有样式.pswp-->
+    <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+        <!-- Background of PhotoSwipe. photoswipe背景
+    It's a separate element, as animating opacity is faster than rgba(). 它是一个单独的元素，因为动画的不透明度比rgba快-->
+        <div class="pswp__bg"></div>
+        <!-- Slides wrapper with overflow:hidden.幻灯片包装防止幻灯片溢出-->
+        <div class="pswp__scroll-wrap">
+            <!-- Container that holds slides. PhotoSwipe keeps only 3 slides in DOM to save memory. -->
+            <!-- don't modify these 3 pswp__item elements, data is added later on. -->
+            <div class="pswp__container">
+                <div class="pswp__item"></div>
+                <div class="pswp__item"></div>
+                <div class="pswp__item"></div>
+            </div>
+            <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+            <div class="pswp__ui pswp__ui--hidden">
+                <div class="pswp__top-bar">
+                    <!--  Controls are self-explanatory. Order can be changed. -->
+                    <div class="pswp__counter"></div>
+                    <button class="pswp__button pswp__button--close" title="关闭 (Esc)"></button>
+                    <!-- Preloader demo https://codepen.io/dimsemenov/pen/yyBWoR -->
+                    <!-- element will get class pswp__preloader--active when preloader is running -->
+                    <div class="pswp__preloader">
+                        <div class="pswp__preloader__icn">
+                            <div class="pswp__preloader__cut">
+                                <div class="pswp__preloader__donut"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                    <div class="pswp__share-tooltip"></div>
+                </div>
+                <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)"></button>
+                <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button>
+                <div class="pswp__caption">
+                    <div class="pswp__caption__center"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script type="text/javascript" src="~/Scripts/config.js"></script>
+    <script src="~/Scripts/photoswipe/photoswipe.min.js"></script>
+    <script src="~/Scripts/photoswipe/photoswipe-ui-default.min.js"></script>
+    <script type="text/html" id="tpl_formtable">
+        <div class="table-warpper bg-white">
+            <table class="table">
+                {{each MainDomain}}
+                <tr>
+                    <td class="td-title">{{$value.areasname}}</td>
+                    <td><p>{{$value.value}}</p></td>
+                </tr>
+                {{/each}}
+            </table>
+        </div>
+        {{each FollowDomain _value _key}}
+        <div class="table-warpper bg-white">
+            {{each _value}}
+            <table class="table">
+                <tr>
+                    <td colspan="2"><p class="table-title">{{_key}}</p></td>
+                </tr>
+                {{each $value}}
+                <tr>
+                    <td class="td-title">{{$value.areasname}}</td>
+                    <td><p>{{$value.value}}</p></td>
+                </tr>
+                {{/each}}
+            </table>
+            {{/each}}
+        </div>
+        {{/each}}
+    </script>
+    <script id="tpl_timeline" type="text/html">
+        {{each steps step index}}
+        {{if step.StepType == 0 || step.StepType == 3 }}
+        <div class="timeline-node-box">
+            <div class="timeline-node-header">
+                <label class="step-name" title="{{step.StepName}}">{{step.StepName}}</label>
+                <span class="state {{step.noBefore===false ? "" : "no-before"}}">
+                    <i class="state-icon {{step.bgColor}}"></i>
+                </span>
+                <b class="line"></b>
+            </div>
+            <div class="timeline-node-content step-box  {{step.bColor}}">
+                <div class="step-auditor">
+                    <div class="pull-left">
+                        {{step.nodes[0].Auditor}}
+                        {{if step.StepType == 0 && !step.toVoid}}
+                        <b>发起</b>
+                        {{/if}}
+                    </div>
+                    <div class="pull-right text-333 time">{{step.nodes[0].HandlerTime}}</div>
+                </div>
+                <div class="step-content">
+                    {{if step.StepType == 0 && !step.toVoid}}
+                    <b>发起</b>
+                    {{/if}}
+                    {{if step.StepType == 0 && step.toVoid}}
+                    <b>
+                        {{if step.nodes[0].extendNodeInfo}}
+                        {{step.nodes[0].extendNodeInfo.HandlerSuggestion}}
+                        {{/if}}
+                    </b>
+                    {{/if}}
+                    {{if step.StepType == 3}}
+                    {{if step.nodes[0].NodeStatus == 0}}
+                    流程将自动结束
+                    {{/if}}
+                    {{if step.nodes[0].NodeStatus}}
+                    流程已自动结束
+                    {{/if}}
+                    {{/if}}
+                </div>
+            </div>
+            <div class="{{step.patch}}"></div>
+        </div>
+        {{/if}}
+        {{if  step.StepType != 0 && step.StepType != 3 }}
+        <div class="timeline-node-box">
+            <div class="timeline-node-header">
+                <label class="step-name {{step.headerHide?"timeline-hidden":""}}" title="{{step.StepName}}">{{step.StepName}}</label>
+                <span class="state">
+                    <i class="state-icon {{step.bgColor}}"></i>
+                </span>
+                <b class="line"></b>
+            </div>
+            <div class="timeline-node-content step-box  {{step.bColor}}">
+                {{if step.each}}
+                <ul class="step-auditor step-ul">
+                    <li class="node-header"><b>责任人：</b></li>
+                    {{each step.nodes node nodeIndex}}
+                    <li class="node-item">
+                        {{node.Auditor}}
+                        {{if nodeIndex!=(step.nodes.length-1)}},{{/if}}
+                    </li>
+                    {{/each}}
+                </ul>
+                {{/if}}
+                {{if !step.each}}
+                <div class="step-auditor">
+                    <div class="pull-left">
+                        {{step.nodes[0].Auditor}}
+                        <b>{{step.nodes[0].FlowHandleTypeName}}</b>
+                    </div>
+                    {{if step.toVoid}}
+                    <div class="pull-right text-333 time">{{step.nodes[0].extendNodeInfo.HandleDatetime || ""}}</div>
+                    {{/if}}
+                    {{if !step.toVoid}}
+                    <div class="pull-right text-333 time">{{step.nodes[0].HandlerTime || "未到达"}}</div>
+                    {{/if}}
+                </div>
+                {{/if}}
+                <div class="step-content">
+                    <ul class="step-consult">
+                        {{each step.nodes node nodeIndex}}
+                        {{if node.extendNodeInfo && node.extendNodeInfo[node.NodeInstanceGuid]}}
+                        {{each node.extendNodeInfo[node.NodeInstanceGuid] extNode extIndex}}
+                        <li class="consult-item">
+                            {{extNode.sender}}&nbsp;<b>{{extNode.title}}:</b>&nbsp;{{extNode.recipient}}
+                            ：{{extNode.content}}
+                            <i class="comments-time pull-right">{{extNode.extra.HandleDatetime}}</i>
+                            {{if extNode.comments}}
+                            <p class="consult-item-comments">
+                                {{extNode.comments[0].sender}}&nbsp;<b>{{extNode.comments[0].title}}:</b>&nbsp;{{extNode.comments[0].recipient}}
+                                :{{extNode.comments[0].content}}
+                                <i class="comments-time pull-right">{{extNode.comments[0].extra.HandleDatetime}}</i>
+                            </p>
+                            {{/if}}
+                        </li>
+                        {{/each}}
+                        {{/if}}
+                        {{/each}}
+                    </ul>
+                    {{if step.nodes[0].TransferToNodeGuid}}
+                    <p style="color:#33c;padding:5px">
+                        {{step.nodes[0].Handler}}&nbsp;<b>授权交办给:</b>&nbsp;{{step.nodes[0].Transferor}}：
+                        {{/if}}
+                        {{if step.toVoid}}
+                        {{step.nodes[0].extendNodeInfo.HandlerSuggestion || ""}}
+                        {{/if}}
+                        {{if !step.toVoid}}
+                        {{step.nodes[0].HandlerSuggestion || ""}}
+                        {{/if}}
+                        {{if step.nodes[0].TransferToNodeGuid}}
+                    </p>
+                    {{/if}}
+                </div>
+            </div>
+            <div class="{{step.patch}}"></div>
+        </div>
+        {{/if}}
+        {{/each}}
+    </script>
+    <script id="tpl_attachment" type="text/html">
+        <div class="weui-grids bg-white">
+            {{each Attachments}}
+            <a href="javascript:;" class="weui-grid {{$value.IsPhoto ? 'figure' : ''}}" data-isphoto="{{$value.IsPhoto}}" data-size="{{$value.Width}}x{{$value.Height}}" data-fileid="{{$value.ID}}" data-userid="{{userid}}" data-href="{{$value.Path}}" data-doctype="{{$value.Type}}">
+                <div class="weui-grid__icon">
+                    <img src="/Content/images/icon_tabbar.png" alt="图片">
+                </div>
+                <p class="weui-grid__label">{{$value.Name}}</p>
+            </a>
+            {{/each}}
+        </div>
+    </script>
+    <script type="text/javascript">
+        init();
+
+        function init() {
+            axios.get('/Scripts/data.json').then(function (response) {
+                var data = response.data;
+                var formHtml = template('tpl_formtable', data);
+                var attachmentHtml = template('tpl_attachment', data);
+                var timelineHtml = createTimeLine(data.FlowInstance, data.NodeExtends);
+                //console.log(timelineHtml)
+                document.getElementById('form_container').innerHTML = formHtml;
+                document.getElementById('form_attachment').innerHTML = attachmentHtml;
+                document.getElementById('form_timeline').innerHTML = timelineHtml;
+            }).catch(function (err) {
+                weui.alert();
+            });
+            galleryInit();
+        }
+
+        function actions() {
+            weui.actionSheet([{
+                label: '处理',
+                onClick: function () {
+                    weui.loading('加载中')
+                    window.location.href = "/home/BusinessHandlePage";
+                }
+            },
+            {
+                label: '从相册选择',
+                onClick: function () {
+                    console.log('从相册选择');
+                }
+            },
+            {
+                label: '其他',
+                onClick: function () {
+                    console.log('其他');
+                }
+            }
+            ], [{
+                label: '取消',
+                onClick: function () {
+                    console.log('取消');
+                }
+            }], {
+                    className: 'custom-classname',
+                    onClose: function () {
+                        console.log('关闭');
+                    }
+                });
+        }
+
+        function agree() {
+            utils.jumpLink("/home/BusinessHandlePage");
+        }
+
+        function disaccord() {
+            weui.actionSheet([{
+                label: ' 打回到发起',
+                onClick: function () {
+                    console.log('打回到发起')
+                }
+            }, {
+                label: '打回到上一步',
+                onClick: function () {
+                    console.log('打回到上一步')
+                }
+            }], [{
+                label: '取消',
+                onClick: function () {
+                    console.log('取消')
+                }
+            }])
+        }
+        //更多操作
+        function moreActions() {
+            weui.actionSheet([{
+                label: '授权交办',
+                onClick: function () {
+                    weui.loading('加载中')
+                    window.location.href = "/home/BusinessHandlePage";
+                }
+            },
+            {
+                label: '发起协商',
+                onClick: function () {
+                    console.log('从相册选择');
+                }
+            },
+            {
+                label: '作废',
+                onClick: function () {
+                    console.log('其他');
+                }
+            },
+            {
+                label: '返回列表',
+                onClick: function () {
+                    weui.loading('加载中')
+                    window.history.back();
+                }
+            }
+            ], [{
+                label: '取消',
+                onClick: function () {
+                    console.log('取消')
+                }
+            }], {
+                    className: 'custom-classname',
+                    onClose: function () {
+                        console.log('关闭1212');
+                    }
+                });
+        }
+
+        //生成时间轴
+        function createTimeLine(flowInstance, nodeExtends) {
+            var stepsVM = [];
+            var exitDo = false;
+            try {
+                var steps = flowInstance.StepInstanceList;
+                var nodes = flowInstance.NodeInstanceList;
+                //为步骤附加节点信息
+                for (var s = 0; s < steps.length; s++) {
+                    var step = steps[s];
+                    step.nodes = [];
+                    for (var n = 0; n < nodes.length; n++) {
+                        if (step.StepInstanceGuid != nodes[n].StepInstanceGuid)
+                            continue;
+                        var node = nodes[n];
+                        //获取节点的扩展信息 交办 和 协商
+                        if (step.CanAssign || step.CanTransfer) {
+                            node.extendNodeInfo = getExtendNodeInfo(node, nodeExtends);
+                        }
+                        step.nodes.push(node);
+                    }
+                }
+                //拼接时间轴对象
+                for (var si = 0; si < steps.length; si++) {
+                    var tempSteps = [];
+                    var tempStep = steps[si];
+                    var surplus = [];
+                    var virtualStep = null;
+
+                    if (exitDo) break;
+                    switch (tempStep.StepType) {
+                        case enums.stepCategory.start:
+                            tempStep.patch = "first";
+                            tempStep.bgColor = "bg-green";
+                            tempStep.bColor = "b-green";
+                            if (si != 0) {
+                                tempStep.patch = "";
+                                tempStep.noBefore = false;
+                            }
+                            break;
+                        case enums.stepCategory.end:
+                            tempStep.patch = "last";
+                            tempStep.noBefore = false;
+                            tempStep.bgColor = "bg-gray";
+                            tempStep.bColor = "b-gray";
+                            break;
+                        default:
+                            tempStep.bgColor = "bg-gray";
+                            tempStep.bColor = "b-gray";
+                            break;
+                    }
+                    if (tempStep.nodes && tempStep.nodes.length)
+                        for (var ni = 0; ni < tempStep.nodes.length; ni++) {
+                            var tempNode = tempStep.nodes[ni];
+                            tempNode.FlowHandleTypeName = getHandleMethodName(tempNode.FlowHandleType);
+                            if (tempNode.HandleMode == 2 && tempNode.NodeStatus != -2) continue;//系统处理的节点不显示
+                            //1.节点为已处理
+                            //2.步骤处理模式为串行
+                            if (tempNode.NodeStatus != 0 && tempNode.NodeStatus != 1) {//已处理
+                                virtualStep = Object.assign({}, tempStep);
+                                //状态 步骤头 节点
+                                virtualStep.bgColor = "bg-green";
+                                virtualStep.bColor = "b-green";
+                                if (tempNode.NodeStatus == -2) {
+                                    virtualStep.bgColor = "bg-red";
+                                    virtualStep.bColor = "b-red";
+                                    virtualStep.patch = "last";
+                                    virtualStep.toVoid = true;
+                                    //终止下一步解析
+                                    exitDo = true;
+                                }
+                                virtualStep.headerHide = ni ? true : false;
+                                virtualStep.nodes = [tempNode];
+                                tempSteps.push(virtualStep);
+
+                            } else if (tempStep.HandleMode == enums.stepHandleMethod.serial) {//串行未处理
+                                virtualStep = Object.assign({}, tempStep);
+                                //状态 步骤头 节点
+                                if (tempNode.NodeStatus == enums.nodeState.toWait) {
+                                    virtualStep.bgColor = "bg-yellow";
+                                    virtualStep.bColor = "b-yellow";
+                                }
+                                virtualStep.headerHide = ni ? true : false;
+                                virtualStep.nodes = [tempNode];
+                                tempSteps.push(virtualStep);
+
+                            } else {//并行且未处理
+                                tempNode.headerHide = ni ? true : false;
+                                tempNode.bgColor = "bg-gray";
+                                tempNode.bColor = "b-gray";
+                                if (tempNode.NodeStatus == enums.nodeState.toWait) {
+                                    tempNode.bgColor = "bg-yellow";
+                                    tempNode.bColor = "b-yellow";
+                                }
+                                surplus.push(tempNode);
+                            }
+                            if (exitDo) break;
+                        }
+
+                    //并行且未处理的 特殊处理
+                    if (surplus.length) {
+                        virtualStep = tempStep;
+                        virtualStep.nodes = surplus;
+                        virtualStep.each = true;
+                        virtualStep.headerHide = surplus[0].headerHide;
+                        virtualStep.bgColor = surplus[0].bgColor;
+                        tempSteps.push(virtualStep);
+                    }
+
+                    stepsVM = stepsVM.concat(tempSteps);
+                }
+                return template('tpl_timeline', { steps: stepsVM });
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+
+        //获取扩展节点信息
+        function getExtendNodeInfo(node, nodeExtend) {
+            var extendNodes = {};
+            if (nodeExtend && nodeExtend.length)
+                for (var k = 0; k < nodeExtend.length; k++) {
+                    var currExtNode = nodeExtend[k];
+                    //协商和回复协商
+                    if (currExtNode.NodeExtendType == 3 || currExtNode.NodeExtendType == 2) {
+                        if (currExtNode.NodeInstanceGuid != node.NodeInstanceGuid || !currExtNode.HandleDatetime) continue;
+                        var extNodes = extendNodes[node.NodeInstanceGuid] || [];
+                        switch (currExtNode.NodeExtendType) {
+                            case 2: //发起
+
+                                var extNode = {
+                                    title: '发起协商',
+                                    content: currExtNode.HandlerSuggestion,
+                                    senderId: currExtNode.HandlerGuid,
+                                    recipientId: currExtNode.AuditorGuid,
+                                    sender: currExtNode.HandlerName,
+                                    recipient: currExtNode.AuditorName,
+                                    extra: currExtNode
+                                };
+                                extNodes.push(extNode);
+                                extendNodes[node.NodeInstanceGuid] = extNodes;
+                                break;
+                            case 3: //回复
+
+                                extNodes.forEach(function (extNode, index, self) {
+                                    if (extNode.recipientId == currExtNode.HandlerGuid) {
+                                        if (!extNode.comments)
+                                            extNode.comments = [];
+                                        var comment = {
+                                            title: '回复',
+                                            content: currExtNode.HandlerSuggestion,
+                                            senderId: currExtNode.HandlerGuid,
+                                            recipientId: currExtNode.AuditorGuid,
+                                            sender: currExtNode.HandlerName,
+                                            recipient: currExtNode.AuditorName,
+                                            extra: currExtNode
+                                        };
+                                        extNode.comments.push(comment);
+                                    }
+                                });
+                                break;
+                            default:
+                                break;
+
+                        }
+                    }
+                    else if (currExtNode.NodeExtendType >= 5 && currExtNode.NodeExtendType <= 8) {//作废
+                        if (currExtNode.StepInstanceGuid == node.StepInstanceGuid) {
+                            return currExtNode;
+                        }
+                    }
+                }
+            return extendNodes;
+        }
+
+        function getHandleMethodName(method) {
+            switch (method) {
+                /// <summary>
+                /// 同意
+                /// </summary>
+
+                case 0:
+                    return "同意";
+                    break;
+
+                /// <summary>
+                /// 不同意
+                /// </summary>
+
+                case 1:
+                    return "不同意";
+                    break;
+                /// <summary>
+                /// 发起协商
+                /// </summary>
+
+                case 2:
+                    return "发起协商";
+                    break;
+                /// <summary>
+                /// 授权交办
+                /// </summary>
+
+                case 3:
+                    return "授权交办";
+                    break;
+                /// <summary>
+                /// 会签
+                /// </summary>
+
+                case 4:
+                    return "会签";
+                    break;
+                /// <summary>
+                /// 重新发起
+                /// </summary>
+
+                case 5:
+                    return "重新发起";
+
+                    break;
+                /// <summary>
+                /// 作废
+                /// </summary>
+
+                case 6:
+                    return "作废";
+
+                    break;
+                /// <summary>
+                /// 发起
+                /// </summary>
+
+                case 7:
+                    return "发起";
+
+                    break;
+                /// <summary>
+                /// 结束
+                /// </summary>
+
+                case 8:
+                    return "结束";
+
+                    break;
+                /// <summary>
+                /// 撤回
+                /// </summary>
+
+                case 9:
+                    return "同意";
+                    break;
+                /// <summary>
+                /// 回复协商
+                /// </summary>
+
+                case 21:
+                    return "回复协商";
+                    break;
+                default:
+                    return "";
+                    break;
+
+            }
+        }
+
+        //附件图片幻灯片组件查看
+        function galleryInit() {
+            var initPhotoSwipeFromDOM = function (gallerySelector) {
+                // parse slide data (url, title, size ...) from DOM elements
+                // (children of gallerySelector)
+                var parseThumbnailElements = function (el) {
+                    var thumbElements = el.querySelectorAll('.figure'),
+                        items = [],
+                        figureEl,
+                        size,
+                        item;
+                    for (var i = 0; i < thumbElements.length; i++) {
+
+                        figureEl = thumbElements[i]; // <figure> element
+                        size = figureEl.dataset.size.split('x');
+
+                        // create slide object
+                        item = {
+                            src: figureEl.dataset.href,
+                            w: parseInt(size[0], 10),
+                            h: parseInt(size[1], 10)
+                        };
+                        item.el = figureEl; // save link to element for getThumbBoundsFn
+                        items.push(item);
+                    }
+                    return items;
+                };
+
+                // find nearest parent element 查找最近的父元素
+                var closest = function closest(el, fn) {
+                    return el && (fn(el) ? el : closest(el.parentNode, fn));
+                };
+
+                // triggers when user clicks on thumbnail 当用户点击缩略图我们触发图片预览
+                var onThumbnailsClick = function (e) {
+                    
+                    e = e || window.event;
+                    e.preventDefault ? e.preventDefault() : e.returnValue = false;
+
+                    var eTarget = e.target || e.srcElement;
+
+                    // find root element of slide 查找幻灯片的根元素
+                    var clickedListItem = closest(eTarget, function (el) {
+                        return (el.classList && el.classList.contains('figure'));
+                    });
+
+                    if (!clickedListItem) {
+                        return;
+                    }
+
+                    // find index of clicked item by looping through all child nodes
+                    // alternatively, you may define index via data- attribute
+                    var clickedGallery = clickedListItem.parentNode,
+                        childNodes = clickedListItem.parentNode.childNodes,
+                        numChildNodes = childNodes.length,
+                        nodeIndex = 0,
+                        index;
+
+                    for (var i = 0; i < numChildNodes; i++) {
+                        if (childNodes[i].nodeType !== 1) {
+                            continue;
+                        }
+
+                        if (childNodes[i] === clickedListItem) {
+                            index = nodeIndex;
+                            break;
+                        }
+                        nodeIndex++;
+                    }
+
+
+                    if (index >= 0) {
+                        // open PhotoSwipe if valid index found
+                        openPhotoSwipe(index, clickedGallery);
+                    }
+                    return false;
+                };
+
+                // 从URL解析图片索引和图库索引 (#&pid=1&gid=2)
+                var photoswipeParseHash = function () {
+
+                    var hash = window.location.hash.substring(1),
+                        params = {};
+
+                    if (hash.length < 5) {
+                        return params;
+                    }
+
+                    var vars = hash.split('&');
+                    for (var i = 0; i < vars.length; i++) {
+                        if (!vars[i]) {
+                            continue;
+                        }
+                        var pair = vars[i].split('=');
+                        if (pair.length < 2) {
+                            continue;
+                        }
+                        params[pair[0]] = pair[1];
+                    }
+
+                    if (params.gid) {
+                        params.gid = parseInt(params.gid, 10);
+                    }
+
+                    return params;
+                };
+
+
+                var openPhotoSwipe = function (index, galleryElement, disableAnimation, fromURL) {
+                    var pswpElement = document.querySelectorAll('.pswp')[0],
+                        gallery,
+                        options,
+                        items;
+
+                    items = parseThumbnailElements(galleryElement);
+
+                    // define options (if needed)
+                    options = {
+
+                        // define gallery index (for URL)
+                        galleryUID: galleryElement.getAttribute('data-pswp-uid')
+
+                        // getThumbBoundsFn: function (index) {
+                        //     // See Options -> getThumbBoundsFn section of documentation for more info
+                        //     var thumbnail = items[index].el.querySelector('.img'), // find thumbnail
+                        //         pageYScroll = window.pageYOffset || document.documentElement.scrollTop,
+                        //         rect = thumbnail.getBoundingClientRect();
+                        //     return {x: rect.left, y: rect.top + pageYScroll, w: rect.width};
+                        // }
+
+                    };
+                    // PhotoSwipe opened from URL
+                    if (fromURL) {
+                        if (options.galleryPIDs) {
+                            // parse real index when custom PIDs are used
+                            // http://photoswipe.com/documentation/faq.html#custom-pid-in-url
+                            for (var j = 0; j < items.length; j++) {
+                                if (items[j].pid == index) {
+                                    options.index = j;
+                                    break;
+                                }
+                            }
+                        } else {
+                            // in URL indexes start from 1
+                            options.index = parseInt(index, 10) - 1;
+                        }
+                    } else {
+                        options.index = parseInt(index, 10);
+                    }
+
+                    // exit if index not found
+                    if (isNaN(options.index)) {
+                        return;
+                    }
+
+                    if (disableAnimation) {
+                        options.showAnimationDuration = 0;
+                    }
+
+                    // Pass data to PhotoSwipe and initialize it
+                    gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, options);
+                    gallery.init();
+                };
+
+                // loop through all gallery elements and bind events
+                var galleryElements = document.querySelectorAll(gallerySelector);
+
+                for (var i = 0, l = galleryElements.length; i < l; i++) {
+
+                    galleryElements[i].setAttribute('data-pswp-uid', i + 1);
+                    galleryElements[i].onclick = onThumbnailsClick;
+                }
+
+                // Parse URL and open gallery if it contains #&pid=3&gid=1
+                var hashData = photoswipeParseHash();
+                if (hashData.pid && hashData.gid) {
+                    openPhotoSwipe(hashData.pid, galleryElements[hashData.gid - 1], true, true);
+                }
+
+                window.gallery = {
+                    onThumbnailsClick: onThumbnailsClick
+                }
+            };
+            initPhotoSwipeFromDOM('#form_attachment');
+        }
+    </script>
+}

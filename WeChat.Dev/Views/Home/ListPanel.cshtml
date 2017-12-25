@@ -1,0 +1,46 @@
+﻿
+@{
+    ViewBag.Title = "ListPanel";
+    Layout = "~/Views/Shared/_ListLayout.cshtml";
+}
+<div class="container list" id="mybacklog"></div>
+@section scripts{
+    <script>
+        try {
+            axios.get('/Scripts/mybacklog.data.json').then(function (response) {
+                var data = response.data;
+                data.listCategory = 0;//待办
+                createCells(data);
+                bindEvents();
+            }).catch(function (err) {
+                weui.alert();
+            })
+        } catch (e) {
+            console.error(e)
+            weui.alert(e.message)
+        }
+
+        function createCells(data) {
+
+            var html = template('tpl_listtemplate', data);
+            document.querySelector('#mybacklog').innerHTML = html;
+
+        }
+
+        function bindEvents() {
+            var links = document.querySelectorAll('a');
+            links.forEach(function (link) {
+                var flag = link.getAttribute('mask')
+                if (flag === "true")
+                    link.addEventListener('click', function (e) {
+                        e.preventDefault()
+                        var _this = this;
+                        weui.loading('加载中')
+                        setTimeout(function () {
+                            window.location.href = _this.href
+                        }, 50)
+                    })
+            })
+        }
+    </script>
+}

@@ -1,0 +1,79 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>@ViewBag.Ttile</title>
+    <link rel="stylesheet" href="https://res.wx.qq.com/open/libs/weui/1.1.2/weui.min.css">
+    <link rel="stylesheet" href="~/Content/site.css" />
+    @RenderSection("head", false)
+</head>
+<body data-appcode="@ViewBag.AppCode" data-website="@ViewBag.WebSite">
+    @RenderBody()
+    <script type="text/javascript" src="~/Scripts/weui.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/axios.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/polyfill.js"></script>
+    <script type="text/javascript" src="~/Scripts/template-web.js"></script>
+    <script type="text/javascript" src="~/Scripts/utils.js"></script>
+    <script type="text/javascript" src="~/Scripts/identity.js"></script>
+    <script type="text/html" id="tpl_listtemplate">
+        {{each items}}
+        <!--listCategory 0待办 1发起 2已办 3抄送-->
+        <div class="weui-panel">
+            <div class="weui-panel__hd">
+                <div class="weui-flex">
+                    <div class="weui-flex__item">
+                        {{if (listCategory === 0 || listCategory === 2|| listCategory === 3)}}
+                        <!--未读小红点-->
+                        {{if $value.ActivationTime == "0001-01-01 00:00"}}
+                        <span class="weui-badge">New</span>
+                        {{/if}}
+                        {{/if}}
+                        <!--业务类型-->
+                        [{{$value.BizTypeName}}]
+                    </div>
+                    <div class="weui-flex__item text-right">
+                        <!--处理类型 待办和抄送-->
+                        {{if (listCategory === 0 || listCategory === 3)}}
+                        <span class="weui-badge bg-success">{{$value.PorcessType}}</span>
+                        {{/if}}
+                        <!--流程状态 发起和已办-->
+                        {{if (listCategory === 1 || listCategory === 2)}}
+                        <span class="weui-badge
+                              {{if $value.FlowStatus=="0"}}bg-info{{/if}}
+                              {{if $value.FlowStatus=="-1"}}bg-danger{{/if}}
+                              {{if $value.FlowStatus=="1"}}bg-success{{/if}}">
+                            {{$value.FlowStatusName}}
+                        </span>
+                        {{/if}}
+                        {{if $value.UrgencyLevel == 1 }}
+                        <span class="weui-badge">紧急</span>
+                        {{/if}}
+                        {{if $value.TimeoutHour > 0 }}
+                        <span class="weui-badge">超时</span>
+                        {{/if}}
+                        {{if $value.IsExistAttachment}}
+                        <i>附件</i>
+                        {{/if}}
+                    </div>
+                </div>
+            </div>
+            <div class="weui-panel__bd weui-cell_access">
+                <a href="/home/detail" class="weui-media-box weui-media-box_text" mask="true">
+                    <h4 class="weui-media-box__title">{{$value.Title}}</h4>
+                    <p class="weui-media-box__desc">
+                        当前步骤:{{$value.StepName}}{{if listCategory!==1}}-<span>[{{$value.PorcessType}}]</span>{{/if}}
+                    </p>
+                    <ul class="weui-media-box__info">
+                        <li class="weui-media-box__info__meta">发起人:{{$value.Initiator}}</li>
+                        <li class="weui-media-box__info__meta">{{$value.StartTime}}</li>
+                    </ul>
+                </a>
+            </div>
+        </div>
+        {{/each}}
+    </script>
+    @RenderSection("scripts", required: false)
+</body>
+</html>

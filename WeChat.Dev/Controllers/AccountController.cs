@@ -47,6 +47,7 @@ namespace WeChat.Dev.Controllers
                 return RedirectToAction("error", "home", new { errmsg = "无效的参数appcode", appcode });
             }
             ViewBag.AppCode = appcode;
+            ViewBag.WebSite = "http://meunsc.oicp.net";
             return View(model);
         }
 
@@ -69,6 +70,10 @@ namespace WeChat.Dev.Controllers
                     await _unitOfWork.SaveChangesAsync();
                     //根据OAuth2.0 颁发令牌
                     token = await GetTokenAsync(user);
+                    if (token == null)
+                    {
+                        throw new Exception("令牌获取失败");
+                    }
                 }
             }
             catch (Exception ex)
@@ -109,6 +114,7 @@ namespace WeChat.Dev.Controllers
                 return RedirectToAction("error", "home", new { errmsg = ex.Message, appcode });
             }
             ViewBag.AppCode = appcode;
+            ViewBag.WebSite = "http://meunsc.oicp.net";
             ViewBag.ReturnUrl = returnUrl;
             ViewBag.Nonce = nonce;
             return View();
@@ -136,12 +142,17 @@ namespace WeChat.Dev.Controllers
                 }
                 //根据OAuth2.0 颁发令牌
                 token = await GetTokenAsync(user);
+                if (token == null)
+                {
+                    throw new Exception("令牌获取失败");
+                }
             }
             catch (Exception ex)
             {
                 errcode = 500;
                 errmsg = ex.Message;
             }
+
             return Content(JsonHandler.ToJson(new { errmsg, errcode, token }));
         }
 
@@ -150,10 +161,10 @@ namespace WeChat.Dev.Controllers
         #region 获取授权令牌
 
 
-        public async Task<OAuthModel> GetTokenAsync(User info)
+        private async Task<OAuthModel> GetTokenAsync(User info)
         {
             //获取身份授权
-            var http = new HttpKit("http://meunsc.oicp.net");
+            var http = new HttpKit("http://douhua.oicp.net");
             var content = new FormUrlEncodedContent(new[]
             {
                     new KeyValuePair<string, string>("grant_type", "password"),
@@ -164,7 +175,7 @@ namespace WeChat.Dev.Controllers
             var resp = await http.PostAsync<OAuthModel>("/api/token", content);
             if (!resp.IsSuccess || string.IsNullOrEmpty(resp.Content.AccesssToken))
                 return null;
-            resp.Content.ExpiresIn = (int)DateTime.Now.AddSeconds(resp.Content.ExpiresIn).ToJSTimeStamp();
+            resp.Content.ExpiresIn = DateTime.Now.AddSeconds(resp.Content.ExpiresIn).ToJSTimeStamp();
             return resp.Content;
         }
 

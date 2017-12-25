@@ -30,7 +30,7 @@ namespace WeChat.Dev.Controllers
         // GET: WeChat
         public ActionResult Index()
         {
-            var app = _currentService.GetApp(Constants.MOBILE_APPROVAL);
+            var app = _currentService.GetApp(Constants.MOBILE_APPROVAL_TEST);
             return View(app);
         }
 
@@ -43,9 +43,9 @@ namespace WeChat.Dev.Controllers
         public ActionResult Authorize(string appcode = null, string returnUrl = null)
         {
             //默认移动审批应用
-            appcode = appcode ?? Constants.MOBILE_APPROVAL;
+            appcode = appcode ?? Constants.MOBILE_APPROVAL_TEST;
             returnUrl = returnUrl ?? Request.UrlReferrer?.ToString();
-            var redirectUrl = $"http://meunsc.oicp.net/wechat/consumecode?appcode={appcode}&returnUrl={returnUrl}";
+            var redirectUrl = $"http://douhua.oicp.net/wechat/consumecode?appcode={appcode}&returnUrl={returnUrl}";
             var target = OAuth2Api.GetCode(corpId, redirectUrl, "");
             return Redirect(target);
         }

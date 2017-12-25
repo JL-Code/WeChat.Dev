@@ -1,12 +1,12 @@
 ﻿<!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta charset="utf-8" />
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title</title>
-    <link href="https://res.wx.qq.com/open/libs/weui/1.1.2/weui.min.css" rel="stylesheet">
-    <link href="~/Content/site.css" rel="stylesheet" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>@ViewBag.Ttile</title>
+    <link rel="stylesheet" href="https://res.wx.qq.com/open/libs/weui/1.1.2/weui.min.css">
+    <link rel="stylesheet" href="~/Content/site.css" />
     @RenderSection("head", false)
 </head>
 <body data-appcode="@ViewBag.AppCode" data-website="@ViewBag.WebSite">
@@ -17,7 +17,6 @@
     <script type="text/javascript" src="~/Scripts/template-web.js"></script>
     <script type="text/javascript" src="~/Scripts/utils.js"></script>
     <script type="text/javascript" src="~/Scripts/identity.js"></script>
-    <script type="text/javascript" src="~/Scripts/site.js"></script>
     @RenderSection("scripts", required: false)
 </body>
 </html>

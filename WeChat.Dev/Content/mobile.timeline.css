@@ -1,0 +1,420 @@
+/*主容器*/
+.timeline {
+    position: relative;
+    background-color: #fff;
+}
+
+.timeline-header {
+    position: relative;
+}
+
+    .timeline-header .node-state {
+        height: 34px;
+        line-height: 34px;
+    }
+
+        .timeline-header .node-state span {
+            position: relative;
+            font-size:12px;
+        }
+
+            .timeline-header .node-state span:before {
+                position: absolute;
+                content: "";
+                top: 1px;
+                left: -16px;
+                display: block;
+                width: 14px;
+                height: 14px;
+                border-radius: 50%;
+            }
+
+.zap-row.flex-container {
+    position: absolute;
+    top: 0;
+    width: 100%;
+}
+
+.timeline-container {
+    padding-bottom: 2px;
+    padding-top: 2px;
+    margin-top: 2px;
+    background-color: #FFF;
+}
+
+.timeline:before {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 71px;
+    width: 2px;
+    content: '';
+    background-color: #ddd;
+}
+
+.ios.timeline:before {
+    left: 71.5px;
+}
+/*单个节点*/
+.timeline .timeline-node-box {
+    position: relative;
+    margin-bottom: 30px;
+    padding-right: 2px;
+    font-size: 12px;
+    font-family: "Microsoft YaHei";
+}
+
+    .timeline .timeline-node-box input {
+        vertical-align: middle;
+    }
+
+/*节点头部*/
+.timeline-node-box .timeline-node-header {
+    position: absolute;
+    top: 50%;
+    z-index: 3;
+    margin-top: -17px;
+    width: 100px;
+    height: 34px;
+}
+
+    .timeline-node-box .timeline-node-header:after {
+        position: absolute;
+        right: -4px;
+        top: 50%;
+        content: '';
+        margin-top: -4px;
+        width: 6px;
+        height: 6px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        background-color: #FFF;
+        z-index: 3;
+    }
+
+.timeline-node-header .state {
+    position: relative;
+    display: inline-block;
+    height: 30px;
+    line-height: 30px;
+    vertical-align: top;
+    width: 19px;
+    text-align: center;
+    background-color: #FFF;
+}
+
+    .timeline-node-header .state:before {
+        position: absolute;
+        content: '';
+        top: 0;
+        left: 50%;
+        margin-left: -4px;
+        width: 0;
+        height: 0;
+        border-top: 5px solid #ddd;
+        border-left: 3px solid transparent;
+        border-right: 3px solid transparent;
+    }
+
+.no-before.state:before {
+    content: none;
+}
+
+.state .state-icon {
+    display: inline-block;
+    height: 13px;
+    width: 13px;
+    margin-top: 8px;
+    border: 1px solid #ddd;
+    border-radius: 50%;
+    /*box-shadow: inset 0 3px 2px rgba(255, 255, 255, .22), inset 0 -3px 2px rgba(0, 0, 0, .17), inset 0 20px 10px rgba(255, 255, 255, .12), 0 0 4px 1px rgba(0, 0, 0, .1), 0 3px 2px rgba(0, 0, 0, .2);*/
+}
+
+.timeline-node-header .line {
+    position: relative;
+    top: 0;
+    display: inline-block;
+    width: 15px;
+    margin-left: -4px;
+    height: 30px;
+    line-height: 30px;
+    vertical-align: top;
+}
+
+.timeline-node-box.btnbox .line {
+    width: 30px;
+}
+
+    .timeline-node-box.btnbox .line:before {
+        position: absolute;
+        top: 50%;
+        left: -1px;
+        content: '';
+        width: 0;
+        height: 0;
+        margin-top: -2.8px;
+        border-right: 5px solid #ddd;
+        border-top: 3px solid transparent;
+        border-bottom: 3px solid transparent;
+    }
+
+.timeline-node-header .line:after {
+    position: absolute;
+    top: 15px;
+    left: 0;
+    right: 0;
+    height: 1px;
+    border-bottom: 1px dotted #ccc;
+    content: '';
+}
+
+.timeline-node-box .first {
+    position: absolute;
+    top: 0;
+    width: 100px;
+    height: 50%;
+    background-color: #FFF;
+}
+
+.timeline-node-box .last {
+    position: absolute;
+    bottom: 0;
+    width: 100px;
+    height: 50%;
+    background-color: #FFF;
+}
+
+/*节点主内容*/
+.timeline-node-box .timeline-node-content {
+    margin-left: 100px;
+    padding: 5px;
+}
+
+/*步骤名称*/
+.timeline-node-box .step-name {
+    display: inline-block;
+    width: 60px;
+    padding-left: 3px;
+    line-height: 20px;
+    margin-top: 6px;
+    margin-right: -3px;
+    text-align: center;
+    word-break: break-all;
+    word-wrap: break-word;
+    font-size: 10px;
+    font-weight: normal;
+}
+
+/*步骤箱*/
+.timeline-node-box .step-box {
+    position: relative;
+}
+
+.timeline-node-box.btnbox .step-box {
+    width: 100px;
+    border: 1px dotted #ddd;
+    border-radius: 5px;
+    padding: 5px 10px;
+}
+
+.timeline-node-box.btnbox {
+    margin-bottom: 10px;
+    margin-top: -20px;
+}
+
+/*步骤内容*/
+.step-box .step-content {
+}
+
+.step-content .step-auditor-option {
+    display: inline-block;
+    min-width: 80px;
+}
+
+.step-ul {
+    overflow: auto;
+}
+
+    .step-ul .node-header {
+        float: left;
+        height: 22px;
+        line-height: 22px;
+    }
+
+    .step-ul .node-item {
+        float: left;
+        min-width: 30px;
+        height: 22px;
+        line-height: 22px;
+        text-align: center;
+    }
+
+.step-content .auditorbtn {
+}
+
+.timeline-node-box .btn-link {
+    text-decoration: none;
+    color: #333;
+    padding: 0;
+    height: 24px;
+    line-height: 24px;
+    font-size: 12px;
+}
+
+.btn-link.addstep:hover {
+    color: #4A90E2;
+}
+
+.btn-link.addstep:active {
+    text-shadow: 0 1px 3px #ddd;
+}
+
+/*步骤责任人*/
+.step-box .step-auditor {
+    line-height: 20px;
+    margin-bottom: 10px;
+    overflow: hidden;
+}
+
+.step-consult {
+}
+
+    .step-consult .consult-item {
+        min-height: 20px;
+        line-height: 20px;
+    }
+
+    .step-consult .consult-item-comments {
+        padding-left: 15px;
+    }
+
+.comments-time, .time {
+    font-style: normal;
+    font-size: 10px;
+}
+
+.step-auditor .pull-left {
+    float: left;
+}
+
+.step-auditor .pull-right {
+    float: right;
+}
+
+/*步骤时间戳*/
+.step-box .step-timestamp {
+    line-height: 20px;
+    margin-bottom: 10px;
+    font-size: 10px;
+}
+
+.new-node {
+}
+
+    /*新建步骤*/
+    .new-node label,
+    .new-node input,
+    .new-node span,
+    .new-node a,
+    .step-content label {
+        display: inline-block;
+        font-size: 12px;
+        height: 18px;
+        line-height: 18px;
+        font-weight: normal;
+    }
+
+    .new-node .form-row {
+        margin-top: 10px;
+    }
+
+.form-row:first-child {
+    margin: 0;
+}
+
+.new-node .btnbox {
+    text-align: right;
+}
+
+.new-node .btn-link:hover {
+    text-decoration: underline;
+}
+
+.step-timestamp, .step-auditor, .step-name {
+    word-break: break-all;
+    -ms-word-wrap: break-word;
+    word-wrap: break-word;
+}
+
+
+.bg-yellow-50 {
+    background-color: rgba(255, 230, 204, .5);
+}
+
+.bg-yellow {
+    background-color: #FFCE99;
+}
+
+.b-yellow {
+    border: 1px solid #FFCE99;
+}
+
+.b-green {
+    border: 1px solid #81DF81;
+}
+
+.bg-green-50 {
+    background-color: rgba(190, 238, 190, .5);
+}
+
+.bg-green {
+    background-color: #81DF81;
+}
+
+.bg-gray-50 {
+    background-color: rgba(242, 242, 242, .5);
+}
+
+.bg-gray {
+    background-color: #E6E6E6;
+}
+
+.bg-red {
+    background-color: red;
+}
+
+.b-red {
+    border: 1px solid red;
+}
+
+.bg-red-50 {
+    background-color: rgba(255, 0, 0, .5);
+}
+
+.text-red {
+    color: red !important;
+}
+
+.text-333 {
+    color: #333;
+}
+
+.text-lightskyblue {
+    color: lightskyblue !important;
+}
+
+.text-dodgerblue {
+    color: dodgerblue !important;
+}
+
+.w-60 {
+    width: 60px;
+}
+
+.w-100 {
+    width: 100px;
+}
+
+.timeline-hidden {
+    visibility: hidden !important;
+}

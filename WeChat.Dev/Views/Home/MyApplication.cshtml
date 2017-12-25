@@ -1,0 +1,33 @@
+﻿
+@{
+    ViewBag.Title = "我的发起";
+    Layout = "~/Views/Shared/_ListLayout.cshtml";
+}
+<div class="container list" id="myapplication"></div>
+@section scripts{
+    <script type="text/javascript">
+        try {
+            init();
+        } catch (e) {
+            console.error(e)
+        }
+
+        function init() {
+            axios
+                .get('/Scripts/data/myapplication.data.json')
+                .then(function (response) {
+                    var data = response.data;
+                    data.listCategory = 1;//发起
+                    try {
+                        var html = template('tpl_listtemplate', data);
+                        document.getElementById('myapplication').innerHTML = html;
+                    } catch (e) {
+                        console.error(e)
+                    }
+                })
+                .catch(function (err) {
+                    weui.alert(JSON.stringify(err));
+                });
+        }
+    </script>
+}

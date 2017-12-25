@@ -215,6 +215,15 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\images\cc_add.png" />
+    <Content Include="Content\images\icon_tabbar.png" />
+    <Content Include="Content\images\live_weixin.png" />
+    <Content Include="Content\images\normal.png" />
+    <Content Include="Content\images\touming.png" />
+    <Content Include="Content\images\tx01.jpg" />
+    <Content Include="Content\images\tx02.jpg" />
+    <Content Include="Content\mobile.timeline.css" />
+    <Content Include="Content\site.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -225,12 +234,23 @@
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Scripts\config.js" />
     <Content Include="Scripts\identity.js" />
     <Content Include="Scripts\axios.min.js" />
-    <Content Include="Scripts\jquery-3.2.1.min.js" />
+    <Content Include="Scripts\photoswipe\default-skin\default-skin.css" />
+    <Content Include="Scripts\photoswipe\default-skin\default-skin.png" />
+    <Content Include="Scripts\photoswipe\default-skin\default-skin.svg" />
+    <Content Include="Scripts\photoswipe\default-skin\preloader.gif" />
+    <Content Include="Scripts\photoswipe\photoswipe-ui-default.min.js" />
+    <Content Include="Scripts\photoswipe\photoswipe.css" />
+    <Content Include="Scripts\photoswipe\photoswipe.min.js" />
+    <Content Include="Scripts\polyfill.js" />
     <Content Include="Scripts\site.js" />
     <Content Include="Scripts\store.legacy.min.js" />
+    <Content Include="Scripts\template-web.js" />
+    <Content Include="Scripts\utils.js" />
     <Content Include="Scripts\weui.min.js" />
+    <Content Include="Scripts\zepto.min.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -251,10 +271,20 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Content\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <Content Include="Views\Shared\_WeuiLayout.cshtml" />
+    <Content Include="Views\Home\ListPanel.cshtml" />
+    <Content Include="Views\Home\BusinessHandlePage.cshtml" />
+    <Content Include="Views\Home\Detail.cshtml" />
+    <Content Include="Scripts\data.json" />
+    <Content Include="Scripts\mybacklog.data.json" />
+    <Content Include="Views\Home\MyCarbonCopy.cshtml" />
+    <Content Include="Views\Home\MyTransaction.cshtml" />
+    <Content Include="Views\Home\MyApplication.cshtml" />
+    <Content Include="Views\Shared\_ListLayout.cshtml" />
+    <Content Include="Scripts\data\myapplication.data.json" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\WeChat.Application\WeChat.Application.csproj">
@@ -296,7 +326,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>61083</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:8090/</IISUrl>
+          <IISUrl>http://localhost:8070/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

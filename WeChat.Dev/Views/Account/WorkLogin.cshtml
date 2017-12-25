@@ -1,37 +1,31 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "微信登录";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = null;
 }
-<div id="worklogin" data-appcode="@ViewBag.AppCode" data-returnurl="@ViewBag.ReturnUrl" data-nonce="@ViewBag.Nonce"></div>
-@section scripts{
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>微信登录</title>
+    <link rel="stylesheet" href="https://res.wx.qq.com/open/libs/weui/1.1.2/weui.min.css">
+</head>
+<body data-appcode="@ViewBag.AppCode" data-website="@ViewBag.WebSite" data-returnurl="@ViewBag.ReturnUrl" data-nonce="@ViewBag.Nonce">
+    <script src="~/Scripts/weui.min.js"></script>
+    <script src="~/Scripts/axios.min.js"></script>
+    <script src="~/Scripts/utils.js"></script>
+    <script src="~/Scripts/identity.js"></script>
     <script>
-        authorize();
 
-        function authorize() {
-            var dataset = document.getElementById('worklogin').dataset;
-            weui.loading("加载中");
-            axios
-                .post('/account/worklogin', {
-                    nonce: dataset.nonce,
-                })
-                .then(function (response) {
-                    try {
-                        var data = response.data;
-                        if (data.errcode !== 0) {
-                            weui.alert(data.errmsg);
-                        } else {
-                            localStorage.setItem(dataset.appcode + "_identity", JSON.stringify(data.token))
-                            window.location.href = dataset.returnurl
-                        }
-                    } catch (e) {
-                        console.log(e)
-                    }
-                })
-                .catch(function (error) {
-                    console.log(error); 
-                });
+        try {
+            var bodyData = document.body.dataset;
+            var instance = new IdentityHandler(bodyData.appcode, bodyData.website);
+            instance.wxLogin(bodyData.nonce, bodyData.returnurl);
+        } catch (e) {
+            weui.alert(e.message, { title: '警告' })
         }
+        
     </script>
-}
-
+</body>
+</html>

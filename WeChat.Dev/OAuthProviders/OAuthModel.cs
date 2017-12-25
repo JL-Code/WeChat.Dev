@@ -11,7 +11,7 @@ namespace WeChat.Dev.OAuthProviders
         public string TokenType { get; set; }
 
         [JsonProperty("expires_in", NullValueHandling = NullValueHandling.Ignore)]
-        public int ExpiresIn { get; set; }
+        public long ExpiresIn { get; set; }
 
         [JsonProperty("refresh_token", NullValueHandling = NullValueHandling.Ignore)]
         public string RefreshToken { get; set; }

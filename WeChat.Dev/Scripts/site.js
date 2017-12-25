@@ -1,8 +1,15 @@
 ﻿(function () {
 
     try {
+        var bodyData = document.body.dataset;
+        var identity = new IdentityHandler(bodyData.appcode, bodyData.website);
+        window.identityInstance = identity;
+        console.log(identity)
+        //identity.authorize();
+
         bindEvents();
     } catch (e) {
+        console.error(e);
         weui.alert(e.message);
     }
 
