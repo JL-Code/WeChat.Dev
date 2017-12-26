@@ -10,13 +10,24 @@
     @RenderSection("head", false)
 </head>
 <body data-appcode="@ViewBag.AppCode" data-website="@ViewBag.WebSite">
-    @RenderBody()
+    <div class="menu-pm container">
+        @RenderBody()
+        <!--底部菜单-->
+        <div class="weui-form-preview__ft fixed_b">
+            <a class="weui-form-preview__btn weui-form-preview__btn_default" href="/home/listpanel">待办</a>
+            <button class="weui-form-preview__btn weui-form-preview__btn_default" type="button" onclick="showAction()">已办</button>
+            @*<a class="weui-form-preview__btn weui-form-preview__btn_default" href="/home/myapplication">发起</a>
+            <a class="weui-form-preview__btn weui-form-preview__btn_default" href="/home/MyTransaction">已办</a>*@
+            <a class="weui-form-preview__btn weui-form-preview__btn_default" href="/home/MyCarbonCopy">抄送</a>
+        </div>
+    </div>
     <script type="text/javascript" src="~/Scripts/weui.min.js"></script>
     <script type="text/javascript" src="~/Scripts/axios.min.js"></script>
     <script type="text/javascript" src="~/Scripts/polyfill.js"></script>
     <script type="text/javascript" src="~/Scripts/template-web.js"></script>
-    <script type="text/javascript" src="~/Scripts/utils.js"></script>
-    <script type="text/javascript" src="~/Scripts/identity.js"></script>
+    <script type="text/javascript" src="~/Scripts/utils.js?v=003"></script>
+    <script type="text/javascript" src="~/Scripts/identity.js?v=003"></script>
+    <script type="text/javascript" src="~/Scripts/site.js?v=003"></script>
     <script type="text/html" id="tpl_listtemplate">
         {{each items}}
         <!--listCategory 0待办 1发起 2已办 3抄送-->
@@ -26,7 +37,7 @@
                     <div class="weui-flex__item">
                         {{if (listCategory === 0 || listCategory === 2|| listCategory === 3)}}
                         <!--未读小红点-->
-                        {{if $value.ActivationTime == "0001-01-01 00:00"}}
+                        {{if $value.ActivationTime == "0003-01-01 00:00"}}
                         <span class="weui-badge">New</span>
                         {{/if}}
                         {{/if}}

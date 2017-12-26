@@ -3,7 +3,7 @@
     ViewBag.Title = "ListPanel";
     Layout = "~/Views/Shared/_ListLayout.cshtml";
 }
-<div class="container list" id="mybacklog"></div>
+<div class="list" id="mybacklog"></div>
 @section scripts{
     <script>
         try {
@@ -24,6 +24,7 @@
 
             var html = template('tpl_listtemplate', data);
             document.querySelector('#mybacklog').innerHTML = html;
+            utils.setTitle("我的待办", data.items.length);
 
         }
 

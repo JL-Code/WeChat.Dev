@@ -285,6 +285,8 @@
     <Content Include="Views\Home\MyApplication.cshtml" />
     <Content Include="Views\Shared\_ListLayout.cshtml" />
     <Content Include="Scripts\data\myapplication.data.json" />
+    <Content Include="Scripts\data\MyTransaction.data.json" />
+    <Content Include="Scripts\data\MyCarbonCopy.data.json" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\WeChat.Application\WeChat.Application.csproj">
@@ -326,7 +328,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>61083</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:8070/</IISUrl>
+          <IISUrl>http://localhost:8070</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
@@ -334,6 +336,7 @@
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>
+      <UserProperties Scripts_4data_4MyTransaction_1data_1json__JSONSchema="{" />
     </VisualStudio>
   </ProjectExtensions>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

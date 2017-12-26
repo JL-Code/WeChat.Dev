@@ -26,9 +26,24 @@
             context = document.querySelectorAll(context);
         }
         document.body.addEventListener(type, function (e) {
-
+            e.preventDefault();
+            var eTarget = e.target;
+            var selectorEl = context[0].querySelector(selector);
+            var clickedListItem = closest(eTarget, function (el) {
+                return el.querySelector(selector);
+            });
+            if (eTarget === selectorEl || clickedListItem) {
+                listener(e);
+            }
         });
     }
+
+    //递归查找最近父元素
+    function closest(el, fn) {
+        return el && (fn(el) ? el : closest(el.parentNode, fn));
+    };
+
+
 
     function off() { }
 
@@ -45,7 +60,33 @@
         }
     }
 
+    function setTitle(name, num) {
+        var titText = num === undefined ? name : (name + "( " + num + " )");
+        var title = document.getElementsByTagName('title');
+
+        function iframeLoad() {
+            setTimeout(function () {
+                iframeEl.removeEventListener('load', iframeLoad);
+                iframeEl.remove();
+            }, 0)
+        }
+
+        if (os().ios) {
+            var bodyEl = document.body;
+            var iframeEl = document.createElement('iframe');
+            document.title = titText;
+            iframeEl.src = '/Content/images/touming.png';
+            iframeEl.onload = iframeLoad;
+            bodyEl.appendChild(iframeEl);
+            return
+        }
+        title[0].innerText = titText;
+    };
+
     return {
-        jumpLink: jumpLink
+        jumpLink: jumpLink,
+        os: os,
+        on: on,
+        setTitle: setTitle
     }
 }))

@@ -1,11 +1,11 @@
 ﻿(function () {
 
     try {
-        var bodyData = document.body.dataset;
-        var identity = new IdentityHandler(bodyData.appcode, bodyData.website);
-        window.identityInstance = identity;
-        console.log(identity)
-        //identity.authorize();
+        //var bodyData = document.body.dataset;
+        //var identity = new IdentityHandler(bodyData.appcode, bodyData.website);
+        //window.identityInstance = identity;
+        //console.log(identity)
+        ////identity.authorize();
 
         bindEvents();
     } catch (e) {
@@ -17,18 +17,9 @@
      * @description 事件绑定
      */
     function bindEvents() {
-        var links = document.querySelectorAll('a');
-        links.forEach(function (link) {
-            var flag = link.getAttribute('mask')
-            if (flag === "true")
-                link.addEventListener('click', function (e) {
-                    e.preventDefault()
-                    weui.loading('加载中')
-                    setTimeout(function () {
-                        window.location.href = e.target.href
-                    }, 50)
-                })
-        })
+        //utils.on('.list', 'click', 'a', function (e) {
+        //    alert(1212);
+        //})
     }
 
     //绑定事件
@@ -56,3 +47,24 @@
         }
     }
 })();
+
+function showAction() {
+    weui.actionSheet([{
+        label: '我的发起',
+        onClick: function () {
+            utils.jumpLink("/home/myapplication");
+        }
+    },
+    {
+        label: '我的办理',
+        onClick: function () {
+            utils.jumpLink("/home/mytransaction");
+        }
+    }
+    ], [{
+        label: '取消',
+        onClick: function () {
+            console.log('取消');
+        }
+    }]);
+}

@@ -84,7 +84,6 @@
         }
 
         function init() {
-            //var cclistEl = document.querySelector('#cclist_items');
             var previewEl = document.querySelector('#handle_form_preview');
             var preview = template('tpl_handleformpreview', {
                 contentComponent: {
@@ -107,10 +106,7 @@
                     show: true
                 }
             });
-            //cclistEl.innerHTML = html;
             previewEl.innerHTML = preview;
-            //cclistEl.dataset.selectUserids = JSON.stringify(ccdata.ccids)
-            //console.log(cclistEl.dataset)
         }
 
         function bindEvents() {
@@ -162,7 +158,7 @@
         function invokeAddressList() {
             var cclistEl = document.querySelector('#cclist_items');
             var lastChildEl = cclistEl.querySelector('a.cc-add');
-            var selectedUserIds = cclistEl.dataset.selectUserids || [];
+            var selectedUserIds = cclistEl.dataset.selectUserids || ccids || [];
             wx.invoke("selectEnterpriseContact", {
                 "fromDepartmentId": 0,// 必填，-1表示打开的通讯录从自己所在部门开始展示, 0表示从最上层开始
                 "mode": "multi",// 必填，选择模式，single表示单选，multi表示多选
@@ -250,14 +246,17 @@
             var cclistEl = document.querySelector('#cclist_items');
             var parentNode = sourceEl.parentNode;
             var userid = sourceEl.dataset.userid;
-            var delIndex = ccids.findIndex(function (el) {
-                return el === userid;
+
+            var delIndex = ccids.findIndex(function (ccid) {
+                return ccid == userid;
             })
-            ccids = ccids.splice(delIndex, 1);
+
+            ccids.splice(delIndex, 1);
             cclistEl.dataset.selectUserids = JSON.stringify(ccids);
             parentNode.remove();
         }
 
+        //获取表单数据
         function getFormData(el) {
             el.classList.add('weui-btn_loading');
             el.style.background = '#eee';

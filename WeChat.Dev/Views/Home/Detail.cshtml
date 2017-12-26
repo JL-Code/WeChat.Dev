@@ -25,16 +25,18 @@
         <div class="timeline" id="form_timeline"></div>
     </section>
     <!--时间轴结束-->
+    <!--底部菜单-->
     <div class="weui-form-preview__ft fixed_b">
         <a class="weui-form-preview__btn weui-form-preview__btn_default" href="javascript:window.history.back();">取消</a>
         <button class="weui-form-preview__btn weui-form-preview__btn_primary" onclick="disaccord()" type="button">不同意</button>
         <button class="weui-form-preview__btn weui-form-preview__btn_primary" onclick="agree()" type="button">同意</button>
         <button class="weui-form-preview__btn weui-form-preview__btn_primary" onclick="moreActions()" type="button">更多</button>
     </div>
+    <!--附件预览-->
     <!-- Root element of PhotoSwipe. Must have class pswp.photoswipe的根元素必须有样式.pswp-->
     <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
         <!-- Background of PhotoSwipe. photoswipe背景
-    It's a separate element, as animating opacity is faster than rgba(). 它是一个单独的元素，因为动画的不透明度比rgba快-->
+        It's a separate element, as animating opacity is faster than rgba(). 它是一个单独的元素，因为动画的不透明度比rgba快-->
         <div class="pswp__bg"></div>
         <!-- Slides wrapper with overflow:hidden.幻灯片包装防止幻灯片溢出-->
         <div class="pswp__scroll-wrap">
@@ -657,7 +659,7 @@
 
                 // triggers when user clicks on thumbnail 当用户点击缩略图我们触发图片预览
                 var onThumbnailsClick = function (e) {
-                    
+
                     e = e || window.event;
                     e.preventDefault ? e.preventDefault() : e.returnValue = false;
 

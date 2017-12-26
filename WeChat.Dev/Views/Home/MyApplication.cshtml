@@ -3,7 +3,7 @@
     ViewBag.Title = "我的发起";
     Layout = "~/Views/Shared/_ListLayout.cshtml";
 }
-<div class="container list" id="myapplication"></div>
+<div class="list" id="myapplication"></div>
 @section scripts{
     <script type="text/javascript">
         try {
@@ -21,6 +21,7 @@
                     try {
                         var html = template('tpl_listtemplate', data);
                         document.getElementById('myapplication').innerHTML = html;
+                        utils.setTitle("我的发起", data.items.length);
                     } catch (e) {
                         console.error(e)
                     }
