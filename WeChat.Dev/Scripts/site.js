@@ -49,6 +49,8 @@
 })();
 
 function showAction() {
+    var labelHtml = '<span style= "vertical-align: middle" >我的发起</span>' +
+        '<span class="weui-badge" style="margin-left: 5px;">99+</span>';
     weui.actionSheet([{
         label: '我的发起',
         onClick: function () {
@@ -56,7 +58,7 @@ function showAction() {
         }
     },
     {
-        label: '我的办理',
+        label: '<span>我的办理12</span>',
         onClick: function () {
             utils.jumpLink("/home/mytransaction");
         }

@@ -1,4 +1,8 @@
-﻿using System.Web.Mvc;
+﻿using System;
+using System.IO;
+using System.Text;
+using System.Web;
+using System.Web.Mvc;
 using WeChat.Infrastructure;
 using Zap.WeChat.SDK;
 using Zap.WeChat.SDK.Cache;
@@ -80,5 +84,16 @@ namespace WeChat.Dev.Controllers
             return View();
         }
 
+        public ActionResult OfficePreview(string filename)
+        {
+            var path = $"E:\\00_Workspace\\Company\\Zap_WeChat_SDK\\WeChat.Dev\\WeChat.Dev\\Upload\\{filename}";
+            if (!System.IO.File.Exists(path))
+                throw new Exception("文件不存在！");
+            return File(path, MiMEUtil.GetMimeMapping(filename), HttpUtility.UrlEncode(filename, Encoding.UTF8));
+        }
+
+        public ActionResult Preview() {
+            return View();
+        }
     }
 }
