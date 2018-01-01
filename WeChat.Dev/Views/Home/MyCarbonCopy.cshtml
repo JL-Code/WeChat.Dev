@@ -16,12 +16,13 @@
             axios
                 .get('/Scripts/data/MyCarbonCopy.data.json')
                 .then(function (response) {
-                    var data = response.data;
-                    data.listCategory = 3;//抄送
                     try {
+                        var data = response.data;
+                        data.listCategory = 3;//抄送
                         var html = template('tpl_listtemplate', data);
                         document.getElementById('MyCarbonCopy').innerHTML = html;
                         utils.setTitle("我的抄送", data.items.length);
+                        bindJumpLink();
                     } catch (e) {
                         console.error(e)
                     }

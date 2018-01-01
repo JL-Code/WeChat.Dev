@@ -11,7 +11,7 @@
                 var data = response.data;
                 data.listCategory = 0;//待办
                 createCells(data);
-                bindEvents();
+                bindJumpLink();
             }).catch(function (err) {
                 weui.alert();
             })
@@ -28,20 +28,6 @@
 
         }
 
-        function bindEvents() {
-            var links = document.querySelectorAll('a');
-            links.forEach(function (link) {
-                var flag = link.getAttribute('mask')
-                if (flag === "true")
-                    link.addEventListener('click', function (e) {
-                        e.preventDefault()
-                        var _this = this;
-                        weui.loading('加载中')
-                        setTimeout(function () {
-                            window.location.href = _this.href
-                        }, 50)
-                    })
-            })
-        }
+        
     </script>
 }

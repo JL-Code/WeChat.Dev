@@ -58,7 +58,7 @@ function showAction() {
         }
     },
     {
-        label: '<span>我的办理12</span>',
+        label: '我的办理',
         onClick: function () {
             utils.jumpLink("/home/mytransaction");
         }
@@ -69,4 +69,19 @@ function showAction() {
             console.log('取消');
         }
     }]);
+}
+
+/**
+ * @description 链接跳转方法
+ */
+function bindJumpLink() {
+    var links = document.querySelectorAll('a');
+    links.forEach(function (link) {
+        var flag = link.getAttribute('mask')
+        if (flag === "true")
+            link.addEventListener('click', function (e) {
+                e.preventDefault()
+                utils.jumpLink(this.href);
+            })
+    })
 }
