@@ -7,6 +7,7 @@
     <title>@ViewBag.Ttile</title>
     <link rel="stylesheet" href="https://res.wx.qq.com/open/libs/weui/1.1.2/weui.min.css">
     <link rel="stylesheet" href="~/Content/site.css" />
+    <link href="~/Content/iconfont/iconfont.css" rel="stylesheet" />
     @RenderSection("head", false)
 </head>
 <body data-appcode="@ViewBag.AppCode" data-website="@ViewBag.WebSite">
@@ -66,7 +67,7 @@
                         <span class="weui-badge">超时</span>
                         {{/if}}
                         {{if $value.IsExistAttachment}}
-                        <i>附件</i>
+                        <i class="iconfont icon-attachment text-golden"></i>
                         {{/if}}
                     </div>
                 </div>

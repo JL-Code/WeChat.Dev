@@ -215,6 +215,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\iconfont\iconfont.css" />
+    <Content Include="Content\iconfont\iconfont.svg" />
     <Content Include="Content\images\cc_add.png" />
     <Content Include="Content\images\icon_tabbar.png" />
     <Content Include="Content\images\live_weixin.png" />
@@ -273,6 +275,8 @@
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\iconfont\iconfont.eot" />
+    <Content Include="Content\iconfont\iconfont.ttf" />
     <None Include="packages.config" />
     <Content Include="Views\Shared\_WeuiLayout.cshtml" />
     <Content Include="Views\Home\ListPanel.cshtml" />
