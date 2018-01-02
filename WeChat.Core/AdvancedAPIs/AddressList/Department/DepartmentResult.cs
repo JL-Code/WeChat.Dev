@@ -28,4 +28,13 @@ namespace Zap.WeChat.SDK.AdvancedAPIs.AddressList
         [JsonProperty("order")]
         public int Order { get; set; }
     }
+
+    public class CreateDepartmentResult : WeChatResponse
+    {
+        /// <summary>
+        /// 创建的部门id
+        /// </summary>
+        [JsonProperty("id")]
+        public long Id { get; set; }
+    }
 }

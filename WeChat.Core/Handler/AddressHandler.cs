@@ -38,5 +38,24 @@ namespace Zap.WeChat.SDK.Handler
         {
             return AddressListApi.ListDepartmentMemberInfo(AppKey, departmentId, fetchChild, maxJsonLength);
         }
+
+        #region Operation
+
+        /// <summary>
+        /// 创建部门
+        /// 系统应用须拥有父部门的管理权限。
+        /// 注意，部门的最大层级为15层；部门总数不能超过3万个；每个部门下的节点不能超过3万个。建议保证创建的部门和对应部门成员是串行化处理。
+        /// </summary>
+        /// <param name="name">部门名称。长度限制为1~64个字节，字符不能包括\:?”<>｜</param>
+        /// <param name="parentId">父亲部门id。根部门id为1 </param>
+        /// <param name="order">在父部门中的次序。从1开始，数字越大排序越靠后</param>
+        /// <param name="id">部门ID。用指定部门ID新建部门，不指定此参数时，则自动生成</param>
+        /// <returns></returns>
+        public CreateDepartmentResult CreateDepartment(string name, long parentId, int order = 1, long? id = null)
+        {
+            return AddressListApi.CreateDepartment(AppKey, name, parentId, order, id);
+        }
+
+        #endregion
     }
 }

@@ -106,6 +106,19 @@ namespace Zap.WeChat.SDK
         }
 
 
+        public static AdvancedAPIs.AddressList.CreateDepartmentResult ToCreateDepartmentResult(this Senparc.Weixin.Work.AdvancedAPIs.MailList.CreateDepartmentResult result)
+        {
+            if (result == null)
+                throw new ArgumentNullException(nameof(result));
+            return new AdvancedAPIs.AddressList.CreateDepartmentResult
+            {
+                ErrorCode = result.ErrorCodeValue,
+                ErrorMessage = result.errmsg,
+                Id = result.id
+            };
+        }
+
+
         //public static Dictionary<string, List<MemberResult>> To(this List<MemberResult> result)
         //{
         //    result.ForEach(m =>
