@@ -1,4 +1,8 @@
 /*主容器*/
+ul, ol {
+    list-style: none;
+}
+
 .timeline {
     position: relative;
     background-color: #fff;
@@ -15,7 +19,7 @@
 
         .timeline-header .node-state span {
             position: relative;
-            font-size:12px;
+            font-size: 12px;
         }
 
             .timeline-header .node-state span:before {
@@ -36,8 +40,8 @@
 }
 
 .timeline-container {
-    padding-bottom: 2px;
-    padding-top: 2px;
+    padding-top: 15px;
+    padding-bottom: 15px;
     margin-top: 2px;
     background-color: #FFF;
 }
@@ -46,8 +50,8 @@
     position: absolute;
     top: 0;
     bottom: 0;
-    left: 71px;
-    width: 2px;
+    left: 72px;
+    width: 1px;
     content: '';
     background-color: #ddd;
 }
@@ -59,14 +63,17 @@
 .timeline .timeline-node-box {
     position: relative;
     margin-bottom: 30px;
-    padding-right: 2px;
     font-size: 12px;
     font-family: "Microsoft YaHei";
 }
 
-    .timeline .timeline-node-box input {
-        vertical-align: middle;
-    }
+.timeline-node-box:last-child {
+    margin-bottom: 0;
+}
+
+.timeline .timeline-node-box input {
+    vertical-align: middle;
+}
 
 /*节点头部*/
 .timeline-node-box .timeline-node-header {
@@ -108,7 +115,7 @@
         content: '';
         top: 0;
         left: 50%;
-        margin-left: -4px;
+        margin-left: -2.98px;
         width: 0;
         height: 0;
         border-top: 5px solid #ddd;
@@ -187,8 +194,10 @@
 /*节点主内容*/
 .timeline-node-box .timeline-node-content {
     margin-left: 100px;
-    margin-right:10px;
+    margin-right: 10px;
     padding: 5px;
+    border: 1px solid #e5e5e5;
+    border-radius: 5px;
 }
 
 /*步骤名称*/
@@ -202,7 +211,7 @@
     text-align: center;
     word-break: break-all;
     word-wrap: break-word;
-    font-size: 10px;
+    font-size: 12px;
     font-weight: normal;
 }
 
@@ -250,8 +259,6 @@
         text-align: center;
     }
 
-.step-content .auditorbtn {
-}
 
 .timeline-node-box .btn-link {
     text-decoration: none;
@@ -278,6 +285,7 @@
 }
 
 .step-consult {
+    list-style: none;
 }
 
     .step-consult .consult-item {
@@ -286,12 +294,14 @@
     }
 
     .step-consult .consult-item-comments {
-        padding-left: 15px;
+        padding: 5px 5px 5px 12px;
+        background-color: rgba(248, 248, 248, 0.76);
     }
 
-.comments-time, .time {
+.comments-time {
     font-style: normal;
-    font-size: 10px;
+    font-size: 11px;
+    color: #999;
 }
 
 .step-auditor .pull-left {
@@ -325,9 +335,13 @@
         font-weight: normal;
     }
 
-    .new-node .form-row {
-        margin-top: 10px;
-    }
+.name {
+    color: #0bb20c;
+}
+
+.new-node .form-row {
+    margin-top: 10px;
+}
 
 .form-row:first-child {
     margin: 0;
@@ -347,79 +361,20 @@
     word-wrap: break-word;
 }
 
+/*颜色辅助*/
 
-.bg-yellow-50 {
-    background-color: rgba(255, 230, 204, .5);
+.timeline-node-box .bg-green {
+    background-color: #81DF81 !important;
 }
 
-.bg-yellow {
-    background-color: #FFCE99;
+.timeline-node-box .bg-gray {
+    background-color: #E6E6E6 !important;
 }
 
-.b-yellow {
-    border: 1px solid #FFCE99;
+.timeline-node-box .bg-red {
+    background-color: #ff0000 !important;
 }
 
-.b-green {
-    border: 1px solid #81DF81;
-}
-
-.b-gray {
-    border: 1px solid #E6E6E6;
-}
-
-.bg-green-50 {
-    background-color: rgba(190, 238, 190, .5);
-}
-
-.bg-green {
-    background-color: #81DF81;
-}
-
-.bg-gray-50 {
-    background-color: rgba(242, 242, 242, .5);
-}
-
-.bg-gray {
-    background-color: #E6E6E6;
-}
-
-.bg-red {
-    background-color: red;
-}
-
-.b-red {
-    border: 1px solid red;
-}
-
-.bg-red-50 {
-    background-color: rgba(255, 0, 0, .5);
-}
-
-.text-red {
-    color: red !important;
-}
-
-.text-333 {
-    color: #333;
-}
-
-.text-lightskyblue {
-    color: lightskyblue !important;
-}
-
-.text-dodgerblue {
-    color: dodgerblue !important;
-}
-
-.w-60 {
-    width: 60px;
-}
-
-.w-100 {
-    width: 100px;
-}
-
-.timeline-hidden {
-    visibility: hidden !important;
+.timeline-node-box .bg-yellow {
+    background-color: #FFCE99 !important
 }

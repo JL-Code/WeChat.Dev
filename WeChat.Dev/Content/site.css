@@ -25,6 +25,12 @@ a.weui-media-box {
     display: inline-block;
     width: 100%;
 }
+
+.weui-grid__icon .iconfont {
+    color: #2dc3e8;
+    font-size: 28px;
+    line-height: 28px;
+}
 /*.weui-form-preview__ft {
     position: fixed;
     z-index: 4;

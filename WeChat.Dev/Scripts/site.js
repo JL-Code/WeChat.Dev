@@ -6,7 +6,6 @@
         //window.identityInstance = identity;
         //console.log(identity)
         ////identity.authorize();
-
         bindEvents();
     } catch (e) {
         console.error(e);
@@ -20,31 +19,6 @@
         //utils.on('.list', 'click', 'a', function (e) {
         //    alert(1212);
         //})
-    }
-
-    //绑定事件
-    function bind(element, event, callback, useCapture) {
-        if (element.addEventListener) {
-            element.addEventListener(event, callback, useCapture);
-        } else {
-            // IE8 fallback
-            element.attachEvent('on' + event, function (event) {
-                // `event` and `event.target` are not provided in IE8
-                event = event || window.event;
-                event.target = event.target || event.srcElement;
-                callback(event);
-            });
-        }
-    }
-
-    //解除绑定事件
-    function unbind(element, event, callback, useCapture) {
-        if (element.removeEventListener) {
-            element.removeEventListener(event, callback, useCapture);
-        } else {
-            // IE8 fallback
-            element.detachEvent('on' + event, callback);
-        }
     }
 })();
 
@@ -85,3 +59,52 @@ function bindJumpLink() {
             })
     })
 }
+
+/**
+ * @description 渲染时间
+ */
+function renderTimeGo() {
+    if (typeof timeago === 'function') {
+        var timeagoInstance = timeago();
+        timeagoInstance.render(document.querySelectorAll('.time_need_to_be_rendered'), 'zh_CN');
+    }
+}
+
+/**
+ * @description 绑定事件
+ * @param {DOM} element
+ * @param {string} event
+ * @param {function} callback
+ * @param {bool} useCapture
+ */
+function bind(element, event, callback, useCapture) {
+    if (element.addEventListener) {
+        element.addEventListener(event, callback, useCapture);
+    } else {
+        // IE8 fallback
+        element.attachEvent('on' + event, function (event) {
+            // `event` and `event.target` are not provided in IE8
+            event = event || window.event;
+            event.target = event.target || event.srcElement;
+            callback(event);
+        });
+    }
+}
+
+/**
+ * @description 解除绑定事件
+ * @param {DOM} element
+ * @param {string} event
+ * @param {function} callback
+ * @param {bool} useCapture
+ */
+function unbind(element, event, callback, useCapture) {
+    if (element.removeEventListener) {
+        element.removeEventListener(event, callback, useCapture);
+    } else {
+        // IE8 fallback
+        element.detachEvent('on' + event, callback);
+    }
+}
+
+

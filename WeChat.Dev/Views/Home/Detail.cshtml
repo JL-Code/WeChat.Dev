@@ -1,16 +1,12 @@
-﻿
-@{
-    ViewBag.Title = "Detail";
+﻿@{
+    ViewBag.Title = "流程详情";
     Layout = "~/Views/Shared/_WeuiLayout.cshtml";
 }
 @section head{
+    <link href="~/Content/iconfont/iconfont.css" rel="stylesheet" />
     <link href="~/Content/mobile.timeline.css" rel="stylesheet" />
     <link href="~/Scripts/photoswipe/photoswipe.css" rel="stylesheet" />
     <link href="~/Scripts/photoswipe/default-skin/default-skin.css" rel="stylesheet" />
-    <style type="text/css">
-        .iframe {
-        }
-    </style>
 }
 <div class="menu-pm container">
     <h4 class="blockquote before-darkorange">业务信息</h4>
@@ -119,31 +115,29 @@
         <div class="timeline-node-box">
             <div class="timeline-node-header">
                 <label class="step-name" title="{{step.StepName}}">{{step.StepName}}</label>
-                <span class="state {{step.noBefore===false ? "" : "no-before"}}">
+                <span class="state {{step.noBefore === false ? "" : "no-before"}}">
                     <i class="state-icon {{step.bgColor}}"></i>
                 </span>
                 <b class="line"></b>
             </div>
-            <div class="timeline-node-content step-box  {{step.bColor}}">
+            <div class="timeline-node-content step-box">
                 <div class="step-auditor">
                     <div class="pull-left">
-                        {{step.nodes[0].Auditor}}
+                        <span class="name">{{step.nodes[0].Auditor}}</span>
                         {{if step.StepType == 0 && !step.toVoid}}
-                        <b>发起</b>
+                        发起
                         {{/if}}
                     </div>
-                    <div class="pull-right text-333 time">{{step.nodes[0].HandlerTime}}</div>
+                    <time class="pull-right comments-time" datetime="{{step.nodes[0].HandlerTime}}">{{step.nodes[0].HandlerTime}}</time>
                 </div>
                 <div class="step-content">
                     {{if step.StepType == 0 && !step.toVoid}}
-                    <b>发起</b>
+                    发起
                     {{/if}}
                     {{if step.StepType == 0 && step.toVoid}}
-                    <b>
-                        {{if step.nodes[0].extendNodeInfo}}
-                        {{step.nodes[0].extendNodeInfo.HandlerSuggestion}}
-                        {{/if}}
-                    </b>
+                    {{if step.nodes[0].extendNodeInfo}}
+                    {{step.nodes[0].extendNodeInfo.HandlerSuggestion}}
+                    {{/if}}
                     {{/if}}
                     {{if step.StepType == 3}}
                     {{if step.nodes[0].NodeStatus == 0}}
@@ -167,13 +161,13 @@
                 </span>
                 <b class="line"></b>
             </div>
-            <div class="timeline-node-content step-box  {{step.bColor}}">
+            <div class="timeline-node-content step-box">
                 {{if step.each}}
                 <ul class="step-auditor step-ul">
-                    <li class="node-header"><b>责任人：</b></li>
+                    <li class="node-header">责任人：</li>
                     {{each step.nodes node nodeIndex}}
                     <li class="node-item">
-                        {{node.Auditor}}
+                        <span class="name">{{node.Auditor}}</span>
                         {{if nodeIndex!=(step.nodes.length-1)}},{{/if}}
                     </li>
                     {{/each}}
@@ -182,41 +176,43 @@
                 {{if !step.each}}
                 <div class="step-auditor">
                     <div class="pull-left">
-                        {{step.nodes[0].Auditor}}
-                        <b>{{step.nodes[0].FlowHandleTypeName}}</b>
+                        <span class="name">{{step.nodes[0].Auditor}}</span>
+                        {{step.nodes[0].FlowHandleTypeName}}
                     </div>
                     {{if step.toVoid}}
-                    <div class="pull-right text-333 time">{{step.nodes[0].extendNodeInfo.HandleDatetime || ""}}</div>
+                    <time class="pull-right comments-time" datetime="{{step.nodes[0].extendNodeInfo.HandleDatetime}}"></time>
                     {{/if}}
                     {{if !step.toVoid}}
-                    <div class="pull-right text-333 time">{{step.nodes[0].HandlerTime || "未到达"}}</div>
+                    <time class="pull-right comments-time" datetime="{{step.nodes[0].HandlerTime}}"></time>
                     {{/if}}
                 </div>
                 {{/if}}
                 <div class="step-content">
+                    <!--协商 开始-->
                     <ul class="step-consult">
                         {{each step.nodes node nodeIndex}}
                         {{if node.extendNodeInfo && node.extendNodeInfo[node.NodeInstanceGuid]}}
                         {{each node.extendNodeInfo[node.NodeInstanceGuid] extNode extIndex}}
                         <li class="consult-item">
-                            {{extNode.sender}}&nbsp;<b>{{extNode.title}}:</b>&nbsp;{{extNode.recipient}}
-                            ：{{extNode.content}}
-                            <i class="comments-time pull-right">{{extNode.extra.HandleDatetime}}</i>
+                            <span class="name">{{extNode.sender}}</span>&nbsp;{{extNode.title}}&nbsp;<span class="name">{{extNode.recipient}}</span>
+                            ：{{extNode.content}}<p><time class="comments-time" datetime="{{extNode.extra.HandleDatetime}}"></time></p>
+                            <!--一级回复 开始-->
                             {{if extNode.comments}}
-                            <p class="consult-item-comments">
-                                {{extNode.comments[0].sender}}&nbsp;<b>{{extNode.comments[0].title}}:</b>&nbsp;{{extNode.comments[0].recipient}}
-                                :{{extNode.comments[0].content}}
-                                <i class="comments-time pull-right">{{extNode.comments[0].extra.HandleDatetime}}</i>
-                            </p>
+                            <div class="consult-item-comments">
+                                <span class="name">{{extNode.comments[0].sender}}</span>&nbsp;{{extNode.comments[0].title}}&nbsp;<span class="name">{{extNode.comments[0].recipient}}</span>：{{extNode.comments[0].content}}<p><time class="comments-time" datetime="{{extNode.comments[0].extra.HandleDatetime}}"></time></p>
+                            </div>
                             {{/if}}
+                            <!--一级回复 结束-->
                         </li>
                         {{/each}}
                         {{/if}}
                         {{/each}}
                     </ul>
+                    <!--协商 结束-->
+                    <!--授权交办 开始-->
                     {{if step.nodes[0].TransferToNodeGuid}}
-                    <p style="color:#33c;padding:5px">
-                        {{step.nodes[0].Handler}}&nbsp;<b>授权交办给:</b>&nbsp;{{step.nodes[0].Transferor}}：
+                    <p>
+                        <span class="name">{{step.nodes[0].Handler}}</span>&nbsp;授权交办&nbsp;<span class="name">{{step.nodes[0].Transferor}}</span>&nbsp;：
                         {{/if}}
                         {{if step.toVoid}}
                         {{step.nodes[0].extendNodeInfo.HandlerSuggestion || ""}}
@@ -227,6 +223,7 @@
                         {{if step.nodes[0].TransferToNodeGuid}}
                     </p>
                     {{/if}}
+                    <!--授权交办 结束-->
                 </div>
             </div>
             <div class="{{step.patch}}"></div>
@@ -239,7 +236,7 @@
             {{each Attachments}}
             <a href="javascript:;" class="weui-grid {{$value.IsPhoto ? 'figure' : ''}}" data-isphoto="{{$value.IsPhoto}}" data-size="{{$value.Width}}x{{$value.Height}}" data-fileid="{{$value.ID}}" data-userid="{{userid}}" data-href="{{$value.Path}}" data-doctype="{{$value.Type}}">
                 <div class="weui-grid__icon">
-                    <img src="/Content/images/icon_tabbar.png" alt="图片">
+                    <i class="iconfont icon-png"></i>
                 </div>
                 <p class="weui-grid__label">{{$value.Name}}</p>
             </a>
@@ -247,22 +244,38 @@
         </div>
     </script>
     <script type="text/javascript">
+        var loading = weui.loading();
+
         init();
+        galleryInit();
 
         function init() {
-            axios.get('/Scripts/data.json').then(function (response) {
+            axios.get('/Scripts/data/timeline.data.json').then(function (response) {
                 var data = response.data;
                 var formHtml = template('tpl_formtable', data);
                 var attachmentHtml = template('tpl_attachment', data);
                 var timelineHtml = createTimeLine(data.FlowInstance, data.NodeExtends);
-                //console.log(timelineHtml)
                 document.getElementById('form_container').innerHTML = formHtml;
                 document.getElementById('form_attachment').innerHTML = attachmentHtml;
                 document.getElementById('form_timeline').innerHTML = timelineHtml;
+                utils.setTitle(data.FlowInstance.Title);
+                setTimeout(function () {
+                    if (typeof timeago === 'function') {
+                        var timeagoInstance = timeago();
+                        var times = document.querySelectorAll('.comments-time');
+                        var tempTime;
+                        times.forEach(function (time) {
+                            tempTime = time.getAttribute('datetime');
+                            if (tempTime) {
+                                time.innerHTML = timeagoInstance.format(tempTime, 'zh_CN');
+                            }
+                        })
+                    }
+                    loading.hide();
+                }, 100)
             }).catch(function (err) {
-                weui.alert();
+                loading.hide();
             });
-            galleryInit();
         }
 
         function actions() {
@@ -405,7 +418,7 @@
                         case enums.stepCategory.start:
                             tempStep.patch = "first";
                             tempStep.bgColor = "bg-green";
-                            tempStep.bColor = "b-green";
+                            tempStep.bColor = "bg-green";
                             if (si != 0) {
                                 tempStep.patch = "";
                                 tempStep.noBefore = false;
@@ -415,11 +428,11 @@
                             tempStep.patch = "last";
                             tempStep.noBefore = false;
                             tempStep.bgColor = "bg-gray";
-                            tempStep.bColor = "b-gray";
+                            tempStep.bColor = "bg-gray";
                             break;
                         default:
                             tempStep.bgColor = "bg-gray";
-                            tempStep.bColor = "b-gray";
+                            tempStep.bColor = "bg-gray";
                             break;
                     }
                     if (tempStep.nodes && tempStep.nodes.length)
@@ -433,10 +446,10 @@
                                 virtualStep = Object.assign({}, tempStep);
                                 //状态 步骤头 节点
                                 virtualStep.bgColor = "bg-green";
-                                virtualStep.bColor = "b-green";
+                                virtualStep.bColor = "bg-green";
                                 if (tempNode.NodeStatus == -2) {
                                     virtualStep.bgColor = "bg-red";
-                                    virtualStep.bColor = "b-red";
+                                    virtualStep.bColor = "bg-red";
                                     virtualStep.patch = "last";
                                     virtualStep.toVoid = true;
                                     //终止下一步解析
@@ -451,7 +464,7 @@
                                 //状态 步骤头 节点
                                 if (tempNode.NodeStatus == enums.nodeState.toWait) {
                                     virtualStep.bgColor = "bg-yellow";
-                                    virtualStep.bColor = "b-yellow";
+                                    virtualStep.bColor = "bg-yellow";
                                 }
                                 virtualStep.headerHide = ni ? true : false;
                                 virtualStep.nodes = [tempNode];
@@ -460,10 +473,10 @@
                             } else {//并行且未处理
                                 tempNode.headerHide = ni ? true : false;
                                 tempNode.bgColor = "bg-gray";
-                                tempNode.bColor = "b-gray";
+                                tempNode.bColor = "bg-gray";
                                 if (tempNode.NodeStatus == enums.nodeState.toWait) {
                                     tempNode.bgColor = "bg-yellow";
-                                    tempNode.bColor = "b-yellow";
+                                    tempNode.bColor = "bg-yellow";
                                 }
                                 surplus.push(tempNode);
                             }
@@ -547,6 +560,7 @@
             return extendNodes;
         }
 
+        //获取处理方法名称
         function getHandleMethodName(method) {
             switch (method) {
                 /// <summary>

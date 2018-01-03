@@ -15,7 +15,7 @@
         @RenderBody()
         <!--底部菜单-->
         <div class="weui-form-preview__ft fixed_b">
-            <a class="weui-form-preview__btn weui-form-preview__btn_default"  href="/home/listpanel" mask="true">待办</a>
+            <a class="weui-form-preview__btn weui-form-preview__btn_default" href="/home/listpanel" mask="true">待办</a>
             <button class="weui-form-preview__btn weui-form-preview__btn_default" type="button" onclick="showAction()">已办</button>
             <a class="weui-form-preview__btn weui-form-preview__btn_default" href="/home/MyCarbonCopy" mask="true">
                 <span style="vertical-align: middle">抄送</span>
@@ -24,12 +24,13 @@
         </div>
     </div>
     <script type="text/javascript" src="~/Scripts/weui.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/timego.js"></script>
     <script type="text/javascript" src="~/Scripts/axios.min.js"></script>
     <script type="text/javascript" src="~/Scripts/polyfill.js"></script>
     <script type="text/javascript" src="~/Scripts/template-web.js"></script>
-    <script type="text/javascript" src="~/Scripts/utils.js?v=003"></script>
-    <script type="text/javascript" src="~/Scripts/identity.js?v=003"></script>
-    <script type="text/javascript" src="~/Scripts/site.js?v=003"></script>
+    <script type="text/javascript" src="~/Scripts/utils.js"></script>
+    <script type="text/javascript" src="~/Scripts/identity.js"></script>
+    <script type="text/javascript" src="~/Scripts/site.js"></script>
     <script type="text/html" id="tpl_listtemplate">
         {{each items}}
         <!--listCategory 0待办 1发起 2已办 3抄送-->

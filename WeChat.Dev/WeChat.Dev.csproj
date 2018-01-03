@@ -250,6 +250,7 @@
     <Content Include="Scripts\site.js" />
     <Content Include="Scripts\store.legacy.min.js" />
     <Content Include="Scripts\template-web.js" />
+    <Content Include="Scripts\timego.js" />
     <Content Include="Scripts\utils.js" />
     <Content Include="Scripts\weui.min.js" />
     <Content Include="Scripts\zepto.min.js" />
@@ -292,6 +293,7 @@
     <Content Include="Scripts\data\MyTransaction.data.json" />
     <Content Include="Scripts\data\MyCarbonCopy.data.json" />
     <Content Include="Views\Home\Preview.cshtml" />
+    <Content Include="Scripts\data\timeline.data.json" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\WeChat.Application\WeChat.Application.csproj">

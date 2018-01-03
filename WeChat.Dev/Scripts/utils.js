@@ -60,6 +60,11 @@
         }
     }
 
+    /**
+     * @description 设置文档标题
+     * @param {string} name
+     * @param {int} num
+     */
     function setTitle(name, num) {
         var titText = num === undefined ? name : (name + "( " + num + " )");
         var title = document.getElementsByTagName('title');

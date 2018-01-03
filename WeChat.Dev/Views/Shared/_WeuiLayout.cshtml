@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>@ViewBag.Ttile</title>
+    <title>@ViewBag.Title</title>
     <link rel="stylesheet" href="https://res.wx.qq.com/open/libs/weui/1.1.2/weui.min.css">
     <link rel="stylesheet" href="~/Content/site.css" />
     @RenderSection("head", false)
@@ -12,6 +12,7 @@
 <body data-appcode="@ViewBag.AppCode" data-website="@ViewBag.WebSite">
     @RenderBody()
     <script type="text/javascript" src="~/Scripts/weui.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/timego.js"></script>
     <script type="text/javascript" src="~/Scripts/axios.min.js"></script>
     <script type="text/javascript" src="~/Scripts/polyfill.js"></script>
     <script type="text/javascript" src="~/Scripts/template-web.js"></script>
