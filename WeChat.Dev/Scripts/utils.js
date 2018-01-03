@@ -97,10 +97,17 @@
             var timeagoInstance = timeago();
             var times = document.querySelectorAll(selector);
             var tempTime;
+            var now = Date.now();
             times.forEach(function (time) {
                 tempTime = time.getAttribute('datetime');
                 if (tempTime) {
-                    time.innerHTML = timeagoInstance.format(tempTime, 'zh_CN');
+                    var temp = new Date(tempTime);
+                    if ((now - temp.getTime()) > 86400000) {
+                        time.innerHTML = tempTime.substring(0, 16);
+                    }
+                    else {
+                        time.innerHTML = timeagoInstance.format(tempTime, 'zh_CN');
+                    }
                 }
             })
         }
