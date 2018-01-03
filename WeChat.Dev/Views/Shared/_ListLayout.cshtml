@@ -81,7 +81,9 @@
                     </p>
                     <ul class="weui-media-box__info">
                         <li class="weui-media-box__info__meta">发起人:{{$value.Initiator}}</li>
-                        <li class="weui-media-box__info__meta">{{$value.StartTime}}</li>
+                        <li class="weui-media-box__info__meta">
+                            <time class="datetime" datetime="{{$value.StartTime}}">{{$value.StartTime}}</time>
+                        </li>
                     </ul>
                 </a>
             </div>

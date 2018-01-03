@@ -260,17 +260,7 @@
                 document.getElementById('form_timeline').innerHTML = timelineHtml;
                 utils.setTitle(data.FlowInstance.Title);
                 setTimeout(function () {
-                    if (typeof timeago === 'function') {
-                        var timeagoInstance = timeago();
-                        var times = document.querySelectorAll('.comments-time');
-                        var tempTime;
-                        times.forEach(function (time) {
-                            tempTime = time.getAttribute('datetime');
-                            if (tempTime) {
-                                time.innerHTML = timeagoInstance.format(tempTime, 'zh_CN');
-                            }
-                        })
-                    }
+                    utils.renderTimego('.comments-time');
                     loading.hide();
                 }, 100)
             }).catch(function (err) {

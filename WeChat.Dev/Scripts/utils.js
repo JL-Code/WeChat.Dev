@@ -88,10 +88,29 @@
         title[0].innerText = titText;
     };
 
+    /**
+     *@description 渲染timego时间
+     * @param {string} selector
+     */
+    function renderTimego(selector) {
+        if (typeof timeago === 'function') {
+            var timeagoInstance = timeago();
+            var times = document.querySelectorAll(selector);
+            var tempTime;
+            times.forEach(function (time) {
+                tempTime = time.getAttribute('datetime');
+                if (tempTime) {
+                    time.innerHTML = timeagoInstance.format(tempTime, 'zh_CN');
+                }
+            })
+        }
+    }
+
     return {
-        jumpLink: jumpLink,
         os: os,
         on: on,
-        setTitle: setTitle
+        jumpLink: jumpLink,
+        setTitle: setTitle,
+        renderTimego: renderTimego
     }
 }))
