@@ -7,7 +7,7 @@
     <div class="weui-form-preview" id="handle_form_preview"></div>
     <div class="weui-form-preview__ft fixed_b">
         <a class="weui-form-preview__btn weui-form-preview__btn_default" href="javascript:window.history.back()">取消</a>
-        <a class="weui-form-preview__btn weui-form-preview__btn_primary" onclick="getFormData(this)" href="javascript:">提交</a>
+        <a class="weui-form-preview__btn weui-form-preview__btn_primary" onclick="execute(this)" href="javascript:">提交</a>
     </div>
 </div>
 @section scripts{
@@ -29,7 +29,7 @@
                     <div class="weui-cell">
                         <div class="weui-cell__bd">
                             <textarea class="weui-textarea" id="suggestion" name="suggestion" rows="3">{{$data.contentComponent.value}}</textarea>
-                            <div class="weui-textarea-counter"><span>0</span>/200</div>
+                            @*<div class="weui-textarea-counter"><span>0</span>/200</div>*@
                         </div>
                     </div>
                 </div>
@@ -63,7 +63,7 @@
                 <div class="weui-cell weui-cell_switch" style="padding-left:0;padding-right:0;">
                     <div class="weui-cell__bd">{{$data.switchComponent.label}}</div>
                     <div class="weui-cell__ft">
-                        <input class="weui-switch" name="switchAgain" type="checkbox">
+                        <input class="weui-switch" id="switchAgain" name="switchAgain" type="checkbox">
                     </div>
                 </div>
             </div>
@@ -71,7 +71,7 @@
         </div>
     </script>
     <script type="text/javascript">
-        var ccids = [], currentHandleType = undefined;
+        var ccids = [], currentHandleType = undefined, appendData = undefined;
         try {
             init();
             initJSSDK();
@@ -84,7 +84,6 @@
         function init() {
             var previewEl = document.querySelector('#handle_form_preview');
             var preview = renderForm();
-            //currentHandleType = handleType; 赋值当前处理类型
             previewEl.innerHTML = preview;
         }
 
@@ -114,29 +113,23 @@
                     show: true
                 }
             };
-            
+
             if (!extra || typeof (extra.handleType) !== "number") {
                 throw new Error("参数 handleType 无效");
                 return
             }
 
+            currentHandleType = extra.handleType;
+
             switch (extra.handleType) {
 
                 case enums.handleType.Assign: //同意
                     data = _.assignIn(defaults, { contentComponent: { value: extra.suggestion } });
-                    break;
-                case enums.handleType.AnswerAssign: //回复协商
-                    data = _.assignIn(defaults, { contentComponent: { value: extra.suggestion } });
+                    initNextNode();
                     break;
                 case enums.handleType.AgainInitiate://重新发起
-                    data = _.assignIn(defaults, { contentComponent: { value: extra.suggestion } });
-                    break;
                 case enums.handleType.JointSignature://会签
-                    data = _.assignIn(defaults, { contentComponent: { value: extra.suggestion } });
-                    break;
                 case enums.handleType.Urge://催办
-                    data = _.assignIn(defaults, { contentComponent: { value: extra.suggestion } });
-                    break;
                 case enums.handleType.Recall://撤回
                     data = _.assignIn(defaults, { contentComponent: { value: extra.suggestion } });
                     break;
@@ -157,9 +150,11 @@
                         contentComponent: { value: extra.suggestion },
                         switchComponent: { show: true, label: '打回重走' }
                     });
+                    initNextNode(2);
                     break;
                 case enums.handleType.ToPrev://打回到上一步
                     data = _.assignIn(defaults, { contentComponent: { value: extra.suggestion } });
+                    initNextNode(2);
                     break;
                 case enums.handleType.LaunchConsult: //发起协商
                     data = _.assignIn(defaults, {
@@ -179,11 +174,18 @@
                         stepComponent: { show: false },
                         principalComponent: { show: false }
                     });
+                    appendData = '{"WfNodeExtendType":"' + extra.netype + '"}';
+                    break;
+                case enums.handleType.AnswerAssign: //回复协商
+                    data = _.assignIn(defaults, { contentComponent: { value: extra.suggestion } });
+                    appendData = '{"WfNodeExtendGuid":"' + extra.WfNodeExtendGuid + '"}';
                     break;
                 default:
+                    initNextNode();
+                    appendData = '{"WfNodeExtendType":"' + extra.netype + '"}';
                     break;
             }
-            console.log(data)
+
             var htmlStr = template('tpl_handleformpreview', data);
             return htmlStr;
         }
@@ -203,7 +205,7 @@
                         removeCCElment(sourceEl);
                     }
                 })
-            } 
+            }
         }
 
         function initJSSDK() {
@@ -340,15 +342,149 @@
             el.style.background = '#eee';
             el.style.color = '#999';
             el.innerHTML = '<i class="weui-loading"></i> Loading';
-            var form = {
-                ccids: ccids,
-                suggestion: document.getElementById('suggestion').value
-            }
-            weui.alert(JSON.stringify(form), function () {
+            //var form = {
+            //    ccids: ccids,
+            //    suggestion: document.getElementById('suggestion').value
+            //}
+            var suggestionEl = document.getElementById('suggestion');
+            var switchAgainEl = document.getElementById('switchAgain');
+            var data = JSON.parse(sessionStorage.getItem("flow_data"));
+            return {
+                FlowInstanceGuid: data.fi.FlowInstanceGuid,
+                FlowHandleType: currentHandleType,
+                DisagreeHandleType: currentHandleType,
+                HandlerSuggestion: suggestionEl.value,
+                RelativePersonGuid: ccids.join(','),
+                RelativePerson: '',//接收人名称
+                ToPreviousStep: false, //打回到上一步
+                ToInitialStep: false, //打回到发起
+                RunPathAgain: switchAgainEl.checked,//打回重走
+                RecipientPerson: '',
+                RecipientPersonGuid: '',
+                FlowTemplateGuid: data.fi.FlowTemplateGuid,
+                StepGuid: data.step.StepGuid,
+                StepInstanceGuid: data.step.StepInstanceGuid,
+                AppendData: appendData
+            };
+
+        }
+
+        //流程处理
+        function execute(el) {
+
+            try {
+                var data = getFormData(el);
+                validate(data);
+                console.log(data)
+                weui.alert(JSON.stringify(data), function () {
+                    el.classList.remove('weui-btn_loading');
+                    el.style.background = '';
+                    el.innerHTML = '提交';
+                })
+            } catch (e) {
                 el.classList.remove('weui-btn_loading');
                 el.style.background = '';
                 el.innerHTML = '提交';
-            })
+                weui.alert(e.message);
+            }
+
+        }
+
+        //验证数据
+        function validate(data) {
+            if (currentHandleType !== 0 && !currentHandleType) {
+                weui.alert("保存失败");
+                return
+            }
+            if (!data.HandlerSuggestion) {
+                throw new Error("请输入意见");
+            }
+            switch (currentHandleType) {
+
+                case enums.handleType.Assign: //同意
+
+                    break;
+                case enums.handleType.AnswerAssign: //回复协商
+
+                    break;
+                case enums.handleType.AgainInitiate://重新发起
+
+                    break;
+                case enums.handleType.JointSignature://会签
+
+                    break;
+                case enums.handleType.Urge://催办
+
+                    break;
+                case enums.handleType.Recall://撤回
+
+                    break;
+                case enums.handleType.Transfer: //授权交办
+                    if (!data.RelativePersonGuid)
+                        throw new Error("请选择一个接收人");
+                    ccidArr = data.RelativePersonGuid.split(',');
+                    if (ccidArr.length > 1) {
+                        throw new Error("只能选择一个接收人");
+                    }
+                    break;
+                case enums.handleType.ToStart://打回到发起
+
+                    break;
+                case enums.handleType.ToPrev://打回到上一步
+
+                    break;
+                case enums.handleType.LaunchConsult: //发起协商
+                    if (!data.RelativePersonGuid)
+                        throw new Error("请选择至少一个抄送人");
+                    ccidArr = data.RelativePersonGuid.split(',');
+                    if (!ccidArr.length)
+                        throw new Error("请选择至少一个抄送人");
+                    break;
+                case enums.handleType.Cancel: //作废
+
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        //初始化下一个节点信息 num 枚举 上一步2 下一步0 第一步
+        function initNextNode(num) {
+            var data = JSON.parse(sessionStorage.getItem("flow_data"));
+            num = num || 0;
+            var options = {
+                url: '../MA/flowform/getnextnode',
+                data: { fiGuid: data.fi.FlowInstanceGuid, type: num },
+                dataType: 'json',
+                timeout: 7000,
+                success: function (data) {
+                    var ul = document.getElementById('auditor');
+                    var fragment = document.createDocumentFragment();
+                    if (data.Auditors && data.Auditors.length) {
+                        data.Auditors.forEach(function (currValue, index, self) {
+                            var li = document.createElement('li');
+                            var p = document.createElement('p');
+                            if (data.StepHandMode == 2 && self.length > 1) {
+                                var i = document.createElement('i');
+                                i.innerText = ",";
+                                li.appendChild(i);
+                            }
+                            p.innerText = currValue;
+                            li.appendChild(p);
+                            fragment.appendChild(li);
+                        });
+                        $(ul).html(fragment);
+                    }
+                    $('#step').text(data.StepName);
+                },
+                error: function (xhr, textStatus, errorThrow) {
+                    alert(textStatus);
+                }, complete: function (xhr, textStatus) {
+                    layer.close(win_id);
+                }
+            };
+            console.log(data)
+            console.log(options.data)
         }
     </script>
 }

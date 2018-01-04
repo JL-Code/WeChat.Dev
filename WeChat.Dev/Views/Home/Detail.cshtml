@@ -254,6 +254,7 @@
                 var formHtml = template('tpl_formtable', data);
                 var attachmentHtml = template('tpl_attachment', data);
                 var timelineHtml = createTimeLine(data.FlowInstance, data.NodeExtends);
+                sessionStorage.setItem("flow_data", JSON.stringify({ fi: data.FlowInstance, step: data.CurrentStep }));
                 document.getElementById('form_container').innerHTML = formHtml;
                 document.getElementById('form_attachment').innerHTML = attachmentHtml;
                 document.getElementById('form_timeline').innerHTML = timelineHtml;
@@ -778,7 +779,7 @@
             sessionStorage.setItem("extra", JSON.stringify({
                 suggestion: suggestion,
                 handleType: type
-            }));
+            })); 
             utils.jumpLink("/home/BusinessHandlePage");
         }
     </script>
