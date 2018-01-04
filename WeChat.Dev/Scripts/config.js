@@ -58,6 +58,30 @@
             /// 已作废。终止流转.
             /// </summary>
             toVoid: -2,
+        },
+        handleType: {
+            //同意
+            Assign: 0,
+            //回复协商
+            AnswerAssign: 21,
+            //重新发起
+            AgainInitiate: 5,
+            //会签
+            JointSignature: 4,
+            //催办
+            Urge: 10,
+            //撤回
+            Recall: 9,
+            //授权交办 3
+            Transfer: 3,
+            //打回发起 1_1
+            ToStart: 1.1,
+            //打回到上一步 1_0
+            ToPrev: 1.2,
+            //发起协商 2
+            LaunchConsult: 2,
+            //作废 6
+            Cancel: 6
         }
     }
 }))

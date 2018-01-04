@@ -98,19 +98,37 @@
             var times = document.querySelectorAll(selector);
             var tempTime;
             var now = Date.now();
-            times.forEach(function (time) {
-                tempTime = time.getAttribute('datetime');
-                if (tempTime) {
-                    var temp = new Date(tempTime);
-                    if ((now - temp.getTime()) > 86400000) {
-                        time.innerHTML = tempTime.substring(0, 16);
+            try {
+                times.forEach(function (time) {
+                    tempTime = time.getAttribute('datetime');
+                    if (tempTime) {
+                        var temp = new Date(tempTime);
+                        if ((now - temp.getTime()) > 86400000) {
+                            time.innerHTML = tempTime.substring(0, 16);
+                        }
+                        else {
+                            time.innerHTML = timeagoInstance.format(tempTime, 'zh_CN');
+                        }
                     }
-                    else {
-                        time.innerHTML = timeagoInstance.format(tempTime, 'zh_CN');
-                    }
-                }
-            })
+                })
+            } catch (e) {
+                console.error(e)
+            }
         }
+    }
+
+    function isOfficeFile(type) {
+        var flag = false;
+        var types = ['.xls', '.xlsx', '.word', '.wordx', '.ppt', '.pptx',];
+        try {
+            var _type = types.find(function (_type) {
+                return _type == type;
+            })
+            flag = !!_type;
+        } catch (e) {
+            console.error(e);
+        }
+        return flag;
     }
 
     return {
@@ -118,6 +136,7 @@
         on: on,
         jumpLink: jumpLink,
         setTitle: setTitle,
-        renderTimego: renderTimego
+        renderTimego: renderTimego,
+        office: isOfficeFile
     }
 }))

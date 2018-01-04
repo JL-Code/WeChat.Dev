@@ -239,6 +239,7 @@
     <Content Include="Scripts\config.js" />
     <Content Include="Scripts\identity.js" />
     <Content Include="Scripts\axios.min.js" />
+    <Content Include="Scripts\lodash.core.min.js" />
     <Content Include="Scripts\photoswipe\default-skin\default-skin.css" />
     <Content Include="Scripts\photoswipe\default-skin\default-skin.png" />
     <Content Include="Scripts\photoswipe\default-skin\default-skin.svg" />

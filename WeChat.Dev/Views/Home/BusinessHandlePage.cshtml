@@ -4,9 +4,7 @@
     Layout = "~/Views/Shared/_WeuiLayout.cshtml";
 }
 <div class="container" id="container" data-jssdkconfig='@Html.Raw(ViewBag.JSSDKConfig)'>
-    <div class="weui-form-preview" id="handle_form_preview">
-
-    </div>
+    <div class="weui-form-preview" id="handle_form_preview"></div>
     <div class="weui-form-preview__ft fixed_b">
         <a class="weui-form-preview__btn weui-form-preview__btn_default" href="javascript:window.history.back()">取消</a>
         <a class="weui-form-preview__btn weui-form-preview__btn_primary" onclick="getFormData(this)" href="javascript:">提交</a>
@@ -30,7 +28,7 @@
                 <div class="weui-cells weui-cells_form" style="margin-top:0;">
                     <div class="weui-cell">
                         <div class="weui-cell__bd">
-                            <textarea class="weui-textarea" id="suggestion" name="suggestion" rows="3"></textarea>
+                            <textarea class="weui-textarea" id="suggestion" name="suggestion" rows="3">{{$data.contentComponent.value}}</textarea>
                             <div class="weui-textarea-counter"><span>0</span>/200</div>
                         </div>
                     </div>
@@ -65,15 +63,15 @@
                 <div class="weui-cell weui-cell_switch" style="padding-left:0;padding-right:0;">
                     <div class="weui-cell__bd">{{$data.switchComponent.label}}</div>
                     <div class="weui-cell__ft">
-                        <input class="weui-switch" type="checkbox">
+                        <input class="weui-switch" name="switchAgain" type="checkbox">
                     </div>
                 </div>
             </div>
             {{/if}}
         </div>
     </script>
-    <script>
-        var ccids = [];
+    <script type="text/javascript">
+        var ccids = [], currentHandleType = undefined;
         try {
             init();
             initJSSDK();
@@ -85,7 +83,16 @@
 
         function init() {
             var previewEl = document.querySelector('#handle_form_preview');
-            var preview = template('tpl_handleformpreview', {
+            var preview = renderForm();
+            //currentHandleType = handleType; 赋值当前处理类型
+            previewEl.innerHTML = preview;
+        }
+
+        //渲染处理表单
+        function renderForm() {
+            var data = {};
+            var extra = JSON.parse(sessionStorage.getItem("extra"));
+            var defaults = {
                 contentComponent: {
                     value: ''
                 },
@@ -98,34 +105,105 @@
                     show: true
                 },
                 switchComponent: {
-                    label: '是否打回重走',
+                    label: '打回重走',
                     show: false
                 },
                 ccComponent: {
                     label: '抄送人', //协商人 接收人
+                    multiple: true,
                     show: true
                 }
-            });
-            previewEl.innerHTML = preview;
+            };
+            
+            if (!extra || typeof (extra.handleType) !== "number") {
+                throw new Error("参数 handleType 无效");
+                return
+            }
+
+            switch (extra.handleType) {
+
+                case enums.handleType.Assign: //同意
+                    data = _.assignIn(defaults, { contentComponent: { value: extra.suggestion } });
+                    break;
+                case enums.handleType.AnswerAssign: //回复协商
+                    data = _.assignIn(defaults, { contentComponent: { value: extra.suggestion } });
+                    break;
+                case enums.handleType.AgainInitiate://重新发起
+                    data = _.assignIn(defaults, { contentComponent: { value: extra.suggestion } });
+                    break;
+                case enums.handleType.JointSignature://会签
+                    data = _.assignIn(defaults, { contentComponent: { value: extra.suggestion } });
+                    break;
+                case enums.handleType.Urge://催办
+                    data = _.assignIn(defaults, { contentComponent: { value: extra.suggestion } });
+                    break;
+                case enums.handleType.Recall://撤回
+                    data = _.assignIn(defaults, { contentComponent: { value: extra.suggestion } });
+                    break;
+                case enums.handleType.Transfer: //授权交办
+                    data = _.assignIn(defaults, {
+                        contentComponent: { value: extra.suggestion },
+                        ccComponent: {
+                            label: '接收人',
+                            multiple: false,
+                            show: true
+                        },
+                        stepComponent: { show: false },
+                        principalComponent: { show: false }
+                    });
+                    break;
+                case enums.handleType.ToStart://打回到发起
+                    data = _.assignIn(defaults, {
+                        contentComponent: { value: extra.suggestion },
+                        switchComponent: { show: true, label: '打回重走' }
+                    });
+                    break;
+                case enums.handleType.ToPrev://打回到上一步
+                    data = _.assignIn(defaults, { contentComponent: { value: extra.suggestion } });
+                    break;
+                case enums.handleType.LaunchConsult: //发起协商
+                    data = _.assignIn(defaults, {
+                        contentComponent: { value: extra.suggestion },
+                        ccComponent: {
+                            label: '接收人',
+                            multiple: false,
+                            show: true
+                        },
+                        stepComponent: { show: false },
+                        principalComponent: { show: false }
+                    });
+                    break;
+                case enums.handleType.Cancel: //作废
+                    data = _.assignIn(defaults, {
+                        contentComponent: { value: extra.suggestion },
+                        stepComponent: { show: false },
+                        principalComponent: { show: false }
+                    });
+                    break;
+                default:
+                    break;
+            }
+            console.log(data)
+            var htmlStr = template('tpl_handleformpreview', data);
+            return htmlStr;
         }
 
         function bindEvents() {
             var el = document.getElementById('cclist_items');
-            el.addEventListener('click', function (e) {
-                var sourceEl = e.target;
-                var selectEl = this.querySelector('a.cc-add');
-                if (sourceEl.tagName.toLowerCase() === 'a' && sourceEl.classList.contains('cc-add')) {
-                    //添加
-                    //alert("打开通讯录");
-                    invokeAddressList();
-                } else if (sourceEl.tagName.toLowerCase() === 'a' && sourceEl.classList.contains('cc-close')) {
-                    //删除
-                    removeCCElment(sourceEl);
-                }
-                console.log(e.target.classList)
-                console.log(sourceEl.classList.contains('cc-add'))
-                console.log(e.target.tagName.toLowerCase() === 'a')
-            })
+            if (el) {
+                el.addEventListener('click', function (e) {
+                    var sourceEl = e.target;
+                    var selectEl = this.querySelector('a.cc-add');
+                    if (sourceEl.tagName.toLowerCase() === 'a' && sourceEl.classList.contains('cc-add')) {
+                        //添加
+                        //alert("打开通讯录");
+                        invokeAddressList();
+                    } else if (sourceEl.tagName.toLowerCase() === 'a' && sourceEl.classList.contains('cc-close')) {
+                        //删除
+                        removeCCElment(sourceEl);
+                    }
+                })
+            } 
         }
 
         function initJSSDK() {
@@ -137,11 +215,11 @@
                 debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
                 jsApiList: ['selectEnterpriseContact'] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
             };
-            var options = Object.assign(defaults, jssdkconfig);
+            var options = _.assignIn(defaults, jssdkconfig);
 
-            console.log(defaults)
-            console.log(jssdkconfig);
-            console.log(options);
+            //console.log(defaults)
+            //console.log(jssdkconfig);
+            //console.log(options);
 
             wx.config(options);
 
