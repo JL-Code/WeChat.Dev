@@ -171,7 +171,7 @@ namespace WeChat.Dev.Controllers
                     new KeyValuePair<string, string>("client_id", info.WorkUserId),
                     new KeyValuePair<string, string>("username", info.Account),
                     new KeyValuePair<string, string>("password", info.Password)
-                });
+            });
             var resp = await http.PostAsync<OAuthModel>("/api/token", content);
             if (!resp.IsSuccess || string.IsNullOrEmpty(resp.Content.AccesssToken))
                 return null;

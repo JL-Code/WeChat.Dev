@@ -1,11 +1,10 @@
 ﻿(function () {
 
     try {
-        //var bodyData = document.body.dataset;
-        //var identity = new IdentityHandler(bodyData.appcode, bodyData.website);
-        //window.identityInstance = identity;
-        //console.log(identity)
-        ////identity.authorize();
+        var identity = new IdentityHandler(dateset(document.body, "appcode"), dateset(document.body, "website"));
+        window.identityInstance = identity;
+
+        identity.authorize();
         bindEvents();
     } catch (e) {
         console.error(e);
@@ -107,4 +106,15 @@ function unbind(element, event, callback, useCapture) {
     }
 }
 
-
+/**
+ * @description 兼容性扩展 获取data-*
+ * @param {DOM} el
+ * @param {string} key
+ */
+function dateset(el, key) {
+    if (typeof el.dataset !== 'undefined') {
+        return el.dataset[key];
+    } else {
+        return el.getAttribute("data-" + key);
+    }
+}

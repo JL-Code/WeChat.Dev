@@ -115,7 +115,8 @@ namespace WeChat.Dev.OAuthProviders
             //身份令牌描述信息
             var props = new AuthenticationProperties(new Dictionary<string, string>
             {
-                {"as:client_id", context.ClientId ?? string.Empty }
+                {"as:client_id", context.ClientId ?? string.Empty },
+                {"userid", user.UserId.ToString() }
             });
             var ticket = new AuthenticationTicket(identity, props);
             //调用“context.Validated（ticket）”时，会在幕后生成访问令牌

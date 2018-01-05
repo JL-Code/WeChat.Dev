@@ -237,6 +237,8 @@
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Scripts\config.js" />
+    <Content Include="Scripts\es6-promise.auto.min.js" />
+    <Content Include="Scripts\es6-promise.min.js" />
     <Content Include="Scripts\identity.js" />
     <Content Include="Scripts\axios.min.js" />
     <Content Include="Scripts\lodash.core.min.js" />

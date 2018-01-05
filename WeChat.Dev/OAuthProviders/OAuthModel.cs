@@ -15,6 +15,24 @@ namespace WeChat.Dev.OAuthProviders
 
         [JsonProperty("refresh_token", NullValueHandling = NullValueHandling.Ignore)]
         public string RefreshToken { get; set; }
+
+        /// <summary>
+        /// 用户ID
+        /// </summary>
+        [JsonProperty("userid", NullValueHandling = NullValueHandling.Ignore)]
+        public string UserId { get; set; }
+
+        /// <summary>
+        /// 发布时间
+        /// </summary>
+        [JsonProperty(".issued", NullValueHandling = NullValueHandling.Ignore)]
+        public string Issued { get; set; }
+
+        /// <summary>
+        /// 过期时间
+        /// </summary>
+        [JsonProperty(".expires", NullValueHandling = NullValueHandling.Ignore)]
+        public string Expires { get; set; }
     }
 
     public abstract class OAuthExpception

@@ -108,6 +108,16 @@ a.weui-media-box {
     background-color: #fff;
 }
 
+.node-auditors {
+    overflow: hidden;
+    list-style: none;
+}
+
+    .node-auditors > li {
+        float: left;
+        color: #0868D1;
+        padding: 0 2px;
+    }
 /*辅助样式*/
 .text-right {
     text-align: right;

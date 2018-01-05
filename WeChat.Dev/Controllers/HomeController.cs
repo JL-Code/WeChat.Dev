@@ -20,8 +20,6 @@ namespace WeChat.Dev.Controllers
         }
         public ActionResult Index()
         {
-            ViewBag.AppCode = Constants.MOBILE_APPROVAL_TEST;
-            ViewBag.WebSite = "http://douhua.oicp.net";
             return View();
         }
 

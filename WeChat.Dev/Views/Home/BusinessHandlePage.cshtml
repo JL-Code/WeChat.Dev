@@ -1,6 +1,8 @@
 ﻿
 @{
     ViewBag.Title = "流程处理";
+    ViewBag.AppCode = Zap.WeChat.SDK.Constants.MOBILE_APPROVAL_TEST;
+    ViewBag.WebSite = "http://douhua.oicp.net";
     Layout = "~/Views/Shared/_WeuiLayout.cshtml";
 }
 <div class="container" id="container" data-jssdkconfig='@Html.Raw(ViewBag.JSSDKConfig)'>
@@ -49,13 +51,15 @@
             {{if $data.stepComponent.show}}
             <div class="weui-form-preview__item">
                 <label class="weui-form-preview__label">{{$data.stepComponent.label}}</label>
-                <span class="weui-form-preview__value">名字名字名字</span>
+                <span class="weui-form-preview__value" id="step"><i class="weui-loading"></i></span>
             </div>
             {{/if}}
             {{if $data.principalComponent.show}}
             <div class="weui-form-preview__item">
                 <label class="weui-form-preview__label">{{$data.principalComponent.label}}</label>
-                <span class="weui-form-preview__value">很长很长的名字很长很长的名字很长很长的名字很长很长的名字很长很长的名字</span>
+                <ul class="weui-form-preview__value node-auditors" id="auditor">
+                    <li><i class="weui-loading"></i></li>
+                </ul>
             </div>
             {{/if}}
             {{if $data.switchComponent.show}}
@@ -358,7 +362,7 @@
                 RelativePerson: '',//接收人名称
                 ToPreviousStep: false, //打回到上一步
                 ToInitialStep: false, //打回到发起
-                RunPathAgain: switchAgainEl.checked,//打回重走
+                RunPathAgain: switchAgainEl && switchAgainEl.checked,//打回重走
                 RecipientPerson: '',
                 RecipientPersonGuid: '',
                 FlowTemplateGuid: data.fi.FlowTemplateGuid,
@@ -371,7 +375,7 @@
 
         //流程处理
         function execute(el) {
-
+            var loading = weui.loading();
             try {
                 var data = getFormData(el);
                 validate(data);
@@ -381,11 +385,13 @@
                     el.style.background = '';
                     el.innerHTML = '提交';
                 })
+                loading.hide();
             } catch (e) {
                 el.classList.remove('weui-btn_loading');
                 el.style.background = '';
                 el.innerHTML = '提交';
                 weui.alert(e.message);
+                loading.hide();
             }
 
         }
@@ -458,24 +464,7 @@
                 dataType: 'json',
                 timeout: 7000,
                 success: function (data) {
-                    var ul = document.getElementById('auditor');
-                    var fragment = document.createDocumentFragment();
-                    if (data.Auditors && data.Auditors.length) {
-                        data.Auditors.forEach(function (currValue, index, self) {
-                            var li = document.createElement('li');
-                            var p = document.createElement('p');
-                            if (data.StepHandMode == 2 && self.length > 1) {
-                                var i = document.createElement('i');
-                                i.innerText = ",";
-                                li.appendChild(i);
-                            }
-                            p.innerText = currValue;
-                            li.appendChild(p);
-                            fragment.appendChild(li);
-                        });
-                        $(ul).html(fragment);
-                    }
-                    $('#step').text(data.StepName);
+
                 },
                 error: function (xhr, textStatus, errorThrow) {
                     alert(textStatus);
@@ -485,6 +474,32 @@
             };
             console.log(data)
             console.log(options.data)
+            setTimeout(function () {
+                var data = {
+                    StepName: "经理审批",
+                    StepHandMode: 0,
+                    Auditors: ['杜宋思仪', '李成', '文杰', '陈丽']
+                };
+                var ul = document.getElementById('auditor');
+                var fragment = document.createDocumentFragment();
+                if (data.Auditors && data.Auditors.length) {
+                    data.Auditors.forEach(function (currValue, index, self) {
+                        var li = document.createElement('li');
+                        var p = document.createElement('p');
+                        if (data.StepHandMode == 2 && self.length > 1) {
+                            var i = document.createElement('i');
+                            i.innerText = ",";
+                            li.appendChild(i);
+                        }
+                        p.innerText = "@@" + currValue;
+                        li.appendChild(p);
+                        fragment.appendChild(li);
+                    });
+                    ul.innerHTML = "";
+                    ul.appendChild(fragment);
+                }
+                document.getElementById('step').innerHTML = data.StepName;
+            }, 1000)
         }
     </script>
 }
