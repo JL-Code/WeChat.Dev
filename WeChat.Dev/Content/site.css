@@ -1,10 +1,26 @@
 ﻿/*站点样式*/
+html,
 body {
     font-size: 14px;
+    height: 100%;
+    background-color: #f8f8f8;
+}
+/*滚动优化*/
+body {
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    -webkit-overflow-scrolling: touch;
 }
 
 .container {
-    background-color: #f8f8f8;
+    overflow: hidden;
+}
+
+.fill-height {
+    height: 100%;
+}
+
+.list {
+    overflow: hidden;
 }
 /*重写覆盖weui样式*/
 .page {
@@ -31,17 +47,7 @@ a.weui-media-box {
     font-size: 28px;
     line-height: 28px;
 }
-/*.weui-form-preview__ft {
-    position: fixed;
-    z-index: 4;
-    line-height: 50px;
-    bottom: 0;
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: flex;
-    width: 100%;
-    background-color: #fff;
-}*/
+
 .weui-grid__label {
     font-size: 12px;
 }
@@ -50,8 +56,8 @@ a.weui-media-box {
     width: 100%;
 }
 
-/*抄送人组件样式*/
 
+/*抄送人组件样式*/
 .cclist {
     padding: 5px 10px;
     background: #fff;
@@ -113,7 +119,7 @@ a.weui-media-box {
     list-style: none;
 }
 
-    .node-auditors > li {
+    .node-auditors > li.auditor {
         float: left;
         color: #0868D1;
         padding: 0 2px;

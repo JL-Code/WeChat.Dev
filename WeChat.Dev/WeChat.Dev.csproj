@@ -239,6 +239,7 @@
     <Content Include="Scripts\config.js" />
     <Content Include="Scripts\es6-promise.auto.min.js" />
     <Content Include="Scripts\es6-promise.min.js" />
+    <Content Include="Scripts\fastclick.min.js" />
     <Content Include="Scripts\identity.js" />
     <Content Include="Scripts\axios.min.js" />
     <Content Include="Scripts\lodash.core.min.js" />
@@ -250,11 +251,11 @@
     <Content Include="Scripts\photoswipe\photoswipe.css" />
     <Content Include="Scripts\photoswipe\photoswipe.min.js" />
     <Content Include="Scripts\polyfill.js" />
+    <Content Include="Scripts\site.core.js" />
     <Content Include="Scripts\site.js" />
     <Content Include="Scripts\store.legacy.min.js" />
     <Content Include="Scripts\template-web.js" />
     <Content Include="Scripts\timego.js" />
-    <Content Include="Scripts\utils.js" />
     <Content Include="Scripts\weui.min.js" />
     <Content Include="Scripts\zepto.min.js" />
     <Content Include="Web.config" />

@@ -9,7 +9,11 @@
     function jumpLink(url) {
         if (url) {
             weui.loading('加载中')
-            window.location.href = url;
+            if (url === 'BACK') {
+                window.history.back();
+            } else {
+                window.location.href = url;
+            }
         }
     }
 
@@ -121,22 +125,72 @@
         var flag = false;
         var types = ['.xls', '.xlsx', '.word', '.wordx', '.ppt', '.pptx',];
         try {
-            var _type = types.find(function (_type) {
-                return _type == type;
-            })
-            flag = !!_type;
+            //var _type = types.find(function (_type) {
+            //    return _type == type;
+            //})
+            //flag = !!_type;
+            for (var i = 0; i < types.length; i++) {
+                if (types[i] === type) {
+                    flag = true;
+                    break;
+                }
+            }
         } catch (e) {
             console.error(e);
         }
         return flag;
     }
 
+    //强制ios 缓存页面刷新
+    function forceReload(source) {
+        if (source && source.event.persisted && os().ios) {
+            window.location.reload(true)
+        }
+    }
+
+    /**
+    * @description 兼容性扩展 获取data-*
+    * @param {DOM} el
+    * @param {string} key
+    */
+    function dateset(el, key, serialize) {
+        var datastr = null;
+        try {
+            if (typeof el.dataset !== 'undefined') {
+                datastr = el.dataset[key];
+            } else {
+                datastr = el.getAttribute("data-" + key);
+            }
+            if (serialize) {
+                datastr = JSON.parse(datastr);
+            }
+        } catch (e) {
+            console.error(e)
+        }
+        return datastr;
+    }
+
     return {
         os: os,
         on: on,
+        dateset: dateset,
         jumpLink: jumpLink,
         setTitle: setTitle,
         renderTimego: renderTimego,
-        office: isOfficeFile
+        office: isOfficeFile,
+        forceReload: forceReload
     }
-}))
+}));
+
+!function () {
+    initFastClick();
+
+    /**
+     * @description 解决click 300ms延时
+     */
+    function initFastClick() {
+        var attachFastClick = Origami.fastclick;
+        attachFastClick(document.body);
+    }
+
+}();

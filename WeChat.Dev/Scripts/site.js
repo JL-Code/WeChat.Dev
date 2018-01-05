@@ -3,22 +3,12 @@
     try {
         var identity = new IdentityHandler(dateset(document.body, "appcode"), dateset(document.body, "website"));
         window.identityInstance = identity;
-
-        identity.authorize();
-        bindEvents();
+        //identity.authorize();
     } catch (e) {
         console.error(e);
-        weui.alert(e.message);
+        weui.alert("出现错误：" + e.message);
     }
 
-    /**
-     * @description 事件绑定
-     */
-    function bindEvents() {
-        //utils.on('.list', 'click', 'a', function (e) {
-        //    alert(1212);
-        //})
-    }
 })();
 
 function showAction() {
@@ -106,15 +96,3 @@ function unbind(element, event, callback, useCapture) {
     }
 }
 
-/**
- * @description 兼容性扩展 获取data-*
- * @param {DOM} el
- * @param {string} key
- */
-function dateset(el, key) {
-    if (typeof el.dataset !== 'undefined') {
-        return el.dataset[key];
-    } else {
-        return el.getAttribute("data-" + key);
-    }
-}

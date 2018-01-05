@@ -8,7 +8,7 @@
 <div class="container" id="container" data-jssdkconfig='@Html.Raw(ViewBag.JSSDKConfig)'>
     <div class="weui-form-preview" id="handle_form_preview"></div>
     <div class="weui-form-preview__ft fixed_b">
-        <a class="weui-form-preview__btn weui-form-preview__btn_default" href="javascript:window.history.back()">取消</a>
+        <a class="weui-form-preview__btn weui-form-preview__btn_default" onclick="utils.jumpLink('BACK')">取消</a>
         <a class="weui-form-preview__btn weui-form-preview__btn_primary" onclick="execute(this)" href="javascript:">提交</a>
     </div>
 </div>
@@ -51,14 +51,16 @@
             {{if $data.stepComponent.show}}
             <div class="weui-form-preview__item">
                 <label class="weui-form-preview__label">{{$data.stepComponent.label}}</label>
-                <span class="weui-form-preview__value" id="step"><i class="weui-loading"></i></span>
+                <div class="weui-form-preview__value" id="step">
+                    <i class="weui-loading"></i><span class="weui-loadmore__tips">正在加载</span>
+                </div>
             </div>
             {{/if}}
             {{if $data.principalComponent.show}}
             <div class="weui-form-preview__item">
                 <label class="weui-form-preview__label">{{$data.principalComponent.label}}</label>
                 <ul class="weui-form-preview__value node-auditors" id="auditor">
-                    <li><i class="weui-loading"></i></li>
+                    <li><i class="weui-loading"></i><span class="weui-loadmore__tips">正在加载</span></li>
                 </ul>
             </div>
             {{/if}}
@@ -201,9 +203,14 @@
                     var sourceEl = e.target;
                     var selectEl = this.querySelector('a.cc-add');
                     if (sourceEl.tagName.toLowerCase() === 'a' && sourceEl.classList.contains('cc-add')) {
-                        //添加
-                        //alert("打开通讯录");
-                        invokeAddressList();
+                        try {
+                            var cclistEl = document.querySelector('#cclist_items');
+                            var lastChildEl = cclistEl.querySelector('a.cc-add');
+                            var selectedUserIds = utils.dateset(cclistEl, "selectUserids", true) || ccids || [];
+                            invokeAddressList(null, selectedUserIds);
+                        } catch (e) {
+                            alert(e.message);
+                        }
                     } else if (sourceEl.tagName.toLowerCase() === 'a' && sourceEl.classList.contains('cc-close')) {
                         //删除
                         removeCCElment(sourceEl);
@@ -222,11 +229,6 @@
                 jsApiList: ['selectEnterpriseContact'] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
             };
             var options = _.assignIn(defaults, jssdkconfig);
-
-            //console.log(defaults)
-            //console.log(jssdkconfig);
-            //console.log(options);
-
             wx.config(options);
 
             wx.ready(function () {
@@ -239,13 +241,10 @@
         }
 
         //唤醒通讯录
-        function invokeAddressList() {
-            var cclistEl = document.querySelector('#cclist_items');
-            var lastChildEl = cclistEl.querySelector('a.cc-add');
-            var selectedUserIds = cclistEl.dataset.selectUserids || ccids || [];
+        function invokeAddressList(mode, selectedUserIds) {
             wx.invoke("selectEnterpriseContact", {
                 "fromDepartmentId": 0,// 必填，-1表示打开的通讯录从自己所在部门开始展示, 0表示从最上层开始
-                "mode": "multi",// 必填，选择模式，single表示单选，multi表示多选
+                "mode": mode || "multi",// 必填，选择模式，single表示单选，multi表示多选
                 //"type": ["department", "user"],// 必填，选择限制类型，指定department、user中的一个或者多个
                 "type": ["user"],
                 "selectedDepartmentIds": [],// 非必填，已选部门ID列表。用于多次选人时可重入
@@ -295,7 +294,7 @@
             ccids = data.map(function (cc) {
                 return cc.id;
             });
-            cclistEl.dataset.selectUserids = JSON.stringify(ccids);
+            cclistEl.setAttribute("data-selectUserids", JSON.stringify(ccids));
             return data;
         }
 
@@ -312,7 +311,7 @@
                 imgEl.src = cc.avatar;
                 imgEl.classList.add('img-item');
                 closeEl.classList.add('cc-close');
-                closeEl.dataset.userid = cc.id;
+                closeEl.setAttribute("userid", cc.id);
                 closeEl.href = "javascript:;";
                 closeEl.innerText = "X";
                 ccEl.classList.add('cc-item');
@@ -329,14 +328,14 @@
         function removeCCElment(sourceEl) {
             var cclistEl = document.querySelector('#cclist_items');
             var parentNode = sourceEl.parentNode;
-            var userid = sourceEl.dataset.userid;
+            var userid = utils.dataset(sourceEl, "userid");
 
             var delIndex = ccids.findIndex(function (ccid) {
                 return ccid == userid;
             })
 
             ccids.splice(delIndex, 1);
-            cclistEl.dataset.selectUserids = JSON.stringify(ccids);
+            cclistEl.setAttribute("data-selectUserids", JSON.stringify(ccids));
             parentNode.remove();
         }
 
@@ -472,8 +471,6 @@
                     layer.close(win_id);
                 }
             };
-            console.log(data)
-            console.log(options.data)
             setTimeout(function () {
                 var data = {
                     StepName: "经理审批",
@@ -486,6 +483,7 @@
                     data.Auditors.forEach(function (currValue, index, self) {
                         var li = document.createElement('li');
                         var p = document.createElement('p');
+                        li.classList.add('auditor');
                         if (data.StepHandMode == 2 && self.length > 1) {
                             var i = document.createElement('i');
                             i.innerText = ",";

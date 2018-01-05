@@ -2,25 +2,27 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densitydpi=device-dpi" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>@ViewBag.Title</title>
     <link rel="stylesheet" href="https://res.wx.qq.com/open/libs/weui/1.1.2/weui.min.css">
     <link rel="stylesheet" href="~/Content/site.css" />
     @RenderSection("head", false)
 </head>
-<body data-appcode="@ViewBag.AppCode" data-website="@ViewBag.WebSite">
+<body data-appcode="@ViewBag.AppCode" data-website="@ViewBag.WebSite" onpageshow="utils.forceReload(this)">
     @RenderBody()
-    <script type="text/javascript" src="~/Scripts/weui.min.js"></script>
-    <script type="text/javascript" src="~/Scripts/polyfill.js"></script>
-    <script type="text/javascript" src="~/Scripts/es6-promise.auto.min.js"></script>
-    <script type="text/javascript" src="~/Scripts/axios.min.js"></script>
-    <script type="text/javascript" src="~/Scripts/timego.js"></script>
-    <script type="text/javascript" src="~/Scripts/template-web.js"></script>
-    <script type="text/javascript" src="~/Scripts/lodash.core.min.js"></script>
-    <script type="text/javascript" src="~/Scripts/utils.js?v=@(new Random().Next())"></script>
-    <script type="text/javascript" src="~/Scripts/config.js?v=@(new Random().Next())"></script>
-    <script type="text/javascript" src="~/Scripts/identity.js"></script>
+    <!--核心的js库-->
+    <script src="~/Scripts/weui.min.js"></script>
+    <script src="~/Scripts/polyfill.js"></script>
+    <script src="~/Scripts/es6-promise.auto.min.js"></script>
+    <script src="~/Scripts/axios.min.js"></script>
+    <script src="~/Scripts/fastclick.min.js"></script>
+    <script src="~/Scripts/lodash.core.min.js"></script>
+    <script src="~/Scripts/site.core.js"></script>
+    <script src="~/Scripts/timego.js"></script>
+    <script src="~/Scripts/template-web.js"></script>
+    <script src="~/Scripts/config.js"></script>
+    <script src="~/Scripts/identity.js"></script>
     @RenderSection("scripts", required: false)
 </body>
 </html>

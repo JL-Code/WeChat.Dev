@@ -2,16 +2,16 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densitydpi=device-dpi" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>@ViewBag.Title</title>
     <link rel="stylesheet" href="https://res.wx.qq.com/open/libs/weui/1.1.2/weui.min.css">
     <link rel="stylesheet" href="~/Content/site.css" />
-    <link href="~/Content/iconfont/iconfont.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/Content/iconfont/iconfont.css" />
     @RenderSection("head", false)
 </head>
-<body data-appcode="@ViewBag.AppCode" data-website="@ViewBag.WebSite">
-    <div class="menu-pm container">
+<body data-appcode="@ViewBag.AppCode" data-website="@ViewBag.WebSite" class="fill-height" onpageshow="utils.forceReload(this)">
+    <div class="menu-pm">
         @RenderBody()
         <!--底部菜单-->
         <div class="weui-form-preview__ft fixed_b">
@@ -23,18 +23,18 @@
             </a>
         </div>
     </div>
-    <script type="text/javascript" src="~/Scripts/weui.min.js"></script>
-    <script type="text/javascript" src="~/Scripts/polyfill.js"></script>
-    <script type="text/javascript" src="~/Scripts/es6-promise.auto.min.js"></script>
-    <script type="text/javascript" src="~/Scripts/axios.min.js"></script>
-    <script type="text/javascript" src="~/Scripts/timego.js"></script>
-    <script type="text/javascript" src="~/Scripts/template-web.js"></script>
-    <script type="text/javascript" src="~/Scripts/utils.js"></script>
-    <script type="text/javascript" src="~/Scripts/identity.js"></script>
-    <script type="text/javascript" src="~/Scripts/site.js"></script>
+    <script src="~/Scripts/weui.min.js"></script>
+    <script src="~/Scripts/polyfill.js"></script>
+    <script src="~/Scripts/es6-promise.auto.min.js"></script>
+    <script src="~/Scripts/axios.min.js"></script>
+    <script src="~/Scripts/fastclick.min.js"></script>
+    <script src="~/Scripts/site.core.js"></script>
+    <script src="~/Scripts/template-web.js"></script>
+    <script src="~/Scripts/identity.js"></script>
+    <script src="~/Scripts/site.js"></script>
     <script type="text/html" id="tpl_listtemplate">
-        {{each items}}
         <!--listCategory 0待办 1发起 2已办 3抄送-->
+        {{each items}}
         <div class="weui-panel">
             <div class="weui-panel__hd">
                 <div class="weui-flex">
