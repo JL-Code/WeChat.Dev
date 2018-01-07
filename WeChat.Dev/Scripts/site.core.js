@@ -151,17 +151,30 @@
     /**
     * @description 兼容性扩展 获取data-*
     * @param {DOM} el
-    * @param {string} key
+    * @param {string|Array} keys
     */
-    function dateset(el, key, serialize) {
-        var datastr = null;
+    function dateset(el, keys, serialize) {
+        var data = {};
+        if (typeof keys === 'string') {
+            return getDataSetData(el, keys, serialize);
+        }
+        if (typeof keys === 'object' && Array.isArray(keys)) {
+            keys.forEach(function (key) {
+                data[key] = getDataSetData(el, key, serialize);
+            })
+            return data;
+        }
+    }
+
+    function getDataSetData(el, key, serialize) {
+        var datastr = undefined;
         try {
             if (typeof el.dataset !== 'undefined') {
                 datastr = el.dataset[key];
             } else {
                 datastr = el.getAttribute("data-" + key);
             }
-            if (serialize) {
+            if (serialize && datastr) {
                 datastr = JSON.parse(datastr);
             }
         } catch (e) {
@@ -170,15 +183,42 @@
         return datastr;
     }
 
+    /**
+     * @description 文件预览
+     * @param {object (key-value)} data
+     */
+    function preview(data) {
+        if (!data || !data.doctype || !data.href) {
+            return
+        }
+        var target = null;
+        if (os().android) {
+            if (isOfficeFile(data.doctype)) {
+                target = "https://view.officeapps.live.com/op/view.aspx?src=" + encodeURIComponent(data.href);
+                jumpLink(target);
+            } else if (data.doctype.toLowerCase() == '.pdf') {
+                //暂时未模拟
+                var url = "http://ebs.highzap.com/Scripts/plugins/pdfjs/web/viewer.html?file=http://ebs.highzap.com/TempUpFiles/1514541197.pdf";
+                jumpLink(url);
+            }
+        }
+        else {//ios
+            //直接用浏览器打开
+            jumpLink(data.href);
+        }
+    }
+
     return {
         os: os,
         on: on,
         dateset: dateset,
+        preview: preview,
         jumpLink: jumpLink,
         setTitle: setTitle,
         renderTimego: renderTimego,
         office: isOfficeFile,
-        forceReload: forceReload
+        forceReload: forceReload,
+        closest: closest
     }
 }));
 
@@ -193,4 +233,26 @@
         attachFastClick(document.body);
     }
 
+    //创建一个axios实例，并为实例添加拦截器代码
+    var axiosInstance = axios.create();
+    axiosInstance.interceptors.request.use(function (config) {
+        // Do something before request is sent
+        console.log('开始请求')
+        console.log(`请求地址: ${config.url}`)
+        return config
+    }, function (error) {
+        // Do something with request error
+        console.log('请求失败')
+        return Promise.reject(error)
+    })
+    axiosInstance.interceptors.response.use(function (config) {
+        // Do something before request is sent
+        console.log('接收响应')
+        return config
+    }, function (error) {
+        // Do something with request error
+        console.log('响应出错')
+        return Promise.reject(error)
+    });
+    window.http = axiosInstance;
 }();

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densitydpi=device-dpi" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no"/>
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>@ViewBag.Title</title>
     <link rel="stylesheet" href="https://res.wx.qq.com/open/libs/weui/1.1.2/weui.min.css">
@@ -23,15 +23,15 @@
             </a>
         </div>
     </div>
-    <script src="~/Scripts/weui.min.js"></script>
-    <script src="~/Scripts/polyfill.js"></script>
-    <script src="~/Scripts/es6-promise.auto.min.js"></script>
-    <script src="~/Scripts/axios.min.js"></script>
-    <script src="~/Scripts/fastclick.min.js"></script>
-    <script src="~/Scripts/site.core.js"></script>
-    <script src="~/Scripts/template-web.js"></script>
-    <script src="~/Scripts/identity.js"></script>
-    <script src="~/Scripts/site.js"></script>
+    <script src="~/Scripts/weui.min.js?v=@(new Random().Next())"></script>
+    <script src="~/Scripts/polyfill.js?v=@(new Random().Next())"></script>
+    <script src="~/Scripts/es6-promise.auto.min.js?v=@(new Random().Next())"></script>
+    <script src="~/Scripts/axios.min.js?v=@(new Random().Next())"></script>
+    <script src="~/Scripts/fastclick.min.js?v=@(new Random().Next())"></script>
+    <script src="~/Scripts/site.core.js?v=@(new Random().Next())"></script>
+    <script src="~/Scripts/template-web.js?v=@(new Random().Next())"></script>
+    <script src="~/Scripts/identity.js?v=@(new Random().Next())"></script>
+    <script src="~/Scripts/site.js?v=@(new Random().Next())"></script>
     <script type="text/html" id="tpl_listtemplate">
         <!--listCategory 0待办 1发起 2已办 3抄送-->
         {{each items}}

@@ -55,8 +55,15 @@ a.weui-media-box {
 .content {
     width: 100%;
 }
+/* pdf预览样式 */
+.pdf-iframe {
+    width: 100%;
+    height: 100%;
+}
 
+.pdf-preview {
 
+}
 /*抄送人组件样式*/
 .cclist {
     padding: 5px 10px;

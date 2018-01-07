@@ -16,8 +16,12 @@
         axios.get('/Scripts/mybacklog.data.json').then(function (response) {
             var data = response.data;
             data.listCategory = 0;//待办
-            createCells(data);
-            bindJumpLink();
+            try {
+                createCells(data);
+                setTimeout(function () { bindJumpLink(); }, 500)
+            } catch (e) {
+                alert("待办：" + e.message);
+            }
         }).catch(function (err) {
             weui.alert("待办：" + JSON.stringify(err));
         })

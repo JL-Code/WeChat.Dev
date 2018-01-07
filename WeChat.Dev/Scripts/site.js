@@ -1,9 +1,10 @@
 ﻿(function () {
 
     try {
-        var identity = new IdentityHandler(dateset(document.body, "appcode"), dateset(document.body, "website"));
+        var identity = new IdentityHandler(utils.dateset(document.body, "appcode"), utils.dateset(document.body, "website"));
         window.identityInstance = identity;
         //identity.authorize();
+        //alert(window.navigator.userAgent);
     } catch (e) {
         console.error(e);
         weui.alert("出现错误：" + e.message);
@@ -69,6 +70,28 @@ function renderTimeGo() {
 function bind(element, event, callback, useCapture) {
     if (element.addEventListener) {
         element.addEventListener(event, callback, useCapture);
+    } else {
+        // IE8 fallback
+        element.attachEvent('on' + event, function (event) {
+            // `event` and `event.target` are not provided in IE8
+            event = event || window.event;
+            event.target = event.target || event.srcElement;
+            callback(event);
+        });
+    }
+}
+
+function on(element, event, selector, callback, useCapture) {
+    if (element.addEventListener) {
+        element.addEventListener(event, function (e) {
+            var target = e.target;
+            var selectorEl = utils.closest(target, function (el) {
+                return (el && el === document.querySelector(selector))
+            });
+            if (selectorEl) {
+                callback(e);
+            }
+        }, useCapture);
     } else {
         // IE8 fallback
         element.attachEvent('on' + event, function (event) {
