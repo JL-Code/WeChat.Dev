@@ -198,6 +198,8 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AppController.cs" />
+    <Compile Include="Models\NavModel.cs" />
     <Compile Include="Models\UserModel.cs" />
     <Compile Include="OAuthProviders\OAuthModel.cs" />
     <Compile Include="OAuthProviders\SimpleAccessTokenProvider.cs" />
@@ -236,6 +238,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Scripts\app\bundle.js" />
     <Content Include="Scripts\config.js" />
     <Content Include="Scripts\detail.js" />
     <Content Include="Scripts\es6-promise.auto.min.js" />
@@ -299,6 +302,15 @@
     <Content Include="Scripts\data\MyCarbonCopy.data.json" />
     <Content Include="Views\Home\Preview.cshtml" />
     <Content Include="Scripts\data\timeline.data.json" />
+    <Content Include="Views\Shared\_AppLayout.cshtml" />
+    <Content Include="Views\Shared\_ListPartial.cshtml" />
+    <Content Include="Views\Shared\_NavPartial.cshtml" />
+    <Content Include="Views\App\Index.cshtml" />
+    <Content Include="Views\App\ToDos.cshtml" />
+    <Content Include="Views\App\Application.cshtml" />
+    <Content Include="Views\App\Transaction.cshtml" />
+    <Content Include="Views\App\CCNotation.cshtml" />
+    <Content Include="Scripts\app\bundle.js.map" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\WeChat.Application\WeChat.Application.csproj">

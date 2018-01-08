@@ -123,7 +123,7 @@
 
     function isOfficeFile(type) {
         var flag = false;
-        var types = ['.xls', '.xlsx', '.word', '.wordx', '.ppt', '.pptx',];
+        var types = ['.xls', '.xlsx', '.doc', '.docx', '.ppt', '.pptx',];
         try {
             //var _type = types.find(function (_type) {
             //    return _type == type;
@@ -189,6 +189,9 @@
      */
     function preview(data) {
         if (!data || !data.doctype || !data.href) {
+            return
+        }
+        if (data.isphoto) {
             return
         }
         var target = null;

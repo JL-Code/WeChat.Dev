@@ -9,20 +9,12 @@
     <link rel="stylesheet" href="~/Content/site.css?v=@(new Random().Next())" />
     @RenderSection("head", false)
 </head>
-<body data-appcode="@ViewBag.AppCode" data-website="@ViewBag.WebSite" onpageshow="utils.forceReload(this)">
+<body data-appcode="@ViewBag.AppCode" data-website="@ViewBag.WebSite">
     @RenderBody()
     <!--核心的js库-->
-    <script src="~/Scripts/weui.min.js"></script>
-    <script src="~/Scripts/polyfill.js"></script>
-    <script src="~/Scripts/es6-promise.auto.min.js"></script>
     <script src="~/Scripts/axios.min.js"></script>
-    <script src="~/Scripts/fastclick.min.js"></script>
-    <script src="~/Scripts/lodash.core.min.js"></script>
-    <script src="~/Scripts/site.core.js?v=@(new Random().Next())"></script>
-    <script src="~/Scripts/timego.js"></script>
     <script src="~/Scripts/template-web.js"></script>
-    <script src="~/Scripts/config.js"></script>
-    <script src="~/Scripts/identity.js"></script>
+    <!--辅助js库-->
     @RenderSection("scripts", required: false)
 </body>
 </html>

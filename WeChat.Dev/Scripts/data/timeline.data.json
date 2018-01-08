@@ -1033,6 +1033,36 @@
       "Height": 0
     },
     {
+      "ID": "dc350dca-095c-404b-8088-9f68565e29a9",
+      "Name": "execl文档测试",
+      "Size": 941851,
+      "Type": ".xlsx",
+      "Path": "http://douhua.oicp.net/upload/execl.xlsx",
+      "IsPhoto": false,
+      "Width": 0,
+      "Height": 0
+    },
+    {
+      "ID": "dc350dca-095c-404b-8088-9f68565e29a9",
+      "Name": "ppt文档测试",
+      "Size": 941851,
+      "Type": ".pptx",
+      "Path": "http://douhua.oicp.net/upload/ppt.pptx",
+      "IsPhoto": false,
+      "Width": 0,
+      "Height": 0
+    },
+    {
+      "ID": "dc350dca-095c-404b-8088-9f68565e29a9",
+      "Name": "word文档测试",
+      "Size": 941851,
+      "Type": ".docx",
+      "Path": "http://douhua.oicp.net/upload/word.docx",
+      "IsPhoto": false,
+      "Width": 0,
+      "Height": 0
+    },
+    {
       "ID": "9f276603-61f2-4af8-b9c9-bd356cec8821",
       "Name": "89920-106.jpg",
       "Size": 921006,

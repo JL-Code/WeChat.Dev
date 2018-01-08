@@ -1,0 +1,37 @@
+﻿
+@{
+    ViewBag.Title = "我的办理";
+    Layout = "~/Views/Shared/_AppLayout.cshtml";
+}
+
+@Html.Partial("_ListPartial", new ViewDataDictionary { { "DOMID", "transaction" }, { "CCNotation", 99 } })
+
+@section scripts{
+    <script>
+        try {
+            init();
+        } catch (e) {
+            console.error(e)
+        }
+
+        function init() {
+            axios
+                .get('/Scripts/data/MyTransaction.data.json')
+                .then(function (response) {
+                    try {
+                        var data = response.data;
+                        data.listCategory = 2;//已办
+                        var html = template('tpl_listtemplate', data);
+                        document.getElementById('transaction').innerHTML = html;
+                    } catch (e) {
+                        console.error(e)
+                    }
+                })
+                .catch(function (err) {
+                    weui.alert(JSON.stringify(err));
+                });
+        }
+    </script>
+}
+
+

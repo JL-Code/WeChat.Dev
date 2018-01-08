@@ -15,6 +15,10 @@ body {
     overflow: hidden;
 }
 
+.page-content {
+    padding-bottom: 50px;
+}
+
 .fill-height {
     height: 100%;
 }
@@ -36,6 +40,10 @@ body {
     .page.panel .page__bd {
         border-bottom: 20px;
     }
+
+.weui-form-preview__ft {
+    height: 50px;
+}
 
 a.weui-media-box {
     display: inline-block;
@@ -62,7 +70,6 @@ a.weui-media-box {
 }
 
 .pdf-preview {
-
 }
 /*抄送人组件样式*/
 .cclist {
@@ -284,4 +291,12 @@ h1.blockquote, h2.blockquote, h3.blockquote, h4.blockquote, h5.blockquote, h6.bl
 
 .text-golden {
     color: #f0a50b !important;
+}
+/* weui 现在表单按钮样式 */
+.weui-form-preview__btn_warn {
+    color: #E64340;
+}
+
+.weui-form-preview__btn_info {
+    color: #000000;
 }

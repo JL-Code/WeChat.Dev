@@ -1,0 +1,37 @@
+﻿
+@{
+    ViewBag.Title = "我的抄送";
+    Layout = "~/Views/Shared/_AppLayout.cshtml";
+}
+
+@Html.Partial("_ListPartial", new ViewDataDictionary { { "DOMID", "ccnotation" }, { "CCNotation", 99 } })
+
+@section scripts{
+    <script>
+        try {
+            init();
+        } catch (e) {
+            console.error(e)
+        }
+
+        function init() {
+            axios
+                .get('/Scripts/data/MyCarbonCopy.data.json')
+                .then(function (response) {
+                    try {
+                        var data = response.data;
+                        data.listCategory = 3;//抄送
+                        var html = template('tpl_listtemplate', data);
+                        document.getElementById('ccnotation').innerHTML = html;
+                    } catch (e) {
+                        console.error(e)
+                    }
+                })
+                .catch(function (err) {
+                    weui.alert(JSON.stringify(err));
+                });
+        }
+    </script>
+}
+
+
