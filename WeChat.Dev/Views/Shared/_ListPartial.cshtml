@@ -1,8 +1,35 @@
-﻿<div class="warpper">
-    <div class="page-content">
-        <div id="@ViewBag.DOMID"></div>
-    </div>
-    @Html.Partial("_NavPartial", ViewData)
+﻿@using WeChat.Dev.Models;
+
+@{
+    var navModel = new NavModel
+    {
+        ClassList = new List<string> { "weui-form-preview__ft", "fixed_b" },
+        Menus = new List<Menu> {
+            new Menu{
+                Name ="待办",
+                ClassList=new List<string>{ "weui-form-preview__btn", "weui-form-preview__btn_default" },
+                ButtonType = ButtonType.Link,
+                Url = "/app/todos"
+            },
+            new Menu{
+                Name ="已办",
+                ClassList=new List<string>{ "weui-form-preview__btn", "weui-form-preview__btn_default" },
+                ButtonType = ButtonType.Button,
+                Url = "/app/todos",
+                CodeSnippet = "onclick=$app.showDoneMenu()"
+            },
+            new Menu{
+                Name ="抄送",
+                ClassList=new List<string>{ "weui-form-preview__btn", "weui-form-preview__btn_default" },
+                ButtonType = ButtonType.Link,
+                Url = "/app/ccnotation"
+            }
+        }
+    };
+}
+<div class="warpper">
+    <div class="page-content" id="@ViewBag.DOMID"></div>
+    @Html.Partial("_NavPartial", navModel)
 </div>
 <script type="text/html" id="tpl_listtemplate">
     <!--listCategory 0待办 1发起 2已办 3抄送-->

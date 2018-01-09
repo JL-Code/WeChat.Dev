@@ -199,6 +199,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AppController.cs" />
+    <Compile Include="Controllers\FlowFormController.cs" />
     <Compile Include="Models\NavModel.cs" />
     <Compile Include="Models\UserModel.cs" />
     <Compile Include="OAuthProviders\OAuthModel.cs" />
@@ -311,6 +312,10 @@
     <Content Include="Views\App\Transaction.cshtml" />
     <Content Include="Views\App\CCNotation.cshtml" />
     <Content Include="Scripts\app\bundle.js.map" />
+    <Content Include="Scripts\data\mybacklog.data.json" />
+    <Content Include="Views\FlowForm\FormDetail.cshtml" />
+    <Content Include="Views\Shared\_TimelinePartial.cshtml" />
+    <Content Include="Views\Shared\_PhotoSwipePartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\WeChat.Application\WeChat.Application.csproj">

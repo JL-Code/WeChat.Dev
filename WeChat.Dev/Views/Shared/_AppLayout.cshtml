@@ -12,9 +12,8 @@
 <body data-appcode="@ViewBag.AppCode" data-website="@ViewBag.WebSite">
     @RenderBody()
     <!--核心的js库-->
-    <script src="~/Scripts/axios.min.js"></script>
-    <script src="~/Scripts/template-web.js"></script>
-    <!--辅助js库-->
+    <script src="~/Scripts/app/bundle.js"></script>
+    <!--辅助js-->
     @RenderSection("scripts", required: false)
 </body>
 </html>

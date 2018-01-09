@@ -1,31 +1,14 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "我的待办";
+    ViewBag.WebSite = "http://douhua.oicp.net";
     Layout = "~/Views/Shared/_AppLayout.cshtml";
 }
 
-@Html.Partial("_ListPartial", new ViewDataDictionary { { "DOMID", "todos" }, { "CCNotation", 99 } })
+@Html.Partial("_ListPartial", new ViewDataDictionary { { "DOMID", "todo" } })
 
 @section scripts{
     <script>
-        axios.get('/Scripts/mybacklog.data.json')
-            .then(function (response) {
-                var data = response.data;
-                data.listCategory = 0;//待办
-                try {
-                    createCells(data);
-                } catch (e) {
-                    alert("待办：" + e.message);
-                }
-            })
-            .catch(function (err) {
-                weui.alert("待办：" + JSON.stringify(err));
-            })
-
-        function createCells(data) {
-            var html = template('tpl_listtemplate', data);
-            document.querySelector('#todos').innerHTML = html;
-        }
+        $app.execute("http://localhost:8070/scripts/data/mybacklog.data.json", $config.listType.todo)
     </script>
 }
 
