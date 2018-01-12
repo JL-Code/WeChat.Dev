@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>app</title>
+    <link rel="stylesheet" href="https://res.wx.qq.com/open/libs/weui/1.1.2/weui.min.css">
+    <link rel="stylesheet" href="../src/css/site.css">
+</head>
+<body>
+<div id="art" data-fileid="12" data-size="120"></div>
+<div id="todo"></div>
+<button type="button" onclick="getTodoTest()">渲染列表数据</button>
+<button type="button" onclick="$app.execute('http://localhost:63342/webpack.example/data/todo.data.json', $config.listType.todo)">获取待办数据</button>
+<button type="button" onclick="$form.init('http://localhost:63342/webpack.example/data/timeline.data.json', { formId: 'form_container', attachmentId: 'form_attachment', timelineId: 'form_timeline' })">渲染详情页面</button>
+<button type="button" onclick="generateTemplate()">渲染artTemplate</button>
+<script type="text/javascript" src="bundle.js"></script></body>
+</html>

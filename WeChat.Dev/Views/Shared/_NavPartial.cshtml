@@ -1,17 +1,17 @@
 ﻿@using WeChat.Dev.Models
 @model NavModel
 <!--底部菜单-->
-<nav class="@(string.Join(" ",Model.ClassList.ToArray()))">
+<nav class="weui-form-preview__ft nav-bar @(string.Join(" ",Model.ClassList.ToArray()))">
     @{
         foreach (var menu in Model.Menus)
         {
             if (menu.ButtonType == ButtonType.Link)
             {
-                <a class='@string.Join(" ", menu.ClassList.ToArray())' href='@menu.Url' mask='true'>@menu.Name</a>
+                <a class='weui-form-preview__btn @string.Join(" ", menu.ClassList.ToArray())' href='@menu.Url' mask='true'>@menu.Name</a>
             }
             if (menu.ButtonType == ButtonType.Button)
             {
-                <button type="button" class="@string.Join(" ", menu.ClassList.ToArray())" @menu.CodeSnippet>@menu.Name</button>
+                <button type="button" class="weui-form-preview__btn @string.Join(" ", menu.ClassList.ToArray())" @menu.CodeSnippet>@menu.Name</button>
             }
         }
     }

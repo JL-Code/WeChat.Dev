@@ -112,11 +112,11 @@
     <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
       <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
     </Reference>
-    <Reference Include="Senparc.Weixin, Version=4.18.7.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Senparc.Weixin.4.18.7\lib\net45\Senparc.Weixin.dll</HintPath>
+    <Reference Include="Senparc.Weixin, Version=4.18.12.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Senparc.Weixin.4.18.12\lib\net45\Senparc.Weixin.dll</HintPath>
     </Reference>
-    <Reference Include="Senparc.Weixin.Work, Version=1.2.5.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Senparc.Weixin.Work.1.2.5\lib\net45\Senparc.Weixin.Work.dll</HintPath>
+    <Reference Include="Senparc.Weixin.Work, Version=1.2.13.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Senparc.Weixin.Work.1.2.13\lib\net45\Senparc.Weixin.Work.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -200,6 +200,9 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AppController.cs" />
     <Compile Include="Controllers\FlowFormController.cs" />
+    <Compile Include="Models\FlowHandleMenu.cs" />
+    <Compile Include="Models\FlowHandleType.cs" />
+    <Compile Include="Models\MenuModel.cs" />
     <Compile Include="Models\NavModel.cs" />
     <Compile Include="Models\UserModel.cs" />
     <Compile Include="OAuthProviders\OAuthModel.cs" />
@@ -228,6 +231,7 @@
     <Content Include="Content\images\tx01.jpg" />
     <Content Include="Content\images\tx02.jpg" />
     <Content Include="Content\mobile.timeline.css" />
+    <Content Include="Content\site-for-work.css" />
     <Content Include="Content\site.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -313,9 +317,11 @@
     <Content Include="Views\App\CCNotation.cshtml" />
     <Content Include="Scripts\app\bundle.js.map" />
     <Content Include="Scripts\data\mybacklog.data.json" />
-    <Content Include="Views\FlowForm\FormDetail.cshtml" />
+    <Content Include="Views\FlowForm\Detail.cshtml" />
     <Content Include="Views\Shared\_TimelinePartial.cshtml" />
     <Content Include="Views\Shared\_PhotoSwipePartial.cshtml" />
+    <Content Include="Views\Shared\_FlowNavPartial.cshtml" />
+    <Content Include="Views\FlowForm\Handle.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\WeChat.Application\WeChat.Application.csproj">

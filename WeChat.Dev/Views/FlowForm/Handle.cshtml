@@ -1,0 +1,30 @@
+﻿@{
+    ViewBag.Title = "流程处理";
+    ViewBag.AppCode = Zap.WeChat.SDK.Constants.MOBILE_APPROVAL_TEST;
+    ViewBag.WebSite = "http://douhua.oicp.net";
+    Layout = "~/Views/Shared/_AppLayout.cshtml";
+}
+<div class="page loadmore" id="handle_container">
+    <div data-jssdkconfig='@Html.Raw(ViewBag.JSSDKConfig)' data-extra='@Html.Raw(ViewBag.Extra)' id="handle_form_preview">
+        <div class="weui-loadmore">
+            <i class="weui-loading"></i>
+            <span class="weui-loadmore__tips">正在加载</span>
+        </div>
+    </div>
+</div>
+<!--底部导航菜单开始-->
+<nav class="weui-form-preview__ft nav-bar">
+    <a class="nav-btn_default weui-form-preview__btn" href="javascript:window.history.back();">取消</a>
+    <button type="button" class="nav-btn_primary weui-form-preview__btn" onclick="flowHandle.execute()">提交</button>
+</nav>
+<!--底部导航菜单结束-->
+@section scripts{
+    <script>
+        var flowHandle;
+        $(function () {
+            var formEl = document.getElementById('handle_form_preview');
+            var data = $utils.ds(formEl, ['jssdkconfig', 'extra']);
+            flowHandle = new FlowHandle(formEl, data.extra, data.jssdkconfig);
+        });
+    </script>
+}

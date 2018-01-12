@@ -1,0 +1,48 @@
+﻿@using WeChat.Dev.Models
+@model NavModel<FlowHandleMenu>
+@{
+    ViewBag.Title = "流程详细信息";
+    Layout = "~/Views/Shared/_AppLayout.cshtml";
+}
+@section head{
+    <link href="~/Content/mobile.timeline.css?v=@(new Random().Next())" rel="stylesheet" />
+}
+<div class="warpper">
+    <div class="page loadmore" id="loadmore">
+        <div class="weui-loadmore">
+            <i class="weui-loading"></i>
+            <span class="weui-loadmore__tips">正在加载</span>
+        </div>
+    </div>
+    <div class="page-content" id="container" style="opacity:0">
+        <!--附件预览-->
+        <h4 class="blockquote before-darkorange" style="margin-top:0;">业务信息</h4>
+        <div id="form_container"></div>
+        <h4 class="blockquote before-pink">相关附件</h4>
+        <div id="form_attachment"></div>
+        <h4 class="blockquote before-success">审批进度</h4>
+        <!--时间轴开始-->
+        @Html.Partial("_TimelinePartial", new ViewDataDictionary { { "DOMID", "form_timeline" } })
+        <!--时间轴结束-->
+    </div>
+    <!--底部导航菜单开始-->
+    @Html.Partial("_FlowNavPartial", Model)
+    <!--底部导航菜单结束-->
+</div>
+<!--附件预览-->
+@Html.Partial("_PhotoSwipePartial")
+@section scripts{
+    <script>
+        $(function () {
+            try {
+                var jssdkconfig = @Html.Raw(ViewBag.JSSDKConfig);
+                var options = { formId: "form_container", attachmentId: "form_attachment", timelineId: "form_timeline" };
+                $form.init("http://douhua.oicp.net/scripts/data/timeline.data.json?v=@(new Random().Next())", options);
+                $utils.initJSSDK(jssdkconfig, ['previewImage','chooseImage'], null, null);
+            } catch (e) {
+                alert("详情页面：" + e.message);
+            }
+        });
+    </script>
+}
+

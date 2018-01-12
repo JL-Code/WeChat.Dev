@@ -46,7 +46,7 @@ namespace WeChat.Dev.Controllers
             appcode = appcode ?? Constants.MOBILE_APPROVAL_TEST;
             returnUrl = returnUrl ?? Request.UrlReferrer?.ToString();
             var redirectUrl = $"http://douhua.oicp.net/wechat/consumecode?appcode={appcode}&returnUrl={returnUrl}";
-            var target = OAuth2Api.GetCode(corpId, redirectUrl, "");
+            var target = OAuth2Api.GetCode(corpId, redirectUrl, "", "");
             return Redirect(target);
         }
 

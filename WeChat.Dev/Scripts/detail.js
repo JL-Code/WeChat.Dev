@@ -5,6 +5,7 @@ init();
 galleryInit();
 
 function init() {
+
     axios.get('/Scripts/data/timeline.data.json').then(function (response) {
         var data = response.data;
         var formHtml = template('tpl_formtable', data);

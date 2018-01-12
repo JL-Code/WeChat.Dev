@@ -301,18 +301,18 @@ h1.blockquote, h2.blockquote, h3.blockquote, h4.blockquote, h5.blockquote, h6.bl
 .text-golden {
     color: #f0a50b !important;
 }
+
 /* 导航菜单按钮样式 */
 .nav-btn_default{
     color:#000;
 }
 .nav-btn_primary{
-    color:#1AAD19;
+    color:#2F7DCD;
 }
 .nav-btn_warn{
     color:#E64340;
 }
-
 /* 时间轴 */
 .name {
-    color: #1AAD19;
+    color: #2F7DCD;
 }

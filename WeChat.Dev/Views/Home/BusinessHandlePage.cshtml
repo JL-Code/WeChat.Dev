@@ -7,6 +7,54 @@
 }
 <div class="container" id="container" data-jssdkconfig='@Html.Raw(ViewBag.JSSDKConfig)'>
     <div class="weui-form-preview" id="handle_form_preview"></div>
+    <div class="weui-panel">
+        <div class="weui-panel__bd">
+            <div class="weui-media-box weui-media-box_text">
+                <label class="weui-form-preview__label">处理意见</label>
+                <div class="weui-form-preview__value content">
+                    <div class="weui-cells weui-cells_form" style="margin-top:0;">
+                        <textarea class="weui-textarea" id="suggestion" name="suggestion" rows="3">不同意</textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="weui-media-box weui-media-box_text">
+                <label>抄送人</label>
+                <div class="weui-form-preview__item text-left">
+                    <div class="cclist" id="cclist_items">
+                        <a href="javascript:;" class="cc-item cc-add"></a>
+                    </div>
+                </div>
+            </div>
+            <div class="weui-media-box weui-media-box_text">
+                <div class="weui-form-preview__item">
+                    <label class="weui-form-preview__label">下一处理步骤</label>
+                    <div class="weui-form-preview__value" id="step">经理审批</div>
+                </div>
+            </div>
+            <div class="weui-media-box weui-media-box_text">
+                <div class="weui-form-preview__item">
+                    <label class="weui-form-preview__label">下一步责任人</label>
+                    <ul class="weui-form-preview__value node-auditors" id="auditor"><li class="auditor"><p>杜宋思仪</p></li><li class="auditor"><p>李成</p></li><li class="auditor"><p>文杰</p></li><li class="auditor"><p>陈丽</p></li></ul>
+                </div>
+            </div>
+            <div class="weui-media-box weui-media-box_text">
+                <div class="weui-form-preview__item text-left">
+                    <div class="weui-cell weui-cell_switch" style="padding-left:0;padding-right:0;">
+                        <div class="weui-cell__bd">打回重走</div>
+                        <div class="weui-cell__ft">
+                            <input class="weui-switch" id="switchAgain" name="switchAgain" type="checkbox">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="weui-panel__ft">
+            <a href="javascript:void(0);" class="weui-cell weui-cell_access weui-cell_link">
+                <div class="weui-cell__bd">查看更多</div>
+                <span class="weui-cell__ft"></span>
+            </a>
+        </div>
+    </div>
     <div class="weui-form-preview__ft fixed_b">
         <a class="weui-form-preview__btn weui-form-preview__btn_default" onclick="utils.jumpLink('BACK')">取消</a>
         <a class="weui-form-preview__btn weui-form-preview__btn_primary" onclick="execute(this)" href="javascript:">提交</a>

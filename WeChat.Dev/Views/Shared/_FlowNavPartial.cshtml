@@ -1,0 +1,41 @@
+﻿@using WeChat.Dev.Models
+@using WeChat.Infrastructure
+@model NavModel<FlowHandleMenu>
+<!--底部菜单-->
+<nav class="weui-form-preview__ft nav-bar @(string.Join(" ", Model?.ClassList.ToArray()))">
+    @{
+        foreach (var menu in Model.Menus)
+        {
+            if (menu.ButtonType == ButtonType.Link)
+            {
+                <a class='weui-form-preview__btn @string.Join(" ", menu.ClassList.ToArray())' @(menu.IsDisplay ? "" : "style=display:none") data-suggestion="@menu.Suggestion" data-handle-type="@((int)menu.HandleType)" data-node-ext-type="@menu.NodeExtType" @(menu.Back ? $"href={menu.Url}" : "") data-href='@menu.Url' data-back="@menu.Back" @(Html.Raw(string.IsNullOrEmpty(menu.CodeSnippet) ? "" : menu.CodeSnippet)) @(Html.Raw((menu.SubMenus != null && menu.SubMenus.Count > 0) ? $"data-submenu='{JsonHandler.ToJson(menu.SubMenus)}' onclick='$app.showSubmenu(this)'" : "mask='true'"))>@menu.Name</a>
+            }
+            else if (menu.ButtonType == ButtonType.Button)
+            {
+                <button type="button" class='weui-form-preview__btn @string.Join(" ", menu.ClassList.ToArray())' @(menu.IsDisplay ? "" : "style=display:none") data-suggestion="@menu.Suggestion" data-handle-type="@((int)menu.HandleType)" data-node-ext-type="@menu.NodeExtType" data-href='@menu.Url' @(Html.Raw(string.IsNullOrEmpty(menu.CodeSnippet) ? "" : menu.CodeSnippet)) @(Html.Raw((menu.SubMenus != null && menu.SubMenus.Count > 0) ? $"data-submenu='{JsonHandler.ToJson(menu.SubMenus)}' onclick='$app.showSubmenu(this)'" : "mask='true'"))>@menu.Name</button>
+            }
+        }
+    }
+</nav>
+<script>
+    function showSubmenu(target) {
+        var menus = [];
+        for (var i = 0; i < 3; i++) {
+            menus.push({
+                label: '',
+                onClick: function () {
+                    $utils.jumpLink("/app/application");
+                }
+            });
+        }
+        weui.actionSheet(
+            menus,
+            [{
+                label: '取消',
+                onClick: function () {
+                    console.log('取消');
+                }
+            }]
+        );
+    }
+</script>

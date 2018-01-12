@@ -1,18 +1,28 @@
-﻿<!DOCTYPE html>
+﻿@{
+    var work = "-for-work";
+    var agent = HttpContext.Current.Request.UserAgent;
+    if (agent.IndexOf("wxwork") > -1)
+    {
+        work = "-for-work";
+    }
+}
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>@ViewBag.Title</title>
-    <link rel="stylesheet" href="https://res.wx.qq.com/open/libs/weui/1.1.2/weui.min.css">
-    <link rel="stylesheet" href="~/Content/site.css?v=@(new Random().Next())" />
-    @RenderSection("head", false)
+    <link rel="stylesheet" href="https://res.wx.qq.com/open/libs/weui/1.1.2/weui@(work).min.css">
+    <link rel="stylesheet" href="~/Content/iconfont/iconfont.css" />
+    <link rel="stylesheet" href="~/Content/site@(work).css?v=@(new Random().Next())" />
+    @RenderSection("head", required: false)
 </head>
-<body data-appcode="@ViewBag.AppCode" data-website="@ViewBag.WebSite">
+<body data-appcode="@ViewBag.AppCode" data-website="@ViewBag.WebSite" onpageshow="$utils.forceReload(this)">
     @RenderBody()
     <!--核心的js库-->
-    <script src="~/Scripts/app/bundle.js"></script>
+    @*<script src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>*@
+    <script src="~/Scripts/app/bundle.js?v=@(new Random().Next())"></script>
     <!--辅助js-->
     @RenderSection("scripts", required: false)
 </body>
