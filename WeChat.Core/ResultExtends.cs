@@ -94,6 +94,22 @@ namespace Zap.WeChat.SDK
             return list;
         }
 
+        public static List<DepartmentResult> ToDepartmentResult(this GetDepartmentListResult result)
+        {
+            if (result == null)
+                throw new ArgumentNullException(nameof(result));
+            var list = result.department?.Select(department => new DepartmentResult
+            {
+                ErrorCode = result.ErrorCodeValue,
+                ErrorMessage = result.errmsg,
+                Name = department.name,
+                Order = department.order,
+                Id = department.id,
+                ParentId = department.parentid
+            })?.ToList();
+            return list;
+        }
+
         public static List<Senparc.Weixin.Work.Entities.Article> ToNews(this NewsBody data)
         {
             return data.Articles.Select(news => new Senparc.Weixin.Work.Entities.Article

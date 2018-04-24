@@ -8,7 +8,7 @@ namespace Zap.WeChat.SDK.AdvancedAPIs.AddressList
         /// 部门ID
         /// </summary>
         [JsonProperty("id")]
-        public int Id { get; set; }
+        public long Id { get; set; }
 
         /// <summary>
         /// 部门名称
@@ -20,13 +20,13 @@ namespace Zap.WeChat.SDK.AdvancedAPIs.AddressList
         /// 部门父级ID
         /// </summary>
         [JsonProperty("parentId")]
-        public int ParentId { get; set; }
+        public long ParentId { get; set; }
 
         /// <summary>
         /// 排序号
         /// </summary>
         [JsonProperty("order")]
-        public int Order { get; set; }
+        public long Order { get; set; }
     }
 
     public class CreateDepartmentResult : WeChatResponse

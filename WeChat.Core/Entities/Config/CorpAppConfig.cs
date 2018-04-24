@@ -16,5 +16,14 @@
         /// 应用编码
         /// </summary>
         public string AppCode { get; set; }
+
+        /// <summary>
+        /// 消息令牌
+        /// </summary>
+        public string Token { get; set; }
+        /// <summary>
+        /// 消息加密串
+        /// </summary>
+        public string EncodingAESKey { get; set; }
     }
 }

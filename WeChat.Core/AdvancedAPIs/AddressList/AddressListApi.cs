@@ -98,9 +98,9 @@ namespace Zap.WeChat.SDK.AdvancedAPIs.AddressList
         /// <param name="accessTokenOrAppKey">调用接口凭证（AccessToken）或AppKey（根据AccessTokenContainer.BuildingKey(corpId, corpSecret)方法获得）</param>
         /// <param name="id">部门id。获取指定部门及其下的子部门。 如果不填，默认获取全量组织架构</param>
         /// <returns></returns>
-        public static GetDepartmentListResult GetDepartmentList(string accessTokenOrAppKey, long? id = null)
+        public static List<DepartmentResult> GetDepartmentList(string accessTokenOrAppKey, long? id = null)
         {
-            return ApiHandlerWapper.TryCommonApi(accessToken =>
+            var result = ApiHandlerWapper.TryCommonApi(accessToken =>
             {
                 var url = string.Format("https://qyapi.weixin.qq.com/cgi-bin/department/list?access_token={0}", accessToken.AsUrlData());
 
@@ -111,7 +111,7 @@ namespace Zap.WeChat.SDK.AdvancedAPIs.AddressList
 
                 return Get.GetJson<GetDepartmentListResult>(url);
             }, accessTokenOrAppKey);
-
+            return result.ToDepartmentResult();
 
         }
 
