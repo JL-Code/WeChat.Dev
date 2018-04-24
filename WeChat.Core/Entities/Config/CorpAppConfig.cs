@@ -3,9 +3,9 @@
     public class CorpAppConfig : CorpConfig
     {
         /// <summary>
-        /// 企业应用秘钥
+        /// 应用秘钥
         /// </summary>
-        public string CorpSecret { get; set; }
+        public string Secret { get; set; }
 
         /// <summary>
         /// 应用ID

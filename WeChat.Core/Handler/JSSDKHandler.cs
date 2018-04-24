@@ -31,14 +31,14 @@ namespace Zap.WeChat.SDK.Handler
         /// <returns></returns>
         public JsApiTicketResult GetSignature(string url)
         {
-            var jsapi_ticket = JsApiTicketManager.TryGetTicket(Config.CorpId, Config.CorpSecret);
+            var jsapi_ticket = JsApiTicketManager.TryGetTicket(AppConfig.CorpId, AppConfig.Secret);
             var timestamp = JSSDKHelper.GetTimestamp();
             var noncestr = JSSDKHelper.GetNoncestr();
             var signature = JSSDKHelper.GetSignature(jsapi_ticket, noncestr, timestamp, url);
 
             return new JsApiTicketResult
             {
-                AppId = Config.CorpId, // 必填，企业号的唯一标识，此处填写企业号corpid
+                AppId = AppConfig.CorpId, // 必填，企业号的唯一标识，此处填写企业号corpid
                 Timestamp = timestamp, // 必填，生成签名的时间戳
                 Noncestr = noncestr, // 必填，生成签名的随机串
                 Signature = signature,// 必填，签名，见附录1

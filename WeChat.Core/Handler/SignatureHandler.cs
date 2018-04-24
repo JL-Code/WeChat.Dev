@@ -14,7 +14,7 @@ namespace Zap.WeChat.SDK.Handler
         }
 
         public string VerifyURL(string msgSignature, string timeStamp, string nonce, string echoStr) =>
-    Signature.VerifyURL(Config.Token, Config.EncodingAESKey, Config.CorpId, msgSignature, timeStamp, nonce, echoStr);
+    Signature.VerifyURL(AppConfig.Token, AppConfig.EncodingAESKey, AppConfig.CorpId, msgSignature, timeStamp, nonce, echoStr);
 
     }
 }

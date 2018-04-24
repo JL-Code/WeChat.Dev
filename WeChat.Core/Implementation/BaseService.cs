@@ -35,7 +35,7 @@ namespace Zap.WeChat.SDK.IServices
         /// <summary>
         /// 应用配置信息
         /// </summary>
-        protected CorpAppConfig Config
+        protected CorpAppConfig AppConfig
         {
             get
             {
@@ -62,7 +62,7 @@ namespace Zap.WeChat.SDK.IServices
         {
             get
             {
-                return AccessTokenManager.BuildingKey(Config.CorpId, Config.CorpSecret);
+                return AccessTokenManager.BuildingKey(AppConfig.CorpId, AppConfig.Secret);
             }
         }
     }
