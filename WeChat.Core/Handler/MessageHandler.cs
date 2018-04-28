@@ -17,12 +17,12 @@ namespace Zap.WeChat.SDK.Handler
 
         public MessageResult SendText(string message, string toUser)
         {
-            return MessageApi.SendText(AppConfig.CorpId, AppConfig.Secret, AppConfig.AgentId.GetValueOrDefault(), message, toUser);
+            return MessageApi.SendText(AppConfig.CorpId, AppConfig.Secret, AppConfig.AgentId, message, toUser);
         }
 
         public MessageResult SendNews(NewsBody body, string toUser = null, string toParty = null, string toTag = null, int safe = 0)
         {
-            return MessageApi.SendNews(AppKey, AppConfig.AgentId.GetValueOrDefault(), body, toUser, toParty, toTag, safe);
+            return MessageApi.SendNews(AppKey, AppConfig.AgentId, body, toUser, toParty, toTag, safe);
         }
     }
 }

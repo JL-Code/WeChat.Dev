@@ -1,4 +1,7 @@
-﻿namespace Zap.WeChat.SDK.Entities
+﻿using System;
+using System.Xml.Serialization;
+
+namespace Zap.WeChat.SDK.Entities
 {
     public class CorpAppConfig : CorpConfig
     {
@@ -10,7 +13,35 @@
         /// <summary>
         /// 应用ID
         /// </summary>
-        public int? AgentId { get; set; }
+        [XmlIgnore]
+        public int AgentId { get; set; }
+
+        /// <summary>
+        /// 用于解决数字类型空值时XML反序列化报错
+        /// </summary>
+        [XmlElement("AgentId")]
+        public string AgentIdStr
+        {
+            get { return AgentId.ToString(); }
+            set
+            {
+                if (string.IsNullOrEmpty(value))
+                {
+                    AgentId = 0;
+                }
+                else
+                {
+                    try
+                    {
+                        AgentId = Convert.ToInt32(value);
+                    }
+                    catch (Exception)
+                    {
+                        AgentId = 0;
+                    }
+                }
+            }
+        }
 
         /// <summary>
         /// 应用编码
