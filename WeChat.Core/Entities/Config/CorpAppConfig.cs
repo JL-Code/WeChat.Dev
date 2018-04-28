@@ -10,7 +10,7 @@
         /// <summary>
         /// 应用ID
         /// </summary>
-        public int AgentId { get; set; }
+        public int? AgentId { get; set; }
 
         /// <summary>
         /// 应用编码

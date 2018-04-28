@@ -26,7 +26,7 @@ namespace WeChat.Application
                 CorpId = "wx2e8cc6975a5fa1ce",
                 AgentId = app.WeChatAppID,
                 AppCode = appcode,
-                CorpSecret = app.SecretValue
+                Secret = app.SecretValue
             };
         }
 
